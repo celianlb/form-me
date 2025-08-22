@@ -34,19 +34,6 @@ export default function SearchFormation({ categories }: SearchFormationProps) {
         <div className="grid grid-cols-2 gap-4">
           <Dropdown
             options={[
-              { value: "septembre-2025", label: "Septembre 2025" },
-              { value: "octobre-2025", label: "Octobre 2025" },
-              { value: "novembre-2025", label: "Novembre 2025" },
-              { value: "decembre-2025", label: "Décembre 2025" },
-              { value: "janvier-2026", label: "Janvier 2026" },
-              { value: "fevrier-2026", label: "Février 2026" },
-              { value: "mars-2026", label: "Mars 2026" },
-              { value: "avril-2026", label: "Avril 2026" },
-            ]}
-            placeholder="Quand ?"
-          />
-          <Dropdown
-            options={[
               { value: "en-ligne", label: "En ligne" },
               { value: "en-presentiel", label: "En présentiel" },
             ]}

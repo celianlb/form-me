@@ -1,12 +1,12 @@
 "use client";
 
 import Button from "@/components/UI/Button";
+import { Category } from "@/types/category";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
 import Navigation from "./Navigation";
-import { Category } from "@/types/category";
 
 interface HeaderProps {
   categories?: Category[];
@@ -74,28 +74,32 @@ export default function Header({ categories = [] }: HeaderProps) {
         <div className="hidden lg:block mt-4 pb-4">
           <div className="grid grid-cols-2 gap-4 max-w-md">
             <div className="space-y-2">
-              {categories.filter((_, index) => index % 2 === 0).map((category) => (
-                <Link
-                  key={category.id}
-                  href={`/formations/category/${category.slug}`}
-                  className="block text-blackBlue hover:text-primary transition-colors font-satoshi text-sm"
-                  onClick={() => setIsFormationsOpen(false)}
-                >
-                  {category.name}
-                </Link>
-              ))}
+              {categories
+                .filter((_, index) => index % 2 === 0)
+                .map((category) => (
+                  <Link
+                    key={category.id}
+                    href={`/formations/category/${category.slug}`}
+                    className="block text-blackBlue hover:text-primary transition-colors font-satoshi text-sm"
+                    onClick={() => setIsFormationsOpen(false)}
+                  >
+                    {category.name}
+                  </Link>
+                ))}
             </div>
             <div className="space-y-2">
-              {categories.filter((_, index) => index % 2 === 1).map((category) => (
-                <Link
-                  key={category.id}
-                  href={`/formations/category/${category.slug}`}
-                  className="block text-blackBlue hover:text-primary transition-colors font-satoshi text-sm"
-                  onClick={() => setIsFormationsOpen(false)}
-                >
-                  {category.name}
-                </Link>
-              ))}
+              {categories
+                .filter((_, index) => index % 2 === 1)
+                .map((category) => (
+                  <Link
+                    key={category.id}
+                    href={`/formations/category/${category.slug}`}
+                    className="block text-blackBlue hover:text-primary transition-colors font-satoshi text-sm"
+                    onClick={() => setIsFormationsOpen(false)}
+                  >
+                    {category.name}
+                  </Link>
+                ))}
             </div>
           </div>
           <div className="mt-4 pt-2 border-t border-darkBlue/20">

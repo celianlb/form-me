@@ -1,5 +1,6 @@
 import { FormationCardData } from "@/types/formation";
 import Image from "next/image";
+import Link from "next/link";
 
 interface FormationCardProps {
   formation: FormationCardData;
@@ -45,8 +46,13 @@ export default function FormationCard({ formation }: FormationCardProps) {
     return "Non défini";
   };
 
+  const href = formation.link || `/formations/${formation.slug}`;
+
   return (
-    <div className="group flex justify-center w-full md:w-fit h-full relative p-6 rounded-3xl border border-grayBlue/20 bg-gradient-to-tr from-white to-gray-100 hover:border-primary transition-all duration-300 ease-in-out cursor-pointer hover:bg-gradient-radial hover:from-white hover:via-[#D8E5FF] hover:to-white">
+    <Link 
+      href={href}
+      className="group flex justify-center w-full md:w-fit h-full relative p-6 rounded-3xl border border-grayBlue/20 bg-gradient-to-tr from-white to-gray-100 hover:border-primary transition-all duration-300 ease-in-out cursor-pointer hover:bg-gradient-radial hover:from-white hover:via-[#D8E5FF] hover:to-white"
+    >
       <div className="flex flex-col md:flex-row gap-12 items-center justify-center">
         {/* Partie gauche - Titre */}
         <div className="flex-1 max-w-[250px]">
@@ -128,6 +134,6 @@ export default function FormationCard({ formation }: FormationCardProps) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
