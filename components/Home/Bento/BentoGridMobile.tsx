@@ -1,8 +1,13 @@
 import Image from "next/image";
 import Button from "../../UI/Button";
 import FormationCard from "../../UI/FormationCard";
+import { FormationCardData } from "@/types/formation";
 
-export default function BentoGridMobile() {
+interface BentoGridMobileProps {
+  formations: FormationCardData[];
+}
+
+export default function BentoGridMobile({ formations }: BentoGridMobileProps) {
   return (
     <div className="flex flex-col gap-6">
       {/* Première div - Formations */}
@@ -18,39 +23,12 @@ export default function BentoGridMobile() {
           Choisissez votre formation
         </h3>
         <div className="flex flex-col gap-3 relative z-10">
-          <FormationCard
-            formation={{
-              id: 1,
-              title: "Formation CACES R489",
-              slug: "caces-r489",
-              duration: 35,
-              location: "center",
-              capacity: { min: 4, max: 12 },
-              price: 1200,
-            }}
-          />
-          <FormationCard
-            formation={{
-              id: 2,
-              title: "Formation CACES R489",
-              slug: "caces-r489",
-              duration: 35,
-              location: "center",
-              capacity: { min: 4, max: 12 },
-              price: 1200,
-            }}
-          />
-          <FormationCard
-            formation={{
-              id: 2,
-              title: "Formation CACES R489",
-              slug: "caces-r489",
-              duration: 35,
-              location: "center",
-              capacity: { min: 4, max: 12 },
-              price: 1200,
-            }}
-          />
+          {formations.map((formation) => (
+            <FormationCard
+              key={formation.id}
+              formation={formation}
+            />
+          ))}
         </div>
       </div>
 

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-platinium/30 py-12 px-[120px] z-50">
+    <footer className="bg-platinium/30 py-12 px-[48px] md:px-[120px] z-50">
       <div className="flex flex-col md:flex-row justify-between gap-12 mb-8">
         <div>
           <Link href={"/"}>
@@ -90,9 +90,9 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="flex justify-between">
-        <p>© forme.me 2025</p>
-        <div className="flex gap-6">
+      <div className="flex gap-8 flex-col-reverse justify-between">
+        <p className="mx-auto font-satoshi text-[16px]">© forme.me 2025</p>
+        <div className="flex gap-2 flex-col md:flex-row">
           <Link
             href={"/mentions-legales"}
             className="font-satoshi text-grayBlue text-[16px] font-medium hover:text-primary transition-colors duration-300"

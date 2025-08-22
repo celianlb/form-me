@@ -2,12 +2,17 @@
 
 import Button from "@/components/UI/Button";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
 import Navigation from "./Navigation";
+import { Category } from "@/types/category";
 
-export default function Header() {
+interface HeaderProps {
+  categories?: Category[];
+}
+
+export default function Header({ categories = [] }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isFormationsOpen, setIsFormationsOpen] = useState(false);
 
@@ -69,50 +74,28 @@ export default function Header() {
         <div className="hidden lg:block mt-4 pb-4">
           <div className="grid grid-cols-2 gap-4 max-w-md">
             <div className="space-y-2">
-              <Link
-                href="/formations/category?cat=dev-web"
-                className="block text-blackBlue hover:text-primary transition-colors font-satoshi text-sm"
-                onClick={() => setIsFormationsOpen(false)}
-              >
-                Développement Web
-              </Link>
-              <Link
-                href="/formations/category?cat=design"
-                className="block text-blackBlue hover:text-primary transition-colors font-satoshi text-sm"
-                onClick={() => setIsFormationsOpen(false)}
-              >
-                Design UX/UI
-              </Link>
-              <Link
-                href="/formations/category?cat=marketing"
-                className="block text-blackBlue hover:text-primary transition-colors font-satoshi text-sm"
-                onClick={() => setIsFormationsOpen(false)}
-              >
-                Marketing Digital
-              </Link>
+              {categories.filter((_, index) => index % 2 === 0).map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/formations/category/${category.slug}`}
+                  className="block text-blackBlue hover:text-primary transition-colors font-satoshi text-sm"
+                  onClick={() => setIsFormationsOpen(false)}
+                >
+                  {category.name}
+                </Link>
+              ))}
             </div>
             <div className="space-y-2">
-              <Link
-                href="/formations/category?cat=gestion"
-                className="block text-blackBlue hover:text-primary transition-colors font-satoshi text-sm"
-                onClick={() => setIsFormationsOpen(false)}
-              >
-                Gestion de Projet
-              </Link>
-              <Link
-                href="/formations/category?cat=data"
-                className="block text-blackBlue hover:text-primary transition-colors font-satoshi text-sm"
-                onClick={() => setIsFormationsOpen(false)}
-              >
-                Data Science
-              </Link>
-              <Link
-                href="/formations/category?cat=security"
-                className="block text-blackBlue hover:text-primary transition-colors font-satoshi text-sm"
-                onClick={() => setIsFormationsOpen(false)}
-              >
-                Cybersécurité
-              </Link>
+              {categories.filter((_, index) => index % 2 === 1).map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/formations/category/${category.slug}`}
+                  className="block text-blackBlue hover:text-primary transition-colors font-satoshi text-sm"
+                  onClick={() => setIsFormationsOpen(false)}
+                >
+                  {category.name}
+                </Link>
+              ))}
             </div>
           </div>
           <div className="mt-4 pt-2 border-t border-darkBlue/20">

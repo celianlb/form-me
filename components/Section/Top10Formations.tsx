@@ -61,7 +61,7 @@ export default function Top10Formations({ formations }: Top10FormationsProps) {
       />
       <div className="flex flex-col gap-12 relative ">
         {/* Header */}
-        <div className="flex justify-between items-start px-6 md:px-[120px]">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-start px-10 md:px-[120px]">
           <div>
             <Heading level={2} className="mb-4">
               Les formations les plus appréciées

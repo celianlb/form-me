@@ -2,13 +2,15 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { Category } from "@/types/category";
 
 interface FormationsDropdownProps {
   isOpen: boolean;
   onClose: () => void;
+  categories?: Category[];
 }
 
-export default function FormationsDropdown({ isOpen, onClose }: FormationsDropdownProps) {
+export default function FormationsDropdown({ isOpen, onClose, categories = [] }: FormationsDropdownProps) {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,16 +31,6 @@ export default function FormationsDropdown({ isOpen, onClose }: FormationsDropdo
 
   if (!isOpen) return null;
 
-  // Catégories temporaires - à remplacer par les vraies catégories
-  const formationCategories = [
-    { name: "Développement Web", href: "/formations/category?cat=dev-web" },
-    { name: "Design UX/UI", href: "/formations/category?cat=design" },
-    { name: "Marketing Digital", href: "/formations/category?cat=marketing" },
-    { name: "Gestion de Projet", href: "/formations/category?cat=gestion" },
-    { name: "Data Science", href: "/formations/category?cat=data" },
-    { name: "Cybersécurité", href: "/formations/category?cat=security" },
-  ];
-
   return (
     <div
       ref={dropdownRef}
@@ -49,10 +41,10 @@ export default function FormationsDropdown({ isOpen, onClose }: FormationsDropdo
       </div>
       
       <div className="space-y-1">
-        {formationCategories.map((category) => (
+        {categories.map((category) => (
           <Link
-            key={category.name}
-            href={category.href}
+            key={category.id}
+            href={`/formations/category/${category.slug}`}
             onClick={onClose}
             className="block px-4 py-2 text-blackBlue hover:bg-primary/5 hover:text-primary transition-colors font-satoshi"
           >

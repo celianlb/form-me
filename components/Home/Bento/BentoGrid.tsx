@@ -1,14 +1,16 @@
+import { FormationsService } from "@/services/formations.service";
 import Image from "next/image";
 import Button from "../../UI/Button";
 import FormationCard from "../../UI/FormationCard";
 import BentoGridMobile from "./BentoGridMobile";
 
-export default function BentoGrid() {
+export default async function BentoGrid() {
+  const formations = await FormationsService.getRandomFormations(3);
   return (
     <>
       {/* Version Mobile */}
       <div className="block lg:hidden">
-        <BentoGridMobile />
+        <BentoGridMobile formations={formations} />
       </div>
 
       {/* Version Desktop */}
@@ -27,39 +29,9 @@ export default function BentoGrid() {
               Choisissez votre formation
             </h3>
             <div className="flex flex-col gap-4 translate-x-12">
-              <FormationCard
-                formation={{
-                  id: 1,
-                  title: "Formation CACES R489",
-                  slug: "caces-r489",
-                  duration: 35,
-                  location: "center",
-                  capacity: { min: 4, max: 12 },
-                  price: 1200,
-                }}
-              />
-              <FormationCard
-                formation={{
-                  id: 2,
-                  title: "Formation CACES R489",
-                  slug: "caces-r489",
-                  duration: 35,
-                  location: "center",
-                  capacity: { min: 4, max: 12 },
-                  price: 1200,
-                }}
-              />
-              <FormationCard
-                formation={{
-                  id: 3,
-                  title: "Formation CACES R489",
-                  slug: "caces-r489",
-                  duration: 35,
-                  location: "center",
-                  capacity: { min: 4, max: 12 },
-                  price: 1200,
-                }}
-              />
+              {formations.map((formation) => (
+                <FormationCard key={formation.id} formation={formation} />
+              ))}
             </div>
           </div>
 
