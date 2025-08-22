@@ -1,0 +1,21 @@
+<svg width="585" height="930" viewBox="0 0 585 930" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<mask id="mask0_177_591" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-345" y="0" width="930" height="930">
+<rect width="657.609" height="657.609" transform="matrix(-0.707107 0.707107 0.707107 0.707107 120 0)" fill="url(#pattern0_177_591)"/>
+</mask>
+<g mask="url(#mask0_177_591)">
+<g filter="url(#filter0_f_177_591)">
+<circle cx="323.873" cy="323.873" r="323.873" transform="matrix(-0.707107 0.707107 0.707107 0.707107 -40.4257 6.97559)" fill="#125EFF" fill-opacity="0.2"/>
+</g>
+</g>
+<defs>
+<pattern id="pattern0_177_591" patternContentUnits="objectBoundingBox" width="0.0121653" height="0.0121653">
+<use xlink:href="#image0_177_591" transform="scale(0.00152066)"/>
+</pattern>
+<filter id="filter0_f_177_591" x="-424.298" y="81.1279" width="767.745" height="767.746" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="30" result="effect1_foregroundBlur_177_591"/>
+</filter>
+<image id="image0_177_591" width="8" height="8" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAABdJREFUGBljYGBg+A/FQAoTMGEKDUcRAATwAgFGIXEOAAAAAElFTkSuQmCC"/>
+</defs>
+</svg>

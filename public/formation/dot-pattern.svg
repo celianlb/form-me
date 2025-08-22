@@ -1,0 +1,21 @@
+<svg width="140" height="140" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<mask id="mask0_127_1018" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="140" height="140">
+<rect width="140" height="140" fill="url(#pattern0_127_1018)"/>
+</mask>
+<g mask="url(#mask0_127_1018)">
+<g filter="url(#filter0_f_127_1018)">
+<circle cx="94.15" cy="45.8502" r="68.95" fill="black" fill-opacity="0.3"/>
+</g>
+</g>
+<defs>
+<pattern id="pattern0_127_1018" patternContentUnits="objectBoundingBox" width="0.0571429" height="0.0571429">
+<use xlink:href="#image0_127_1018" transform="scale(0.00714286)"/>
+</pattern>
+<filter id="filter0_f_127_1018" x="-34.8" y="-83.0999" width="257.9" height="257.9" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="30" result="effect1_foregroundBlur_127_1018"/>
+</filter>
+<image id="image0_127_1018" width="8" height="8" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAABdJREFUGBljYGBg+A/FQAoTMGEKDUcRAATwAgFGIXEOAAAAAElFTkSuQmCC"/>
+</defs>
+</svg>

@@ -1,0 +1,21 @@
+<svg width="595" height="614" viewBox="0 0 595 614" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<mask id="mask0_53_321" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-141" y="-3" width="930" height="931">
+<rect width="657.609" height="657.609" transform="translate(789 462.495) rotate(135)" fill="url(#pattern0_53_321)"/>
+</mask>
+<g mask="url(#mask0_53_321)">
+<g filter="url(#filter0_f_53_321)">
+<circle cx="324" cy="622.921" r="323.873" transform="rotate(135 324 622.921)" fill="#4B5977" fill-opacity="0.2"/>
+</g>
+</g>
+<defs>
+<pattern id="pattern0_53_321" patternContentUnits="objectBoundingBox" width="0.0121653" height="0.0121653">
+<use xlink:href="#image0_53_321" transform="scale(0.00152066)"/>
+</pattern>
+<filter id="filter0_f_53_321" x="-59.8731" y="239.048" width="767.745" height="767.745" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="30" result="effect1_foregroundBlur_53_321"/>
+</filter>
+<image id="image0_53_321" width="8" height="8" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAAXNSR0IArs4c6QAAABdJREFUGBljYGBg+A/FQAoTMGEKDUcRAATwAgFGIXEOAAAAAElFTkSuQmCC"/>
+</defs>
+</svg>
