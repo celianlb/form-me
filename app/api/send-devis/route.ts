@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
       codePostal,
       message,
       formationTitle,
+      categoryName,
     } = body;
 
     // Validation des champs requis
@@ -131,6 +132,7 @@ export async function POST(request: NextRequest) {
 
           <div class="formation-title">
             <h2>Formation : ${formationTitle}</h2>
+            ${categoryName ? `<p style="margin: 5px 0; color: #666;">Catégorie : ${categoryName}</p>` : ''}
           </div>
 
           <div class="info-grid">
@@ -199,6 +201,7 @@ export async function POST(request: NextRequest) {
       html: htmlContent,
       text: `
 Nouvelle demande de devis pour la formation : ${formationTitle}
+${categoryName ? `Catégorie : ${categoryName}` : ''}
 
 Informations du contact :
 - Nom : ${prenom} ${nom}
