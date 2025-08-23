@@ -4,6 +4,22 @@ import CategoryCard from "@/components/UI/CategoryCard";
 import { CategoryWithCount } from "@/types/category";
 import { useRef } from "react";
 
+// Mapping des icônes par slug de catégorie
+const getCategoryIcon = (slug: string): string => {
+  const iconMap: { [key: string]: string } = {
+    elingage: "/category/Climbing.svg",
+    "travaux-hauteurs-echafaudage": "/category/Crane.svg",
+    "habilitations-electriques": "/category/Electricity.svg",
+    atex: "/category/Explosion.svg",
+    "sauveteurs-secouristes-au-travail": "/category/Float.svg",
+    aipr: "/category/RadioTower.svg",
+    "gestes-postures": "/category/StandingMan.svg",
+    "caces-autorisation-conduite": "/category/Truck.svg",
+  };
+
+  return iconMap[slug] || "/formation/picto/person.svg";
+};
+
 interface FormationCategoryProps {
   categories: CategoryWithCount[];
 }
@@ -50,7 +66,7 @@ export default function FormationCategory({
           {categories.map((category) => (
             <div key={category.id} className="py-4 flex-shrink-0">
               <CategoryCard
-                picto={category.picto || "/formation/picto/person.svg"}
+                picto={getCategoryIcon(category.slug)}
                 titre={category.name}
                 nombreFormations={category.trainingCount}
                 slug={category.slug}

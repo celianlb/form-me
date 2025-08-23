@@ -18,8 +18,7 @@ export default function CategoryPageClient({
   category,
   formations,
 }: CategoryPageClientProps) {
-  const { filters, updateFilters, resetFilters, hasActiveFilters } =
-    useFilterSync();
+  const { filters, updateFilters, resetFilters } = useFilterSync();
 
   // Filtrer les formations selon les critères
   const filteredFormations = useMemo(() => {

@@ -58,6 +58,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           Toutes nos formations <br />{" "}
           <Badge className=" text-center">{category.name}</Badge>
         </Heading>
+        <p className="text-grayBlue max-w-[650px] text-center mt-8">
+          {category.description}
+        </p>
       </HeroSection>
 
       {/* Contenu client avec filtres et formations */}

@@ -48,10 +48,10 @@ export default function Navigation({
 
       {/* À propos */}
       <Link
-        href="/a-propos"
+        href="/nous-rejoindre"
         className="text-blackBlue hover:text-primary transition-colors font-satoshi font-medium"
       >
-        À propos
+        Nous rejoindre
       </Link>
     </nav>
   );
