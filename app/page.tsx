@@ -3,6 +3,7 @@ import BentoSection from "@/components/Home/Bento/BentoSection";
 import SearchFormation from "@/components/Home/SearchFormation";
 import CategorySection from "@/components/Section/CategorySection";
 import CTA from "@/components/Section/CTA";
+import CTADevis from "@/components/Section/CTADevis";
 import SocialProof from "@/components/Section/SocialProof";
 import Top10Formations from "@/components/Section/Top10Formations";
 import Badge from "@/components/UI/Badge";
@@ -32,6 +33,7 @@ export default async function Home() {
       <CTA />
       <SocialProof />
       <Top10Formations formations={topFormations} />
+      <CTADevis />
     </main>
   );
 }
