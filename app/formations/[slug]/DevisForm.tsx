@@ -21,6 +21,12 @@ export default function DevisForm({ formation }: DevisFormProps) {
     codePostal: "",
     message: "",
   });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
 
   const getAvailableModalites = () => {
     const options = [];
@@ -45,10 +51,58 @@ export default function DevisForm({ formation }: DevisFormProps) {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Données du formulaire:", formData);
-    // Ici vous pourrez ajouter la logique d'envoi du formulaire
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const response = await fetch('/api/send-devis', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          formationTitle: formation.title
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setSubmitStatus({
+          type: 'success',
+          message: 'Votre demande de devis a été envoyée avec succès ! Nous vous recontacterons rapidement.'
+        });
+        // Réinitialiser le formulaire
+        setFormData({
+          nom: "",
+          prenom: "",
+          email: "",
+          telephone: "",
+          profil: "entreprise",
+          modalite: "",
+          apprenants: 4,
+          ville: "",
+          codePostal: "",
+          message: "",
+        });
+      } else {
+        setSubmitStatus({
+          type: 'error',
+          message: result.error || 'Une erreur est survenue lors de l\'envoi de votre demande.'
+        });
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi:', error);
+      setSubmitStatus({
+        type: 'error',
+        message: 'Une erreur réseau est survenue. Veuillez réessayer.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const modaliteOptions = getAvailableModalites();
@@ -273,9 +327,39 @@ export default function DevisForm({ formation }: DevisFormProps) {
           />
         </div>
 
+        {/* Messages de statut */}
+        {submitStatus.type && (
+          <div
+            className={`p-4 rounded-xl mb-4 ${
+              submitStatus.type === 'success'
+                ? 'bg-green-50 text-green-800 border border-green-200'
+                : 'bg-red-50 text-red-800 border border-red-200'
+            }`}
+          >
+            <div className="flex items-start space-x-3">
+              <span className="text-lg">
+                {submitStatus.type === 'success' ? '✅' : '❌'}
+              </span>
+              <p className="font-satoshi text-sm">{submitStatus.message}</p>
+            </div>
+          </div>
+        )}
+
         {/* Bouton de soumission */}
-        <Button type="submit" variant="secondary" className="w-fit">
-          Demander un devis
+        <Button 
+          type="submit" 
+          variant="secondary" 
+          className="w-fit"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? (
+            <div className="flex items-center space-x-2">
+              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <span>Envoi en cours...</span>
+            </div>
+          ) : (
+            'Demander un devis'
+          )}
         </Button>
       </form>
     </div>

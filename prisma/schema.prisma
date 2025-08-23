@@ -64,7 +64,10 @@ model User {
   postalCode   String?
   city         String?
   passwordHash String?
-  createdAt    DateTime @default(now())
+  mustChangePassword Boolean @default(false) // pour forcer le changement à la première connexion
+  lastLoginAt    DateTime?
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
 
   // Relations
   trainingsCreated Training[] @relation("TrainingCreatedBy")
@@ -206,13 +209,16 @@ model AccessSupport {
  * SUPPORT GROUPS (per training session, managed manually)
  */
 model SupportGroup {
-  id          Int       @id @default(autoincrement())
-  trainingId  Int
-  name        String
-  startDate   DateTime? // optional
-  endDate     DateTime? // optional
-  createdById Int?
-  createdAt   DateTime  @default(now())
+  id           Int       @id @default(autoincrement())
+  trainingId   Int
+  name         String
+  companyName  String    // nom de l'entreprise
+  trainingDate DateTime  // date à laquelle s'est effectuée la formation
+  startDate    DateTime? // optional
+  endDate      DateTime? // optional
+  createdById  Int?
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
 
   training  Training @relation(fields: [trainingId], references: [id])
   createdBy User?    @relation("SupportGroupCreatedBy", fields: [createdById], references: [id]) // ✅ correction

@@ -1,4 +1,5 @@
 import Badge from "@/components/UI/Badge";
+import Button from "@/components/UI/Button";
 import Heading from "@/components/UI/Heading";
 import { FormationWithDetails } from "@/types/formationDetails";
 import Image from "next/image";
@@ -130,9 +131,15 @@ export default function HeroSection({ formation }: HeroSectionProps) {
           </div>
         </div>
 
-        {/* Partie droite - Formulaire de devis */}
-        <div className="flex-1 md:max-w-1/2">
+        {/* Partie droite Desktop - Formulaire de devis */}
+        <div className="flex-1 hidden md:block md:max-w-1/2">
           <DevisForm formation={formation} />
+        </div>
+        {/* Partie droite Desktop - Formulaire de devis */}
+        <div className="block md:hidden w-full max-w-md">
+          <Button variant="primary" className="w-full">
+            Demander un devis
+          </Button>
         </div>
       </div>
     </section>

@@ -2,7 +2,7 @@ import { cn } from "@/utils/cn";
 import Link from "next/link";
 import React from "react";
 
-type ButtonVariant = "primary" | "secondary" | "tertiary";
+export type ButtonVariant = "primary" | "secondary" | "tertiary" | "outline";
 
 interface BaseButtonProps {
   children: React.ReactNode;
@@ -33,6 +33,8 @@ const getVariantClasses = (variant: ButtonVariant): string => {
       "bg-white text-primary border-primary hover:border-white active:bg-platinium active:border-primary",
     tertiary:
       "bg-grayBlue text-white border-white hover:bg-white hover:text-grayBlue hover:border-grayBlue active:bg-platinium",
+    outline:
+      "bg-transparent text-gray-700 border-gray-300 hover:bg-gray-50 hover:border-gray-400",
   };
   return variants[variant];
 };

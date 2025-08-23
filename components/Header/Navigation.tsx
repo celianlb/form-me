@@ -7,14 +7,17 @@ interface NavigationProps {
   setIsFormationsOpen: (isOpen: boolean) => void;
 }
 
-export default function Navigation({ isFormationsOpen, setIsFormationsOpen }: NavigationProps) {
+export default function Navigation({
+  isFormationsOpen,
+  setIsFormationsOpen,
+}: NavigationProps) {
   return (
     <nav className="flex items-center space-x-8">
       {/* Formations Link avec Dropdown */}
       <div className="relative">
         <button
           onClick={() => setIsFormationsOpen(!isFormationsOpen)}
-          className="flex items-center space-x-1 text-blackBlue hover:text-primary transition-colors font-satoshi font-medium"
+          className="flex cursor-pointer items-center space-x-1 text-blackBlue hover:text-primary transition-colors font-satoshi font-medium"
         >
           <span>Formations</span>
           <svg
@@ -25,10 +28,14 @@ export default function Navigation({ isFormationsOpen, setIsFormationsOpen }: Na
             stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
           </svg>
         </button>
-        
       </div>
 
       {/* Valeurs & Engagements */}

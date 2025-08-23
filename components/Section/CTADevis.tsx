@@ -4,16 +4,16 @@ import Heading from "../UI/Heading";
 
 export default function CTADevis() {
   return (
-    <section className="bg-[#DBE6FF]/20 border items-center border-primary/10 p-6 md:p-12 flex gap-16 md:gap-20 mx-[40px] md:mx-[120px] rounded-[32px] md:rounded-[50px] my-[80px]">
-      <div className="flex flex-col gap-4 w-1/2">
+    <section className="bg-[#DBE6FF]/20 border items-center border-primary/10 p-6 md:p-12 flex flex-col md:flex-row gap-16 md:gap-20 mx-[40px] md:mx-[120px] rounded-[32px] md:rounded-[50px] my-[80px]">
+      <div className="flex flex-col gap-4 md:w-1/2">
         <Heading level={2}>Prêt à vous former ?</Heading>
         <p className="text-grayBlue">
           Nous sommes à votre écoute pour répondre à vos questions et vous
           accompagner dans votre projet de formation.
         </p>
       </div>
-      <div className="bg-white border border-primary/30 w-1/2 p-8 flex flex-col gap-8 rounded-[32px]">
-        <div className="flex justify-between">
+      <div className="bg-white border border-primary/30 md:w-1/2 p-8 flex flex-col gap-8 rounded-[32px]">
+        <div className="flex flex-col gap-4 md:flex-row justify-between">
           <div className="flex gap-2 items-center">
             <Image
               src={"/contact/devis/mail.svg"}

@@ -184,9 +184,9 @@ export default function FormationDetails({ formation }: FormationDetailsProps) {
 
   return (
     <section className="px-[40px] md:px-[120px] py-[80px]">
-      <div className="flex flex-col lg:flex-row gap-12">
+      <div className="flex flex-col md:flex-row gap-12">
         {/* Menu de navigation à gauche */}
-        <div className="lg:w-1/3">
+        <div className="md:w-1/3 hidden md:block">
           <div className="sticky top-32">
             <nav className="space-y-2">
               {sections.map((section) => (
@@ -195,7 +195,7 @@ export default function FormationDetails({ formation }: FormationDetailsProps) {
                   onClick={() => scrollToSection(section.id)}
                   className={`block w-full text-left px-4 py-3 rounded-xl transition-all duration-300 font-satoshi ${
                     activeSection === section.id
-                      ? "bg-primary text-white font-medium"
+                      ? "text-primary font-medium"
                       : "text-darkBlue hover:bg-primary/10 hover:text-primary"
                   }`}
                 >
