@@ -1,18 +1,24 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface CategoryCardProps {
   picto: string;
   titre: string;
   nombreFormations: number;
+  slug: string;
 }
 
 export default function CategoryCard({
   picto,
   titre,
   nombreFormations,
+  slug,
 }: CategoryCardProps) {
   return (
-    <div className="relative p-8 rounded-3xl w-[300px] h-full flex flex-col border border-grayBlue/20 hover:border-transparent bg-gradient-to-tr from-white to-[rgba(223,223,223,0.4)] hover:bg-none shadow-[0_0_20px_rgba(18,94,255,0.1)] hover:shadow-none overflow-hidden transition-all duration-500 ease-in-out group cursor-pointer">
+    <Link
+      href={`/formations/category/${slug}`}
+      className="relative p-8 rounded-3xl w-[300px] h-full flex flex-col border border-grayBlue/20 hover:border-transparent bg-gradient-to-tr from-white to-[rgba(223,223,223,0.4)] hover:bg-none shadow-[0_0_20px_rgba(18,94,255,0.1)] hover:shadow-none overflow-hidden transition-all duration-500 ease-in-out group cursor-pointer"
+    >
       {/* Pattern SVG en arrière-plan */}
       <div className="absolute top-0 right-0 w-[140px] h-[140px]">
         <Image
@@ -41,6 +47,6 @@ export default function CategoryCard({
           {nombreFormations} formation{nombreFormations > 1 ? "s" : ""}
         </p>
       </div>
-    </div>
+    </Link>
   );
 }

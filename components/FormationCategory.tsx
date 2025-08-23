@@ -53,6 +53,7 @@ export default function FormationCategory({
                 picto={category.picto || "/formation/picto/person.svg"}
                 titre={category.name}
                 nombreFormations={category.trainingCount}
+                slug={category.slug}
               />
             </div>
           ))}
