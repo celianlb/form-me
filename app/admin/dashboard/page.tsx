@@ -3,9 +3,7 @@
 import Button from "@/components/UI/Button";
 import {
   Activity,
-  BarChart3,
   BookOpen,
-  FileText,
   Plus,
   UserCircle,
   UserPlus,
@@ -115,16 +113,6 @@ export default function AdminDashboard() {
       iconColor: "text-purple-600",
       route: "/admin/trainings",
     },
-    {
-      title: "Analytics",
-      description: "Statistiques et rapports",
-      icon: BarChart3,
-      count: null,
-      bgColor: "from-amber-50 to-amber-100/50",
-      iconBg: "bg-amber-100",
-      iconColor: "text-amber-600",
-      route: "/admin/analytics",
-    },
   ];
 
   return (
@@ -170,7 +158,7 @@ export default function AdminDashboard() {
       {/* Content */}
       <div className="max-w-7xl mx-auto py-8">
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {adminCards.map((card, index) => (
             <div
               key={index}
@@ -268,7 +256,7 @@ export default function AdminDashboard() {
           <div className="space-y-6">
             <div className="bg-white rounded-2xl shadow-sm border border-primary/20 p-6">
               <h3 className="text-lg font-satoshi font-semibold text-darkBlue mb-4">
-                Actions Rapides
+                Actions
               </h3>
               <div className="space-y-3">
                 <Button
@@ -278,14 +266,6 @@ export default function AdminDashboard() {
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Créer un groupe
-                </Button>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start"
-                  onClick={() => router.push("/admin/trainings/create")}
-                >
-                  <FileText className="w-4 h-4 mr-2" />
-                  Nouvelle formation
                 </Button>
                 <Button
                   variant="outline"
