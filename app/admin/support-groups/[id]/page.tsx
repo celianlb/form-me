@@ -486,7 +486,7 @@ export default function GroupDetailPage() {
                   width={120}
                   height={120}
                   alt=""
-                  className="absolute top-0 right-0 opacity-30"
+                  className="absolute top-0 right-0 -z-10"
                 />
                 <div className="flex justify-between items-start">
                   <div>
