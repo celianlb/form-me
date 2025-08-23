@@ -7,6 +7,7 @@ import { CategoriesService } from "@/services/categories.service";
 import { FormationsService } from "@/services/formations.service";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import CategoryPageClient from "./CategoryPageClient";
 
 interface CategoryPageProps {
@@ -60,7 +61,16 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       </HeroSection>
 
       {/* Contenu client avec filtres et formations */}
-      <CategoryPageClient category={category} formations={formations} />
+      <Suspense
+        fallback={
+          <div className="px-5 lg:px-[120px] py-[80px] text-center">
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p className="text-gray-600">Chargement des filtres...</p>
+          </div>
+        }
+      >
+        <CategoryPageClient category={category} formations={formations} />
+      </Suspense>
 
       <Top10Formations formations={topFormations} />
 

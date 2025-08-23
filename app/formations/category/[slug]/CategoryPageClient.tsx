@@ -2,13 +2,12 @@
 
 import Button from "@/components/UI/Button";
 import FormationCard from "@/components/UI/FormationCard";
-import FormationFilters, {
-  FilterState,
-} from "@/components/UI/FormationFilters";
+import FormationFilters from "@/components/UI/FormationFilters";
+import { useFilterSync } from "@/hooks/useFilterSync";
 import { Category } from "@/types/category";
 import { FormationCardData } from "@/types/formation";
 import { filterFormations } from "@/utils/formationFilters";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 interface CategoryPageClientProps {
   category: Category;
@@ -19,27 +18,20 @@ export default function CategoryPageClient({
   category,
   formations,
 }: CategoryPageClientProps) {
-  const [filters, setFilters] = useState<FilterState>({
-    search: "",
-    duration: "",
-    location: "",
-  });
+  const { filters, updateFilters, resetFilters, hasActiveFilters } =
+    useFilterSync();
 
   // Filtrer les formations selon les critères
   const filteredFormations = useMemo(() => {
     return filterFormations(formations, filters);
   }, [formations, filters]);
 
-  const handleFilter = (newFilters: FilterState) => {
-    setFilters(newFilters);
-  };
-
   return (
     <>
       {/* Système de filtrage */}
       <section className="px-5 lg:px-[120px] py-[80px] relative z-10">
         <div className="max-w-7xl mx-auto">
-          <FormationFilters onFilter={handleFilter} initialFilters={filters} />
+          <FormationFilters onFilter={updateFilters} initialFilters={filters} />
         </div>
       </section>
 
@@ -103,12 +95,7 @@ export default function CategoryPageClient({
                     </>
                   ) : (
                     <>
-                      <Button
-                        onClick={() =>
-                          setFilters({ search: "", duration: "", location: "" })
-                        }
-                        variant="secondary"
-                      >
+                      <Button onClick={resetFilters} variant="secondary">
                         Réinitialiser les filtres
                       </Button>
                       <Button href="/formations" variant="primary">

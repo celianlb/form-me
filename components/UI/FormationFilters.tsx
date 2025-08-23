@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { durationOptions, locationOptions } from "@/utils/filterConstants";
+import { useEffect, useState } from "react";
 import Button from "./Button";
-import Dropdown, { SelectOption } from "./Dropdown";
+import Dropdown from "./Dropdown";
 import SearchInput from "./SearchInput";
 
 export interface FilterState {
@@ -16,20 +17,6 @@ interface FormationFiltersProps {
   initialFilters?: Partial<FilterState>;
 }
 
-const durationOptions: SelectOption[] = [
-  { value: "", label: "Toutes les durées" },
-  { value: "1", label: "1 jour" },
-  { value: "2", label: "2 jours" },
-  { value: "3", label: "3 jours" },
-  { value: "3+", label: "3 jours +" },
-];
-
-const locationOptions: SelectOption[] = [
-  { value: "", label: "Tous les lieux" },
-  { value: "center", label: "Sur site" },
-  { value: "elearning", label: "E-learning" },
-];
-
 export default function FormationFilters({
   onFilter,
   initialFilters = {},
@@ -40,16 +27,31 @@ export default function FormationFilters({
     location: initialFilters.location || "",
   });
 
+  // Synchroniser avec les filtres externes
+  useEffect(() => {
+    setFilters({
+      search: initialFilters.search || "",
+      duration: initialFilters.duration || "",
+      location: initialFilters.location || "",
+    });
+  }, [initialFilters]);
+
   const handleSearchChange = (value: string) => {
-    setFilters((prev) => ({ ...prev, search: value }));
+    const newFilters = { ...filters, search: value };
+    setFilters(newFilters);
+    onFilter(newFilters);
   };
 
   const handleDurationChange = (value: string) => {
-    setFilters((prev) => ({ ...prev, duration: value }));
+    const newFilters = { ...filters, duration: value };
+    setFilters(newFilters);
+    onFilter(newFilters);
   };
 
   const handleLocationChange = (value: string) => {
-    setFilters((prev) => ({ ...prev, location: value }));
+    const newFilters = { ...filters, location: value };
+    setFilters(newFilters);
+    onFilter(newFilters);
   };
 
   const handleFilter = () => {
