@@ -2,6 +2,7 @@
 
 import Button from "@/components/UI/Button";
 import { getSession, signIn } from "next-auth/react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
@@ -52,9 +53,16 @@ export default function SignInClient() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-platinium/20 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
+          <Image
+            src={"/nous-rejoindre/Account.svg"}
+            width={48}
+            height={48}
+            alt="account"
+            className="mx-auto"
+          />
           <h2 className="mt-6 text-center text-3xl font-satoshi font-bold text-darkBlue">
             Connexion à votre compte
           </h2>
