@@ -17,55 +17,55 @@ export default function Footer() {
         <div className="flex flex-col gap-2">
           <Link
             className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
-            href={"/formation/caces-&-autorisation-conduite"}
+            href={"/formation/category/caces-&-autorisation-conduite"}
           >
             Formations CACES® et autorisation de conduite
           </Link>
           <Link
             className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
-            href={"/formation/aipr"}
+            href={"/formation/category/aipr"}
           >
             Formations AIPR
           </Link>
           <Link
             className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
-            href={"/formation/gestes-&-postures"}
+            href={"/formation/category/gestes-&-postures"}
           >
             Formations Gestes & postures
           </Link>
           <Link
             className="font-satoshi text-white text-[16px] font-medium hover:text-primary transition-colors duration-300"
-            href={"/formation/habilitations-electriques"}
+            href={"/formation/category/habilitations-electriques"}
           >
             Formations Habilitations électriques
           </Link>
           <Link
             className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
-            href={"/formation/travaux-hauteurs-&-echafaudage"}
+            href={"/formation/category/travaux-hauteurs-&-echafaudage"}
           >
             Formations Travaux en hauteurs & échafaudages
           </Link>
           <Link
             className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
-            href={"/formation/incendie-&-evacuation"}
+            href={"/formation/category/incendie-&-evacuation"}
           >
             Formations Incendie & évacuation
           </Link>
           <Link
             className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
-            href={"/formation/elingage"}
+            href={"/formation/category/elingage"}
           >
             Formations Elingage
           </Link>
           <Link
             className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
-            href={"/formation/atex"}
+            href={"/formation/category/atex"}
           >
             Formations ATEX
           </Link>
           <Link
             className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
-            href={"/formation/sauveteurs-secouristes-au-travail"}
+            href={"/formation/category/sauveteurs-secouristes-au-travail"}
           >
             Formations Sauveteurs et secouristes au travail (SST)
           </Link>
@@ -73,13 +73,13 @@ export default function Footer() {
         <div className="flex flex-col gap-2">
           <Link
             className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
-            href={"/formation/nous-rejoindre"}
+            href={"/formation/category/nous-rejoindre"}
           >
             Nous rejoindre
           </Link>
           <Link
             className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
-            href={"/formation/nous-rejoindre"}
+            href={"/formation/category/nous-rejoindre"}
           >
             Nos partenaires
           </Link>
