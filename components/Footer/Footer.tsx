@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
@@ -72,16 +73,17 @@ export default function Footer() {
         </div>
         <div className="flex flex-col gap-2">
           <Link
-            className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
-            href={"/formation/category/nous-rejoindre"}
+            className="font-satoshia text-center flex gap-2 bg-white p-3 rounded-full text-grayBlue text-[16px] font-medium hover:text-primary transition-all duration-300 hover:shadow-[0px_4px_10px_rgba(255,255,255,0.3)] "
+            href={"/nous-rejoindre"}
           >
+            <Image
+              src={"/Connect.svg"}
+              width={24}
+              height={24}
+              alt="account"
+              className="inline-block mr-2"
+            />
             Nous rejoindre
-          </Link>
-          <Link
-            className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
-            href={"/formation/category/nous-rejoindre"}
-          >
-            Nos partenaires
           </Link>
         </div>
       </div>
