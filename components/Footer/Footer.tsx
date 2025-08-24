@@ -101,7 +101,7 @@ export default function Footer() {
           </Link>
           <p className="text-white">-</p>
           <Link
-            href={"/politiques-de-confidentialité"}
+            href={"/politiques-de-confidentialite"}
             className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
           >
             Politique de confidentialité
