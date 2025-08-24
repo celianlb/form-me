@@ -54,7 +54,10 @@ export async function GET() {
       trainingDate: membership.group.trainingDate,
       training: {
         title: membership.group.training.title,
-        supports: membership.group.training.supports,
+        supports: membership.group.training.supports.map((support) => ({
+          ...support,
+          fileSize: support.fileSize ? Number(support.fileSize) : null,
+        })),
       },
     }));
 

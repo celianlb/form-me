@@ -1,7 +1,23 @@
 "use client";
 
 import Button from "@/components/UI/Button";
+import FileUpload from "@/components/UI/FileUpload";
+import { 
+  FileText, 
+  Plus, 
+  Download, 
+  Edit2, 
+  Trash2, 
+  FolderOpen,
+  Save,
+  X,
+  Presentation,
+  Video,
+  Link as LinkIcon,
+  File
+} from "lucide-react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
@@ -44,6 +60,7 @@ export default function GroupSupportsPage() {
     fileUrl: "",
     fileSize: "",
   });
+  const [uploadMethod, setUploadMethod] = useState<"upload" | "url">("upload");
 
   const fetchGroupDetail = useCallback(async () => {
     try {
@@ -93,19 +110,61 @@ export default function GroupSupportsPage() {
       fileUrl: "",
       fileSize: "",
     });
+    setUploadMethod("upload");
     setShowCreateForm(false);
     setEditingSupport(null);
+  };
+
+  const handleFileUploaded = (fileData: {
+    url: string;
+    size: number;
+    type: string;
+    originalName: string;
+  }) => {
+    setFormData(prev => ({
+      ...prev,
+      title: prev.title || fileData.originalName,
+      fileUrl: fileData.url,
+      fileSize: fileData.size.toString(),
+      type: fileData.type
+    }));
   };
 
   const handleCreateSupport = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validation côté client
+    if (!formData.title.trim()) {
+      alert("Le titre est requis");
+      return;
+    }
+
+    if (!formData.type) {
+      alert("Le type de fichier est requis");
+      return;
+    }
+
+    if (!formData.fileUrl.trim()) {
+      alert("Veuillez d'abord uploader un fichier ou saisir une URL");
+      return;
+    }
+
+    console.log("Group data:", group); // Debug
+    console.log("Training ID:", group?.training?.id); // Debug
+    
+    if (!group?.training?.id) {
+      alert("Formation non trouvée");
+      return;
+    }
+
     try {
       const payload = {
         ...formData,
-        trainingId: group?.training.id,
+        trainingId: group.training.id,
         fileSize: formData.fileSize ? parseInt(formData.fileSize) : undefined,
       };
+
+      console.log("Payload envoyé:", payload); // Debug
 
       const response = await fetch("/api/admin/supports", {
         method: "POST",
@@ -138,6 +197,8 @@ export default function GroupSupportsPage() {
       fileUrl: support.fileUrl,
       fileSize: support.fileSize?.toString() || "",
     });
+    // Si le fichier est hébergé sur Cloudinary, on peut utiliser l'upload, sinon URL
+    setUploadMethod(support.fileUrl.includes('cloudinary.com') ? "upload" : "url");
     setShowCreateForm(true);
   };
 
@@ -206,22 +267,21 @@ export default function GroupSupportsPage() {
   const getFileTypeIcon = (type: string) => {
     switch (type.toLowerCase()) {
       case "pdf":
-        return "📄";
-      case "ppt":
-      case "pptx":
-        return "📊";
       case "doc":
       case "docx":
-        return "📝";
+        return FileText;
+      case "ppt":
+      case "pptx":
+        return Presentation;
       case "xls":
       case "xlsx":
-        return "📈";
+        return FileText;
       case "video":
-        return "🎥";
+        return Video;
       case "link":
-        return "🔗";
+        return LinkIcon;
       default:
-        return "📁";
+        return File;
     }
   };
 
@@ -260,11 +320,11 @@ export default function GroupSupportsPage() {
   }
 
   return (
-    <div className="mt-32 bg-gray-50">
+    <div className="mt-32 px-[48px] md:px-[120px]">
       {/* Header */}
-      <div className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+      <div className="">
+        <div>
+          <div className="flex flex-col md:flex-row justify-between gap-4 items-start md:items-center py-6">
             <div>
               <h1 className="text-3xl font-satoshi font-bold text-darkBlue">
                 Supports - {group.name}
@@ -284,9 +344,10 @@ export default function GroupSupportsPage() {
               </Button>
               <Button
                 onClick={() => setShowCreateForm(!showCreateForm)}
-                variant="secondary"
+                variant="primary"
               >
-                + Ajouter un support
+                <Plus className="w-4 h-4 mr-2" />
+                Ajouter un support
               </Button>
             </div>
           </div>
@@ -294,212 +355,300 @@ export default function GroupSupportsPage() {
       </div>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-6xl mx-auto py-8">
         {/* Formulaire de création/édition */}
         {showCreateForm && (
-          <div className="bg-white rounded-xl shadow-sm border p-6 mb-8">
-            <h3 className="text-lg font-satoshi font-semibold text-darkBlue mb-4">
-              {editingSupport
-                ? "Modifier le support"
-                : "Ajouter un nouveau support"}
-            </h3>
+          <div className="bg-white rounded-2xl shadow-sm border border-primary/20 overflow-hidden mb-8">
+            {/* Header du formulaire */}
+            <div className="relative p-8 bg-gradient-to-r from-white to-primary/5 border-b border-b-grayBlue/20">
+              <Image
+                src="/formation/dot-pattern.svg"
+                width={150}
+                height={150}
+                alt=""
+                className="absolute top-0 right-0"
+              />
+              <h3 className="text-2xl font-satoshi font-bold text-darkBlue mb-2">
+                {editingSupport
+                  ? "Modifier le support"
+                  : "Ajouter un nouveau support"}
+              </h3>
+              <p className="text-gray-600">
+                {editingSupport 
+                  ? "Modifiez les informations du support"
+                  : "Ajoutez un nouveau support pour cette formation"
+                }
+              </p>
+            </div>
 
-            <form
-              onSubmit={
-                editingSupport ? handleUpdateSupport : handleCreateSupport
-              }
-              className="space-y-4"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label
-                    htmlFor="title"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
-                    Titre *
-                  </label>
-                  <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
+            <div className="p-8">
+              <form
+                onSubmit={
+                  editingSupport ? handleUpdateSupport : handleCreateSupport
+                }
+                className="space-y-8"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label
+                      htmlFor="title"
+                      className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
+                    >
+                      Titre *
+                    </label>
+                    <input
+                      type="text"
+                      id="title"
+                      name="title"
+                      value={formData.title}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi"
+                      placeholder="Ex: Guide de formation Excel"
+                    />
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="type"
+                      className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
+                    >
+                      Type *
+                    </label>
+                    <select
+                      id="type"
+                      name="type"
+                      value={formData.type}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi bg-white"
+                    >
+                      <option value="pdf">PDF</option>
+                      <option value="ppt">PowerPoint</option>
+                      <option value="pptx">PowerPoint (PPTX)</option>
+                      <option value="doc">Word</option>
+                      <option value="docx">Word (DOCX)</option>
+                      <option value="xls">Excel</option>
+                      <option value="xlsx">Excel (XLSX)</option>
+                      <option value="video">Vidéo</option>
+                      <option value="link">Lien</option>
+                      <option value="other">Autre</option>
+                    </select>
+                  </div>
                 </div>
 
+                {/* Méthode d'ajout du fichier */}
                 <div>
-                  <label
-                    htmlFor="type"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
-                    Type *
+                  <label className="block text-sm font-satoshi font-medium text-darkBlue mb-4">
+                    Méthode d&apos;ajout du fichier *
                   </label>
-                  <select
-                    id="type"
-                    name="type"
-                    value={formData.type}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  >
-                    <option value="pdf">PDF</option>
-                    <option value="ppt">PowerPoint</option>
-                    <option value="pptx">PowerPoint (PPTX)</option>
-                    <option value="doc">Word</option>
-                    <option value="docx">Word (DOCX)</option>
-                    <option value="xls">Excel</option>
-                    <option value="xlsx">Excel (XLSX)</option>
-                    <option value="video">Vidéo</option>
-                    <option value="link">Lien</option>
-                    <option value="other">Autre</option>
-                  </select>
-                </div>
-              </div>
+                  <div className="flex space-x-4 mb-6">
+                    <button
+                      type="button"
+                      onClick={() => setUploadMethod("upload")}
+                      className={`flex-1 px-4 py-3 rounded-xl border-2 text-sm font-satoshi font-medium transition-colors ${
+                        uploadMethod === "upload"
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-gray-200 text-gray-700 hover:border-gray-300"
+                      }`}
+                    >
+                      📤 Upload fichier
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setUploadMethod("url")}
+                      className={`flex-1 px-4 py-3 rounded-xl border-2 text-sm font-satoshi font-medium transition-colors ${
+                        uploadMethod === "url"
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-gray-200 text-gray-700 hover:border-gray-300"
+                      }`}
+                    >
+                      🔗 URL externe
+                    </button>
+                  </div>
 
-              <div>
-                <label
-                  htmlFor="fileUrl"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  URL du fichier *
-                </label>
-                <input
-                  type="url"
-                  id="fileUrl"
-                  name="fileUrl"
-                  value={formData.fileUrl}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="https://example.com/fichier.pdf"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label
-                    htmlFor="description"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
-                    Description
-                  </label>
-                  <textarea
-                    id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
+                  {uploadMethod === "upload" ? (
+                    <div>
+                      <label className="block text-sm font-satoshi font-medium text-darkBlue mb-3">
+                        Fichier à uploader *
+                      </label>
+                      <FileUpload onFileUploaded={handleFileUploaded} />
+                    </div>
+                  ) : (
+                    <div>
+                      <label
+                        htmlFor="fileUrl"
+                        className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
+                      >
+                        URL du fichier *
+                      </label>
+                      <input
+                        type="url"
+                        id="fileUrl"
+                        name="fileUrl"
+                        value={formData.fileUrl}
+                        onChange={handleInputChange}
+                        required={uploadMethod === "url"}
+                        className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi"
+                        placeholder="https://example.com/fichier.pdf"
+                      />
+                    </div>
+                  )}
                 </div>
 
-                <div>
-                  <label
-                    htmlFor="fileSize"
-                    className="block text-sm font-medium text-gray-700 mb-2"
-                  >
-                    Taille du fichier (en bytes)
-                  </label>
-                  <input
-                    type="number"
-                    id="fileSize"
-                    name="fileSize"
-                    value={formData.fileSize}
-                    onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-              </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label
+                      htmlFor="description"
+                      className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
+                    >
+                      Description
+                    </label>
+                    <textarea
+                      id="description"
+                      name="description"
+                      value={formData.description}
+                      onChange={handleInputChange}
+                      rows={4}
+                      className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi resize-none"
+                      placeholder="Description du support..."
+                    />
+                  </div>
 
-              <div className="flex justify-end space-x-3 pt-4">
-                <Button type="button" onClick={resetForm} variant="primary">
-                  Annuler
-                </Button>
-                <Button type="submit" variant="secondary">
-                  {editingSupport ? "Modifier" : "Créer"}
-                </Button>
-              </div>
-            </form>
+                  <div>
+                    <label
+                      htmlFor="fileSize"
+                      className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
+                    >
+                      Taille du fichier (en bytes)
+                    </label>
+                    <input
+                      type="number"
+                      id="fileSize"
+                      name="fileSize"
+                      value={formData.fileSize}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi"
+                      placeholder="Ex: 2048000"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-end space-x-4 pt-6 border-t">
+                  <Button type="button" onClick={resetForm} variant="outline">
+                    <X className="w-4 h-4 mr-2" />
+                    Annuler
+                  </Button>
+                  <Button type="submit" variant="primary">
+                    <Save className="w-4 h-4 mr-2" />
+                    {editingSupport ? "Enregistrer les modifications" : "Créer le support"}
+                  </Button>
+                </div>
+              </form>
+            </div>
           </div>
         )}
 
         {/* Liste des supports */}
-        <div className="bg-white rounded-xl shadow-sm border">
-          <div className="p-6 border-b">
-            <h3 className="text-lg font-satoshi font-semibold text-darkBlue">
-              Supports disponibles ({group.training.supports.length})
-            </h3>
-          </div>
-          <div className="p-6">
-            {group.training.supports.length === 0 ? (
-              <div className="text-center py-8">
-                <div className="text-6xl mb-4">📁</div>
-                <p className="text-gray-500">Aucun support disponible</p>
+        <div className="bg-white rounded-2xl shadow-sm border border-primary/20">
+          <div className="p-6 border-b border-grayBlue/20">
+            <div className="flex items-center justify-between">
+              <h3 className="text-lg font-satoshi font-semibold text-darkBlue flex items-center">
+                <FolderOpen className="w-5 h-5 mr-2 text-primary" />
+                Supports disponibles ({group.training.supports.length})
+              </h3>
+              {group.training.supports.length > 0 && !showCreateForm && (
                 <Button
                   onClick={() => setShowCreateForm(true)}
                   variant="secondary"
-                  className="mt-4"
+                  className="text-sm"
                 >
+                  <Plus className="w-4 h-4 mr-1" />
+                  Ajouter
+                </Button>
+              )}
+            </div>
+          </div>
+          <div className="p-6">
+            {group.training.supports.length === 0 ? (
+              <div className="text-center py-12">
+                <FolderOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                <h4 className="text-lg font-satoshi font-medium text-darkBlue mb-2">
+                  Aucun support disponible
+                </h4>
+                <p className="text-gray-500 mb-6">
+                  Commencez par ajouter le premier support pour cette formation
+                </p>
+                <Button
+                  onClick={() => setShowCreateForm(true)}
+                  variant="primary"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
                   Ajouter le premier support
                 </Button>
               </div>
             ) : (
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {group.training.supports.map((support) => (
-                  <div
-                    key={support.id}
-                    className="border rounded-lg p-4 hover:shadow-md transition-shadow"
-                  >
-                    <div className="flex items-start space-x-3 mb-3">
-                      <span className="text-2xl flex-shrink-0">
-                        {getFileTypeIcon(support.type)}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-medium text-darkBlue truncate">
-                          {support.title}
-                        </h4>
-                        {support.description && (
-                          <p className="text-sm text-gray-600 mt-1">
-                            {support.description}
-                          </p>
-                        )}
-                        <div className="text-xs text-gray-500 mt-2">
-                          {support.type.toUpperCase()}
-                          {support.fileSize &&
-                            ` • ${formatFileSize(Number(support.fileSize))}`}
+              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {group.training.supports.map((support) => {
+                  const IconComponent = getFileTypeIcon(support.type);
+                  return (
+                    <div
+                      key={support.id}
+                      className="group border border-gray-100 rounded-xl p-6 hover:border-primary/30 hover:shadow-lg transition-all duration-200"
+                    >
+                      <div className="flex items-start space-x-4 mb-4">
+                        <div className="p-3 bg-primary/10 rounded-full">
+                          <IconComponent className="w-6 h-6 text-primary" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-satoshi font-semibold text-darkBlue truncate mb-1">
+                            {support.title}
+                          </h4>
+                          <div className="text-xs font-satoshi text-grayBlue bg-gray-50 px-2 py-1 rounded-md inline-block">
+                            {support.type.toUpperCase()}
+                            {support.fileSize &&
+                              ` • ${formatFileSize(Number(support.fileSize))}`}
+                          </div>
+                        </div>
+                      </div>
+
+                      {support.description && (
+                        <p className="text-sm font-satoshi text-grayBlue mb-4 leading-relaxed">
+                          {support.description}
+                        </p>
+                      )}
+
+                      <div className="flex items-center justify-between pt-4 border-t border-gray-50">
+                        <a
+                          href={support.fileUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center text-sm font-satoshi font-medium text-primary hover:text-primary/80 transition-colors"
+                        >
+                          <Download className="w-4 h-4 mr-1" />
+                          {support.type === "link" ? "Ouvrir" : "Télécharger"}
+                        </a>
+
+                        <div className="flex space-x-2">
+                          <button
+                            onClick={() => handleEditSupport(support)}
+                            className="p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                            title="Modifier"
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteSupport(support.id)}
+                            className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            title="Supprimer"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
                         </div>
                       </div>
                     </div>
-
-                    <div className="flex justify-between items-center">
-                      <a
-                        href={support.fileUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm text-primary hover:underline"
-                      >
-                        {support.type === "link" ? "Ouvrir" : "Télécharger"}
-                      </a>
-
-                      <div className="flex space-x-2">
-                        <button
-                          onClick={() => handleEditSupport(support)}
-                          className="text-xs text-blue-600 hover:underline"
-                        >
-                          Modifier
-                        </button>
-                        <button
-                          onClick={() => handleDeleteSupport(support.id)}
-                          className="text-xs text-red-600 hover:underline"
-                        >
-                          Supprimer
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

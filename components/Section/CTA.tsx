@@ -22,9 +22,10 @@ export default function CTA() {
         </Button>
       </div>
       <div className="flex flex-col md:flex-row w-fit justify-between mx-auto gap-12">
-        <Stats number={"99%"} label="de satisfaction des apprenants" />
-        <Stats number={"29K+"} label="apprenants formés" />
-        <Stats number={"4990"} label="sessions de formations effectuées" />
+        <Stats number={"4,3/5"} label="de satisfaction des apprenants" />
+        <Stats number={"3K+"} label="apprenants formés" />
+        <Stats number={"20K+"} label="sessions de formations effectuées" />
+        <Stats number={"99,94%"} label="de taux de réussite des stagiaires" />
       </div>
       <Button className="block md:hidden" variant="secondary">
         Demander un devis

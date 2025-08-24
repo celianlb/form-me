@@ -83,16 +83,18 @@ export default function Header({ categories = [] }: HeaderProps) {
         isFormationsOpen ? "pb-8" : ""
       }`}
     >
-      <div className="flex items-center justify-between h-16">
-        {/* Logo */}
-        <Logo />
-
+      <div className="flex flex-row items-center justify-between h-16">
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-8">
           <Navigation
             isFormationsOpen={isFormationsOpen}
             setIsFormationsOpen={setIsFormationsOpen}
           />
+        </div>
+
+        {/* Logo */}
+        <div className="absolute left-1/2 transform -translate-x-1/2">
+          <Logo />
         </div>
 
         {/* Desktop Buttons */}

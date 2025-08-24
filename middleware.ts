@@ -31,7 +31,7 @@ export default withAuth(
     callbacks: {
       authorized: ({ token, req }) => {
         const { pathname } = req.nextUrl;
-        
+
         // Pages publiques - toujours autorisées
         if (
           pathname === "/" ||
@@ -42,10 +42,13 @@ export default withAuth(
           pathname.startsWith("/auth/signin") ||
           pathname.startsWith("/auth/error") ||
           pathname.startsWith("/devis-&-contact") ||
-          pathname.startsWith("/valeurs-&-engagements") ||
+          pathname.startsWith("/certifications-qualite") ||
+          pathname.startsWith("/nous-rejoindre") ||
           pathname.startsWith("/a-propos") ||
           // Fichiers statiques - images, CSS, JS
-          pathname.match(/\.(png|jpg|jpeg|gif|svg|webp|ico|css|js|woff|woff2|ttf|eot)$/i) ||
+          pathname.match(
+            /\.(png|jpg|jpeg|gif|svg|webp|ico|css|js|woff|woff2|ttf|eot)$/i
+          ) ||
           // Dossiers publics
           pathname.startsWith("/images/") ||
           pathname.startsWith("/contact/") ||
@@ -66,6 +69,6 @@ export default withAuth(
 export const config = {
   matcher: [
     // Appliquer le middleware seulement aux pages, pas aux fichiers statiques
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
-  ]
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+  ],
 };

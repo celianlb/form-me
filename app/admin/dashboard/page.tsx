@@ -1,14 +1,7 @@
 "use client";
 
 import Button from "@/components/UI/Button";
-import {
-  Activity,
-  BookOpen,
-  Plus,
-  UserCircle,
-  UserPlus,
-  Users,
-} from "lucide-react";
+import { Activity, Plus, UserCircle, UserPlus, Users } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -103,16 +96,6 @@ export default function AdminDashboard() {
       iconColor: "text-emerald-600",
       route: "/admin/support-groups",
     },
-    {
-      title: "Formations",
-      description: "Gérer le contenu des formations",
-      icon: BookOpen,
-      count: stats.totalTrainings,
-      bgColor: "from-purple-50 to-purple-100/50",
-      iconBg: "bg-purple-100",
-      iconColor: "text-purple-600",
-      route: "/admin/trainings",
-    },
   ];
 
   return (
@@ -158,7 +141,7 @@ export default function AdminDashboard() {
       {/* Content */}
       <div className="max-w-7xl mx-auto py-8">
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {adminCards.map((card, index) => (
             <div
               key={index}
@@ -171,10 +154,10 @@ export default function AdminDashboard() {
                   width={80}
                   height={80}
                   alt=""
-                  className="absolute top-0 right-0 opacity-30"
+                  className="absolute top-0 right-0"
                 />
                 <div className="flex items-center justify-between mb-4">
-                  <div className={`p-3 ${card.iconBg} rounded-xl`}>
+                  <div className={`rounded-xl`}>
                     <card.icon className={`w-6 h-6 ${card.iconColor}`} />
                   </div>
                   {card.count !== null && (

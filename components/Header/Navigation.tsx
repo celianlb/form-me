@@ -17,7 +17,7 @@ export default function Navigation({
       <div className="relative">
         <button
           onClick={() => setIsFormationsOpen(!isFormationsOpen)}
-          className="flex cursor-pointer items-center space-x-1 text-blackBlue hover:text-primary transition-colors font-satoshi font-medium"
+          className="flex cursor-pointer items-center space-x-1 text-grayBlue hover:text-primary transition-colors font-satoshi font-medium"
         >
           <span>Formations</span>
           <svg
@@ -38,18 +38,18 @@ export default function Navigation({
         </button>
       </div>
 
-      {/* Valeurs & Engagements */}
+      {/* Valeurs & Engagements 
       <Link
-        href="/valeurs-&-engagements"
+        href="/certifications-qualite"
         className="text-blackBlue hover:text-primary transition-colors font-satoshi font-medium"
       >
-        Valeurs & Engagements
-      </Link>
+        Certifications & Qualité
+      </Link>*/}
 
       {/* À propos */}
       <Link
         href="/nous-rejoindre"
-        className="text-blackBlue hover:text-primary transition-colors font-satoshi font-medium"
+        className="text-grayBlue hover:text-primary transition-colors font-satoshi font-medium"
       >
         Nous rejoindre
       </Link>

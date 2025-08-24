@@ -34,7 +34,9 @@ export default function CTADevis() {
           </div>
         </div>
 
-        <Button variant="primary">Demander un devis</Button>
+        <Button variant="primary" href="/devis-&-contact">
+          Demander un devis
+        </Button>
       </div>
     </section>
   );

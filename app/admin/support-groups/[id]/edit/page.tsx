@@ -1,7 +1,9 @@
 "use client";
 
 import Button from "@/components/UI/Button";
+import { ClipboardList, Save, Settings } from "lucide-react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
@@ -158,11 +160,11 @@ export default function EditSupportGroup() {
   }
 
   return (
-    <div className="mt-32 bg-gray-50">
+    <div className="mt-32 px-[48px] md:px-[120px]">
       {/* Header */}
-      <div className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
+      <div className="">
+        <div>
+          <div className="flex flex-col md:flex-row justify-between gap-4 items-start md:items-center py-6">
             <div>
               <h1 className="text-3xl font-satoshi font-bold text-darkBlue">
                 Modifier le groupe
@@ -182,143 +184,181 @@ export default function EditSupportGroup() {
       </div>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white rounded-xl shadow-sm border p-8">
-          {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
-              <p className="text-red-800">{error}</p>
-            </div>
-          )}
+      <div className="max-w-4xl mx-auto py-8">
+        <div className="bg-white rounded-2xl shadow-sm border border-primary/20 overflow-hidden">
+          {/* Header du formulaire */}
+          <div className="relative p-8 bg-gradient-to-r from-white to-primary/5 border-b border-b-grayBlue/20">
+            <Image
+              src="/formation/dot-pattern.svg"
+              width={150}
+              height={150}
+              alt=""
+              className="absolute top-0 right-0"
+            />
+            <h2 className="text-2xl font-satoshi font-bold text-darkBlue mb-2">
+              Modification du Groupe
+            </h2>
+            <p className="text-gray-600">
+              Modifiez les informations du groupe de support
+            </p>
+          </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Nom du groupe */}
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
-              >
-                Nom du groupe *
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleInputChange}
-                required
-                className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi"
-                placeholder="Ex: Formation Excel - Groupe A"
-              />
-            </div>
-
-            {/* Nom de l'entreprise */}
-            <div>
-              <label
-                htmlFor="companyName"
-                className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
-              >
-                Nom de l&apos;entreprise *
-              </label>
-              <input
-                type="text"
-                id="companyName"
-                name="companyName"
-                value={formData.companyName}
-                onChange={handleInputChange}
-                required
-                className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi"
-                placeholder="Ex: ACME Corp"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Date de formation */}
-              <div>
-                <label
-                  htmlFor="trainingDate"
-                  className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
-                >
-                  Date de la formation *
-                </label>
-                <input
-                  type="date"
-                  id="trainingDate"
-                  name="trainingDate"
-                  value={formData.trainingDate}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi"
-                />
+          <div className="p-8">
+            {error && (
+              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+                <p className="text-red-800">{error}</p>
               </div>
+            )}
 
-              {/* Formation */}
-              <div>
-                <label
-                  htmlFor="trainingId"
-                  className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
-                >
-                  Formation *
-                </label>
-                <select
-                  id="trainingId"
-                  name="trainingId"
-                  value={formData.trainingId}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi bg-white"
-                >
-                  <option value="">Sélectionner une formation</option>
-                  {trainings.map((training) => (
-                    <option key={training.id} value={training.id}>
-                      {training.title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Section Informations générales */}
+              <div className="space-y-6">
+                <h3 className="text-lg font-satoshi font-semibold text-darkBlue flex items-center">
+                  <ClipboardList className="w-5 h-5 mr-2 text-primary" />
+                  Informations générales
+                </h3>
 
-            {/* Statut actif/inactif */}
-            <div>
-              <label className="flex items-center space-x-3">
-                <input
-                  type="checkbox"
-                  name="isActive"
-                  checked={formData.isActive}
-                  onChange={handleInputChange}
-                  className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
-                />
-                <span className="text-sm font-satoshi font-medium text-darkBlue">
-                  Groupe actif
-                </span>
-              </label>
-              <p className="text-sm text-gray-600 mt-1">
-                Les groupes inactifs ne sont plus accessibles aux utilisateurs
-              </p>
-            </div>
+                {/* Nom du groupe */}
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
+                  >
+                    Nom du groupe *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi"
+                    placeholder="Ex: Formation Excel - Groupe A"
+                  />
+                </div>
 
-            {/* Boutons */}
-            <div className="flex justify-end space-x-4 pt-6">
-              <Button
-                type="button"
-                onClick={() =>
-                  router.push(`/admin/support-groups/${params.id}`)
-                }
-                variant="outline"
-              >
-                Annuler
-              </Button>
-              <Button type="submit" variant="secondary" disabled={isSubmitting}>
-                {isSubmitting ? (
-                  <div className="flex items-center space-x-2">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span>Modification...</span>
+                {/* Nom de l'entreprise */}
+                <div>
+                  <label
+                    htmlFor="companyName"
+                    className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
+                  >
+                    Nom de l&apos;entreprise *
+                  </label>
+                  <input
+                    type="text"
+                    id="companyName"
+                    name="companyName"
+                    value={formData.companyName}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi"
+                    placeholder="Ex: ACME Corp"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Date de formation */}
+                  <div>
+                    <label
+                      htmlFor="trainingDate"
+                      className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
+                    >
+                      Date de la formation *
+                    </label>
+                    <input
+                      type="date"
+                      id="trainingDate"
+                      name="trainingDate"
+                      value={formData.trainingDate}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi"
+                    />
                   </div>
-                ) : (
-                  "Modifier le groupe"
-                )}
-              </Button>
-            </div>
-          </form>
+
+                  {/* Formation */}
+                  <div>
+                    <label
+                      htmlFor="trainingId"
+                      className="block text-sm font-satoshi font-medium text-darkBlue mb-2"
+                    >
+                      Formation *
+                    </label>
+                    <select
+                      id="trainingId"
+                      name="trainingId"
+                      value={formData.trainingId}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi bg-white"
+                    >
+                      <option value="">Sélectionner une formation</option>
+                      {trainings.map((training) => (
+                        <option key={training.id} value={training.id}>
+                          {training.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Section Configuration */}
+              <div className="space-y-6">
+                <h3 className="text-lg font-satoshi font-semibold text-darkBlue flex items-center">
+                  <Settings className="w-5 h-5 mr-2 text-primary" />
+                  Configuration
+                </h3>
+
+                {/* Statut actif/inactif */}
+                <div>
+                  <label className="flex items-center space-x-3">
+                    <input
+                      type="checkbox"
+                      name="isActive"
+                      checked={formData.isActive}
+                      onChange={handleInputChange}
+                      className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                    />
+                    <span className="text-sm font-satoshi font-medium text-darkBlue">
+                      Groupe actif
+                    </span>
+                  </label>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Les groupes inactifs ne sont plus accessibles aux utilisateurs
+                  </p>
+                </div>
+              </div>
+
+              {/* Boutons */}
+              <div className="flex justify-end space-x-4 pt-6 border-t">
+                <Button
+                  type="button"
+                  onClick={() =>
+                    router.push(`/admin/support-groups/${params.id}`)
+                  }
+                  variant="outline"
+                >
+                  Annuler
+                </Button>
+                <Button type="submit" variant="primary" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Modification...</span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center space-x-2">
+                      <Save className="w-4 h-4" />
+                      <span>Enregistrer les modifications</span>
+                    </div>
+                  )}
+                </Button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>

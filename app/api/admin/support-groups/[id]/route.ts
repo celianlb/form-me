@@ -185,6 +185,7 @@ export async function GET(
       include: {
         training: {
           select: {
+            id: true,
             title: true,
             supports: {
               where: { isActive: true },

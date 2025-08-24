@@ -67,7 +67,7 @@ export default async function DevisContactPage() {
                     height={40}
                     alt="mail svg"
                   />
-                  <p className="font-satoshi text-darkBlue">
+                  <p className="font-satoshi font-semibold text-darkBlue">
                     form.me@gmail.com
                   </p>
                 </div>
@@ -78,7 +78,9 @@ export default async function DevisContactPage() {
                     height={40}
                     alt="phone svg"
                   />
-                  <p className="font-satoshi text-darkBlue">+33766763911</p>
+                  <p className="font-satoshi font-semibold text-darkBlue">
+                    +33 7 66 76 39 11
+                  </p>
                 </div>
               </div>
               <div className="text-sm text-grayBlue font-satoshi">
