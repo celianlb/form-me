@@ -20,6 +20,8 @@ export default function DevisForm({ formation }: DevisFormProps) {
     ville: "",
     codePostal: "",
     message: "",
+    consentementMarketing: false,
+    consentementPolitique: false,
   });
   
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -44,10 +46,12 @@ export default function DevisForm({ formation }: DevisFormProps) {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+    const checked = type === 'checkbox' ? (e.target as HTMLInputElement).checked : undefined;
+    
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -87,6 +91,8 @@ export default function DevisForm({ formation }: DevisFormProps) {
           ville: "",
           codePostal: "",
           message: "",
+          consentementMarketing: false,
+          consentementPolitique: false,
         });
       } else {
         setSubmitStatus({
@@ -325,6 +331,56 @@ export default function DevisForm({ formation }: DevisFormProps) {
             placeholder="Ex: Plus de 10 apprenants, besoins particuliers..."
             className="w-full px-4 py-3 border border-grayBlue/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-satoshi resize-none"
           />
+        </div>
+
+        {/* Checkboxes de consentement */}
+        <div className="space-y-4 pt-4 border-t border-grayBlue/20">
+          <div className="flex items-start space-x-3">
+            <input
+              type="checkbox"
+              id="consentementPolitique"
+              name="consentementPolitique"
+              checked={formData.consentementPolitique}
+              onChange={handleInputChange}
+              required
+              className="mt-1 w-4 h-4 text-primary bg-white border-grayBlue/30 rounded focus:ring-primary focus:ring-2 focus:ring-offset-0"
+            />
+            <label
+              htmlFor="consentementPolitique"
+              className="text-sm font-satoshi text-darkBlue leading-relaxed"
+            >
+              J'ai lu et j'accepte la{" "}
+              <a
+                href="/politiques-de-confidentialite"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-primary hover:underline font-medium"
+              >
+                politique de confidentialité
+              </a>{" "}
+              * <span className="text-grayBlue/70">(Obligatoire pour traiter votre demande)</span>
+            </label>
+          </div>
+
+          <div className="flex items-start space-x-3">
+            <input
+              type="checkbox"
+              id="consentementMarketing"
+              name="consentementMarketing"
+              checked={formData.consentementMarketing}
+              onChange={handleInputChange}
+              className="mt-1 w-4 h-4 text-primary bg-white border-grayBlue/30 rounded focus:ring-primary focus:ring-2 focus:ring-offset-0"
+            />
+            <label
+              htmlFor="consentementMarketing"
+              className="text-sm font-satoshi text-darkBlue leading-relaxed"
+            >
+              J'accepte de recevoir des informations sur les formations et actualités de Form.Me par e-mail
+              <span className="text-grayBlue/70 block mt-1">
+                (Facultatif - Vous pouvez vous désabonner à tout moment)
+              </span>
+            </label>
+          </div>
         </div>
 
         {/* Messages de statut */}
