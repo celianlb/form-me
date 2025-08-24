@@ -1,15 +1,18 @@
+import Badge from "@/components/UI/Badge";
+import Heading from "@/components/UI/Heading";
+
 export default function MentionsLegales() {
   return (
     <div className="min-h-screen  pt-32 pb-16">
       <div className="max-w-4xl mx-auto px-6 lg:px-8">
         <div className=" p-8 lg:p-12">
-          <h1 className="text-4xl lg:text-5xl font-sora font-bold text-primary mb-8">
-            Mentions Légales
-          </h1>
+          <Heading level={1} className="mb-16 mx-auto w-full text-center">
+            <Badge className="px-12 w-full">Mentions légales</Badge>
+          </Heading>
 
           <div className="space-y-8 font-satoshi text-grayBlue">
             <section>
-              <h2 className="text-2xl font-semibold text-primary mb-4">
+              <h2 className="text-2xl font-sora font-bold tracking-tight text-primary mb-4">
                 Éditeur du site
               </h2>
               <div className="space-y-2">
@@ -42,7 +45,7 @@ export default function MentionsLegales() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-primary mb-4">
+              <h2 className="text-2xl font-sora font-bold tracking-tight text-primary mb-4">
                 Contact
               </h2>
               <div className="space-y-2">
@@ -59,7 +62,7 @@ export default function MentionsLegales() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-primary mb-4">
+              <h2 className="text-2xl font-sora font-bold tracking-tight text-primary mb-4">
                 Hébergement
               </h2>
               <div className="space-y-2">
@@ -74,7 +77,7 @@ export default function MentionsLegales() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-primary mb-4">
+              <h2 className="text-2xl font-sora font-bold tracking-tight text-primary mb-4">
                 Propriété intellectuelle
               </h2>
               <p className="leading-relaxed">
@@ -92,7 +95,7 @@ export default function MentionsLegales() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-primary mb-4">
+              <h2 className="text-2xl font-sora font-bold tracking-tight text-primary mb-4">
                 Responsabilité
               </h2>
               <p className="leading-relaxed">
@@ -110,7 +113,7 @@ export default function MentionsLegales() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-primary mb-4">
+              <h2 className="text-2xl font-sora font-bold tracking-tight text-primary mb-4">
                 Liens hypertextes
               </h2>
               <p className="leading-relaxed">
@@ -130,7 +133,7 @@ export default function MentionsLegales() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-primary mb-4">
+              <h2 className="text-2xl font-sora font-bold tracking-tight text-primary mb-4">
                 Protection des données personnelles
               </h2>
               <p className="leading-relaxed">
@@ -148,7 +151,7 @@ export default function MentionsLegales() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-primary mb-4">
+              <h2 className="text-2xl font-sora font-bold tracking-tight text-primary mb-4">
                 Cookies
               </h2>
               <p className="leading-relaxed">
@@ -165,7 +168,7 @@ export default function MentionsLegales() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-primary mb-4">
+              <h2 className="text-2xl font-sora font-bold tracking-tight text-primary mb-4">
                 Droit applicable
               </h2>
               <p className="leading-relaxed">

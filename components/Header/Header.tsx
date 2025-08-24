@@ -3,6 +3,7 @@
 import Button from "@/components/UI/Button";
 import { CategoryWithCount } from "@/types/category";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -110,18 +111,13 @@ export default function Header({ categories = [] }: HeaderProps) {
                 className="flex cursor-pointer items-center space-x-2 px-3 py-2 rounded-full hover:bg-gray-100 transition-colors"
                 title="Menu utilisateur"
               >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 12C14.4862 12 16.5 9.98625 16.5 7.5C16.5 5.01375 14.4862 3 12 3C9.51375 3 7.5 5.01375 7.5 7.5C7.5 9.98625 9.51375 12 12 12ZM12 14.25C8.99625 14.25 3 15.7575 3 18.75V21H21V18.75C21 15.7575 15.0037 14.25 12 14.25Z"
-                    fill="#125EFF"
-                  />
-                </svg>
+                <Image
+                  src={"/Account.svg"}
+                  alt="User Avatar"
+                  width={32}
+                  height={32}
+                  className="rounded-full"
+                />
                 <span className="text-sm text-gray-700 font-medium">
                   {session.user.name || session.user.email}
                 </span>
