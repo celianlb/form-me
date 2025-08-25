@@ -1,7 +1,7 @@
+import { FormationCardData } from "@/types/formation";
 import Image from "next/image";
 import Button from "../../UI/Button";
 import FormationCard from "../../UI/FormationCard";
-import { FormationCardData } from "@/types/formation";
 
 interface BentoGridMobileProps {
   formations: FormationCardData[];
@@ -24,10 +24,7 @@ export default function BentoGridMobile({ formations }: BentoGridMobileProps) {
         </h3>
         <div className="flex flex-col gap-3 relative z-10">
           {formations.map((formation) => (
-            <FormationCard
-              key={formation.id}
-              formation={formation}
-            />
+            <FormationCard key={formation.id} formation={formation} />
           ))}
         </div>
       </div>
@@ -43,7 +40,9 @@ export default function BentoGridMobile({ formations }: BentoGridMobileProps) {
           height={95}
           alt="image pour les devis"
         />
-        <Button variant="secondary">Je souhaite un devis</Button>
+        <Button variant="secondary" href="/devis-&-contact">
+          Je souhaite un devis
+        </Button>
       </div>
 
       {/* Grid 2x2 pour les 3 autres divs */}

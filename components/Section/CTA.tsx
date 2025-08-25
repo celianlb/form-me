@@ -17,7 +17,11 @@ export default function CTA() {
     <section className="bg-[#DBE6FF]/20 border border-primary/10 p-6 md:p-12 flex flex-col gap-16 md:gap-20 mx-[40px] md:mx-[120px] rounded-[32px] md:rounded-[50px] my-[80px]">
       <div className="flex justify-between items-center">
         <Heading level={2}>Nous privilégions la qualité</Heading>
-        <Button className="hidden md:block" variant="secondary">
+        <Button
+          className="hidden md:block"
+          variant="secondary"
+          href="/devis-&-contact"
+        >
           Demander un devis
         </Button>
       </div>

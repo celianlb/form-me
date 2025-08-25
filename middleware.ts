@@ -45,6 +45,8 @@ export default withAuth(
           pathname.startsWith("/certifications-qualite") ||
           pathname.startsWith("/nous-rejoindre") ||
           pathname.startsWith("/a-propos") ||
+          pathname.startsWith("/politiques-de-confidentialite") ||
+          pathname.startsWith("/mentions-legales") ||
           // Fichiers statiques - images, CSS, JS
           pathname.match(
             /\.(png|jpg|jpeg|gif|svg|webp|ico|css|js|woff|woff2|ttf|eot)$/i

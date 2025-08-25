@@ -50,7 +50,9 @@ export default async function BentoGrid() {
                   height={118}
                   alt="image pour les devis"
                 />
-                <Button variant="secondary">Je souhaites un devis</Button>
+                <Button variant="secondary" href="/devis-&-contact">
+                  Je souhaites un devis
+                </Button>
               </div>
 
               {/* Troisième div */}

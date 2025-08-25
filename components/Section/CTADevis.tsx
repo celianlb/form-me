@@ -16,7 +16,7 @@ export default function CTADevis() {
         <div className="flex flex-col gap-4 md:flex-row justify-between">
           <div className="flex gap-2 items-center">
             <Image
-              src={"/contact/devis/mail.svg"}
+              src={"/contact/Devis/mail.svg"}
               width={40}
               height={40}
               alt="mail svg"
@@ -25,7 +25,7 @@ export default function CTADevis() {
           </div>
           <div className="flex gap-2 items-center">
             <Image
-              src={"/contact/devis/phone.svg"}
+              src={"/contact/Devis/phone.svg"}
               width={40}
               height={40}
               alt="mail svg"
