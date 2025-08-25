@@ -516,7 +516,7 @@ export default function DevisContactForm({
               htmlFor="consentementPolitique"
               className="text-sm font-satoshi text-darkBlue leading-relaxed"
             >
-              J'ai lu et j'accepte la{" "}
+              J&apos;ai lu et j&apos;accepte la{" "}
               <a
                 href="/politiques-de-confidentialite"
                 target="_blank"
@@ -542,7 +542,7 @@ export default function DevisContactForm({
               htmlFor="consentementMarketing"
               className="text-sm font-satoshi text-darkBlue leading-relaxed"
             >
-              J'accepte de recevoir des informations sur les formations et actualités de Form.Me par e-mail
+              J&apos;accepte de recevoir des informations sur les formations et actualités de Form.Me par e-mail
               <span className="text-grayBlue/70 block mt-1">
                 (Facultatif - Vous pouvez vous désabonner à tout moment)
               </span>

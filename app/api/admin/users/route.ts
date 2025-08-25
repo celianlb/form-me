@@ -194,10 +194,17 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Supprimer d'abord les relations
-    await prisma.supportGroupMember.deleteMany({
-      where: { userId: parseInt(userId) },
-    });
+    // Supprimer d'abord toutes les relations
+    await Promise.all([
+      // Supprimer les memberships dans les groupes de support
+      prisma.supportGroupMember.deleteMany({
+        where: { userId: parseInt(userId) },
+      }),
+      // Supprimer les tokens d'invitation liés à cet utilisateur
+      prisma.inviteToken.deleteMany({
+        where: { userId: parseInt(userId) },
+      }),
+    ]);
 
     // Puis supprimer l'utilisateur
     await prisma.user.delete({
