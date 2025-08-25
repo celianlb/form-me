@@ -47,6 +47,7 @@ export default withAuth(
           pathname.startsWith("/a-propos") ||
           pathname.startsWith("/politiques-de-confidentialite") ||
           pathname.startsWith("/mentions-legales") ||
+          pathname.startsWith("/devis-&-contact") ||
           // Fichiers statiques - images, CSS, JS
           pathname.match(
             /\.(png|jpg|jpeg|gif|svg|webp|ico|css|js|woff|woff2|ttf|eot)$/i

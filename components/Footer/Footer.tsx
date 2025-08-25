@@ -108,10 +108,10 @@ export default function Footer() {
           </Link>
           <p className="text-white">-</p>
           <Link
-            href={"/contact"}
+            href={"/devis-&-contact"}
             className="font-satoshi text-white text-[16px] font-medium hover:text-platinium transition-colors duration-300"
           >
-            Contact
+            Devis & Contact
           </Link>
         </div>
       </div>
