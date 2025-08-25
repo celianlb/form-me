@@ -71,7 +71,11 @@ export default function Top10Formations({ formations }: Top10FormationsProps) {
               développer vos compétences
             </p>
           </div>
-          <Button variant="secondary" className="w-fit">
+          <Button
+            variant="secondary"
+            className="w-fit"
+            href="https://form-me-inky.vercel.app/formations"
+          >
             Voir toutes les formations
           </Button>
         </div>
