@@ -205,13 +205,19 @@ export default function Header({ categories = [] }: HeaderProps) {
           <Button href="/devis-&-contact" variant="primary">
             Devis
           </Button>
-          <Image
-            src={"/whatsapp.svg"}
-            width={40}
-            height={40}
-            alt="whatsapp cta"
-            className="cursor-pointer rounded-full hover:shadow-[0px_0px_10px_rgba(50,255,53,1)] transition-all duration-300"
-          />
+          <Link
+            href={"https://wa.me/33766763911"}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              src={"/whatsapp.svg"}
+              width={40}
+              height={40}
+              alt="whatsapp cta"
+              className="cursor-pointer rounded-full hover:shadow-[0px_0px_10px_rgba(50,255,53,1)] transition-all duration-300"
+            />
+          </Link>
         </div>
 
         {/* Mobile Burger Menu */}
