@@ -12,7 +12,7 @@ interface HeadingProps {
 const getHeadingClasses = (level: HeadingLevel): string => {
   const sizeClasses = {
     1: "text-[32px] md:text-[48px] tracking-[-2px] md:tracking-[-4px]",
-    2: "text-[28px] md:text-[32px]",
+    2: "text-[28px] md:text-[32px] tracking-[-1.5px]",
     3: "text-[24px] md:text-[28px]",
     4: "text-[20px] md:text-[24px]",
     5: "text-[18px] md:text-[20px]",
