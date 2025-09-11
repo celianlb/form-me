@@ -7,9 +7,13 @@ export default function Footer() {
       <div className="flex flex-col md:flex-row justify-between gap-12 mb-16">
         <div>
           <Link href={"/"}>
-            <p className="font-sora font-bold text-4xl text-platinium">
-              Form.Me
-            </p>
+            <Image
+              src={"/logo/noBgColor.png"}
+              width={100}
+              height={100}
+              alt="Logo FormMe"
+              className="rounded-full mb-4"
+            />
           </Link>
           <p className="font-satoshi text-white text-[16px] max-w-[250px]">
             Des formations professionnelles pour la sécurité et la prévention.
