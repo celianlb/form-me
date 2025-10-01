@@ -15,6 +15,7 @@ const getCategoryIcon = (slug: string): string => {
     aipr: "/category/RadioTower.svg",
     "gestes-postures": "/category/StandingMan.svg",
     "caces-autorisation-conduite": "/category/Truck.svg",
+    "digital-business": "/category/Business.svg",
   };
 
   return iconMap[slug] || "/formation/picto/person.svg";

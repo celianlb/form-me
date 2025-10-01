@@ -963,6 +963,157 @@ const trainings: TrainingSeed[] = [
     evaluationMethods: "QCM + évaluation pratique par catégorie.",
     validationMethod: "CACES/Autorisation de conduite R482 (10 ans).",
   },
+
+  // 17) DSA – Digital Success Academy
+  {
+    categoryName: "Digital Business",
+    title: "DSA – Digital Success Academy",
+    shortDescription:
+      "Programme en ligne pour lancer et automatiser un business digital rentable.",
+    longDescription:
+      "Programme 100 % en ligne destiné à accompagner entrepreneurs, indépendants et créateurs dans le développement de leur activité digitale : revente de formations, création d’offres numériques et mise en place d’un business automatisé.",
+    durationDays: 56,
+    minParticipants: 1,
+    targetAudience:
+      "Entrepreneurs souhaitant développer des revenus en ligne; formateurs, coachs et consultants; personnes en reconversion vers le digital; indépendants et freelances voulant automatiser leurs ventes.",
+    objectives: [
+      "Comprendre les fondamentaux du business en ligne et du marketing digital.",
+      "Apprendre à revendre et distribuer des formations existantes.",
+      "Créer ses propres produits digitaux (guides, e-books, programmes en ligne).",
+      "Mettre en place un écosystème de vente automatisé (funnels, emailing, réseaux sociaux).",
+      "Développer une stratégie de visibilité sur les plateformes sociales et professionnelles.",
+      "Construire un revenu récurrent et scalable grâce aux outils digitaux.",
+    ],
+    modules: [
+      {
+        title: "Module 1 – Introduction au business digital",
+        order: 1,
+        type: "THEORETICAL",
+        content:
+          "- Panorama des opportunités en ligne\n- Modèles économiques : affiliation, revente, produits digitaux\n- Mindset et organisation de l’entrepreneur digital",
+      },
+      {
+        title: "Module 2 – Revente de formations et affiliation",
+        order: 2,
+        type: "THEORETICAL",
+        content:
+          "- Identifier des offres à revendre\n- Comprendre les systèmes d’affiliation\n- Construire une stratégie de distribution efficace",
+      },
+      {
+        title: "Module 3 – Création de produits digitaux",
+        order: 3,
+        type: "THEORETICAL",
+        content:
+          "- Définir une niche rentable\n- Concevoir un produit digital (e-book, formation vidéo, toolkit)\n- Structurer et valoriser son offre",
+      },
+      {
+        title: "Module 4 – Mise en place d’un écosystème automatisé",
+        order: 4,
+        type: "THEORETICAL",
+        content:
+          "- Introduction aux tunnels de vente\n- Email marketing et séquences automatisées\n- Pages de capture, de vente et paiement en ligne",
+      },
+      {
+        title: "Module 5 – Communication et visibilité",
+        order: 5,
+        type: "THEORETICAL",
+        content:
+          "- Développer sa présence sur les réseaux sociaux\n- Stratégie de contenu : posts, vidéos, lives\n- Notions de publicité payante (Facebook Ads, Google Ads)",
+      },
+      {
+        title: "Module 6 – Mise en pratique et passage à l’action",
+        order: 6,
+        type: "PRACTICAL",
+        content:
+          "- Lancer son premier produit ou offre digitale\n- Créer son propre tunnel de vente\n- Suivre les performances et optimiser",
+      },
+    ],
+    technicalMeans:
+      "Plateforme e-learning, vidéos, tutoriels, supports téléchargeables et communauté privée.",
+    teachingMeans:
+      "Formation 100 % en ligne mêlant vidéos, tutoriels, exercices guidés et coaching de groupe.",
+    evaluationMethods:
+      "Quiz de validation par module et projet final de lancement d’une offre digitale.",
+    validationMethod: "Attestation de réussite DSA.",
+    monitoringMethods:
+      "Suivi via la plateforme e-learning, quiz de progression et sessions de coaching collectif.",
+    priceExclTax: 597,
+    availableInCenter: false,
+    availableElearning: true,
+  },
+
+  // 18) Formation ONE
+  {
+    categoryName: "Digital Business",
+    title: "Formation ONE – École digitale finance & entrepreneuriat",
+    shortDescription:
+      "Parcours digital évolutif en éducation financière, business et entrepreneuriat.",
+    longDescription:
+      "École digitale modulable pour acquérir des compétences en finance, trading, business digital, immobilier et leadership. L’objectif est de permettre à chacun de progresser à son rythme et de lancer un projet entrepreneurial durable. Tarification : 299 € le premier mois, puis 169 €/mois avec possibilité de rendre l’abonnement gratuit selon les paliers atteints.",
+    durationDays: 90,
+    minParticipants: 1,
+    targetAudience:
+      "Tout public (débutants à experts); salariés, indépendants et entrepreneurs; personnes en reconversion professionnelle.",
+    objectives: [
+      "Développer ses connaissances en éducation financière et comprendre les mécanismes économiques.",
+      "Maîtriser les bases et stratégies avancées du trading et de l’investissement.",
+      "Apprendre à créer et vendre des produits digitaux et des offres e-commerce.",
+      "Développer son personal branding et monétiser ses réseaux sociaux.",
+      "Comprendre et pratiquer l’investissement immobilier.",
+      "Renforcer son leadership, son organisation et sa performance.",
+      "Construire une vision entrepreneuriale solide pour un projet personnel ou professionnel.",
+    ],
+    modules: [
+      {
+        title: "Module 1 – Éducation financière",
+        order: 1,
+        type: "THEORETICAL",
+        content:
+          "- Gestion budgétaire et patrimoine\n- Revenus actifs vs passifs\n- Compréhension du cashflow",
+      },
+      {
+        title: "Module 2 – Finance & trading",
+        order: 2,
+        type: "THEORETICAL",
+        content:
+          "- Introduction aux marchés financiers (bourse, forex, crypto)\n- Lecture de l’actualité économique et indicateurs clés\n- Gestion des risques",
+      },
+      {
+        title: "Module 3 – Business digital & e-commerce",
+        order: 3,
+        type: "THEORETICAL",
+        content:
+          "- Création et lancement d’un produit digital\n- Mise en place d’un shop e-commerce\n- Monétisation des réseaux sociaux et partenariats",
+      },
+      {
+        title: "Module 4 – Immobilier & gestion patrimoniale",
+        order: 4,
+        type: "THEORETICAL",
+        content:
+          "- Typologies d’investissements immobiliers\n- Fiscalité, financement et rénovation\n- Immobilier commercial et résidentiel",
+      },
+      {
+        title: "Module 5 – Leadership & mindset entrepreneurial",
+        order: 5,
+        type: "PRACTICAL",
+        content:
+          "- Communication et influence\n- Prise de décision, organisation stratégique\n- Habitudes de performance et travail en équipe",
+      },
+    ],
+    technicalMeans:
+      "Plateforme digitale, sessions live/replay, coaching one-to-one, supports multimédia et communauté d’apprenants.",
+    teachingMeans:
+      "Parcours 100 % digital combinant e-learning, sessions live, ateliers collectifs et coaching personnalisé.",
+    evaluationMethods:
+      "Paliers de progression avec validations à chaque étape et accompagnement continu.",
+    validationMethod:
+      "Reconnaissance progressive au sein de la communauté et attestation interne du parcours.",
+    monitoringMethods:
+      "Suivi personnalisé, coaching individuel et collectif, indicateurs de progression partagés.",
+    priceExclTax: 299,
+    availableInCenter: false,
+    availableElearning: true,
+  },
 ];
 
 /* -----------------------------
@@ -993,6 +1144,30 @@ async function getCategoryIdOrThrow(
   throw new Error(
     `Category "${wantedName}" not found in DB. Please ensure it matches exactly your Category.name.`
   );
+}
+
+async function ensureTrainingCategories(
+  idx: { byName: Map<string, number>; bySlug: Map<string, number> }
+) {
+  const names = new Set(trainings.map((t) => t.categoryName));
+  for (const name of names) {
+    const lowerName = name.toLowerCase();
+    if (idx.byName.has(lowerName)) continue;
+    const slug = slugify(name);
+    const slugKey = slug.toLowerCase();
+    const existingBySlug = idx.bySlug.get(slugKey);
+    if (existingBySlug) {
+      idx.byName.set(lowerName, existingBySlug);
+      continue;
+    }
+    const category = await prisma.category.upsert({
+      where: { slug },
+      update: { name },
+      create: { name, slug },
+    });
+    idx.byName.set(lowerName, category.id);
+    idx.bySlug.set(category.slug.toLowerCase(), category.id);
+  }
 }
 
 /* -----------------------------
@@ -1093,6 +1268,9 @@ async function upsertTrainingWithExistingCategory(
 async function main() {
   console.log("🌱 Loading categories from DB...");
   const idx = await loadCategoryIndex();
+
+  console.log("🌱 Ensuring categories...");
+  await ensureTrainingCategories(idx);
 
   console.log("🌱 Seeding trainings...");
   for (const t of trainings) {
