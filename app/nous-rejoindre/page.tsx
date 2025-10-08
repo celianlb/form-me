@@ -145,7 +145,7 @@ export default function NousRejoindre() {
                 </Heading>
                 <p className="text-grayBlue font-satoshi mb-6">
                   Intégrez notre réseau de partenaires et développez votre
-                  activité de formation.
+                  activité de formation avec des tarifs préférentiels.
                 </p>
               </div>
 
@@ -153,18 +153,55 @@ export default function NousRejoindre() {
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-grayBlue rounded-full"></div>
                   <span className="font-satoshi text-sm">
-                    Réseau de distribution
+                    <strong>Tarifs préférentiels</strong> à la journée sur
+                    toutes nos formations
                   </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 bg-grayBlue rounded-full"></div>
-                  <span className="font-satoshi text-sm">Outils marketing</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-grayBlue rounded-full"></div>
                   <span className="font-satoshi text-sm">
-                    Accompagnement business
+                    Facturation <strong>au forfait journalier</strong> (non par
+                    stagiaire)
                   </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-grayBlue rounded-full"></div>
+                  <span className="font-satoshi text-sm">
+                    Réseau de distribution et outils marketing
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-grayBlue rounded-full"></div>
+                  <span className="font-satoshi text-sm">
+                    Accompagnement business personnalisé
+                  </span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-grayBlue rounded-full"></div>
+                  <span className="font-satoshi text-sm">
+                    Accès prioritaire aux nouvelles formations
+                  </span>
+                </div>
+              </div>
+
+              {/* Encadré tarif exemple */}
+              <div className="mt-6 bg-primary/10 border border-primary rounded-xl p-4">
+                <p className="text-xs font-satoshi text-grayBlue mb-2">
+                  Exemple de tarifs partenaire
+                </p>
+                <div className="space-y-2 text-sm font-satoshi">
+                  <div className="flex justify-between items-center">
+                    <span className="text-grayBlue">ATEX</span>
+                    <span className="font-bold text-darkBlue">910€ HT/j</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-grayBlue">CACES R489</span>
+                    <span className="font-bold text-darkBlue">790€ HT/j</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-grayBlue">Travail en Hauteur</span>
+                    <span className="font-bold text-darkBlue">790€ HT/j</span>
+                  </div>
                 </div>
               </div>
             </div>

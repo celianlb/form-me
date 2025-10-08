@@ -5,7 +5,10 @@ export interface Formation {
   shortDescription?: string;
   durationHours?: number;
   durationDays?: number;
-  priceExclTax?: number;
+  pricePartnerPerDay?: number;
+  priceNonPartnerPerTrainee?: number;
+  availableForPartners: boolean;
+  applicationType: "STANDARD" | "APPLICATION";
   availableInCenter: boolean;
   availableElearning: boolean;
   minParticipants?: number;
@@ -21,12 +24,16 @@ export interface FormationCardData {
   title: string;
   slug: string;
   duration?: number; // en heures (calculé depuis durationHours ou durationDays * 7)
+  durationDays?: number; // en jours
   location: "center" | "elearning" | "both";
   capacity: {
     min?: number;
     max?: number;
   };
-  price?: number; // prix HT
+  pricePartnerPerDay?: number; // prix journalier partenaire HT
+  priceNonPartnerPerTrainee?: number; // prix par stagiaire non-partenaire HT
+  availableForPartners: boolean;
+  applicationType: "STANDARD" | "APPLICATION";
   link?: string; // URL vers la page de la formation
 }
 
@@ -41,5 +48,8 @@ export interface FormationFromDB {
   maxParticipants?: number | null;
   availableInCenter: boolean;
   availableElearning: boolean;
-  priceExclTax?: number | null; // Prisma Decimal type
+  pricePartnerPerDay?: number | null;
+  priceNonPartnerPerTrainee?: number | null;
+  availableForPartners: boolean;
+  applicationType: "STANDARD" | "APPLICATION";
 }

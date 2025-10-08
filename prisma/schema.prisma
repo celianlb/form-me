@@ -50,6 +50,11 @@ enum InviteTokenType {
   RESET_PASSWORD
 }
 
+enum ApplicationType {
+  STANDARD  // Formulaire de devis classique
+  APPLICATION // Formulaire de candidature
+}
+
 /**
  * USERS
  */
@@ -122,11 +127,14 @@ model Training {
   monitoringMethods     String? // NEW: suivi (émargement, évaluation, etc.)
   renewalRecommendation String? // NEW: conseils de renouvellement
 
-  priceExclTax       Decimal?      @db.Decimal(10, 2)
-  availableInCenter  Boolean       @default(true)
-  availableElearning Boolean       @default(false)
-  isActive           Boolean       @default(true)
-  status             ContentStatus @default(DRAFT)
+  pricePartnerPerDay       Decimal? @db.Decimal(10, 2) // Prix journalier partenaire
+  priceNonPartnerPerTrainee Decimal? @db.Decimal(10, 2) // Prix par stagiaire non-partenaire
+  availableForPartners     Boolean  @default(false) // Dispo pour les partenaires
+  applicationType          ApplicationType @default(STANDARD) // Type de formulaire (devis ou candidature)
+  availableInCenter        Boolean  @default(true)
+  availableElearning       Boolean  @default(false)
+  isActive                 Boolean  @default(true)
+  status                   ContentStatus @default(DRAFT)
 
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

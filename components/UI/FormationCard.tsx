@@ -64,23 +64,25 @@ export default function FormationCard({ formation }: FormationCardProps) {
         {/* Partie droite - Infos avec pictos */}
         <div className="flex flex-col gap-3 md:w-1/2">
           <div className="flex gap-3">
-            {/* Durée */}
-            <div className="flex items-center gap-1 w-full">
-              <div className="w-8 h-8 flex items-center justify-center">
-                <Image
-                  src="/formation/picto/Schedule.svg"
-                  alt="Durée"
-                  width={20}
-                  height={20}
-                  className="text-grayBlue"
-                />
+            {/* Durée - masquée si formation sur candidature */}
+            {formation.applicationType === "STANDARD" && (
+              <div className="flex items-center gap-1 w-full">
+                <div className="w-8 h-8 flex items-center justify-center">
+                  <Image
+                    src="/formation/picto/Schedule.svg"
+                    alt="Durée"
+                    width={20}
+                    height={20}
+                    className="text-grayBlue"
+                  />
+                </div>
+                <span className="text-sm font-satoshi font-medium text-blackBlue/70">
+                  {formation.duration
+                    ? `${formation.duration}h`
+                    : "Durée non définie"}
+                </span>
               </div>
-              <span className="text-sm font-satoshi font-medium text-blackBlue/70">
-                {formation.duration
-                  ? `${formation.duration}h`
-                  : "Durée non définie"}
-              </span>
-            </div>
+            )}
 
             {/* Lieu */}
             <div className="flex items-center gap-1 w-full">
@@ -127,8 +129,14 @@ export default function FormationCard({ formation }: FormationCardProps) {
                   className="text-grayBlue"
                 />
               </div>
-              <span className="text-sm font-satoshi w-full  text-blackBlue/70 font-bold">
-                {formation.price ? `${formation.price}€ HT` : "Sur devis"}
+              <span className="text-sm font-satoshi w-full text-blackBlue/70 font-bold">
+                {formation.applicationType === "APPLICATION"
+                  ? "Sur candidature"
+                  : formation.priceNonPartnerPerTrainee
+                  ? `${formation.priceNonPartnerPerTrainee}€ HT/stagiaire`
+                  : formation.pricePartnerPerDay
+                  ? `${formation.pricePartnerPerDay}€ HT/j`
+                  : "Sur devis"}
               </span>
             </div>
           </div>

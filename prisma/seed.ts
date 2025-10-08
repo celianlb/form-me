@@ -38,7 +38,10 @@ type TrainingSeed = {
   validationMethod?: string;
   monitoringMethods?: string;
   renewalRecommendation?: string;
-  priceExclTax?: number;
+  pricePartnerPerDay?: number;
+  priceNonPartnerPerTrainee?: number;
+  availableForPartners?: boolean;
+  applicationType?: "STANDARD" | "APPLICATION";
   availableInCenter?: boolean;
   availableElearning?: boolean;
 
@@ -56,19 +59,22 @@ const trainings: TrainingSeed[] = [
     shortDescription:
       "Sensibilisation aux risques ATEX et comportements sécuritaires en zones classées.",
     longDescription:
-      "Sensibiliser aux risques liés aux atmosphères explosives et adopter les comportements sécuritaires lors d’interventions en zones ATEX. Conforme à la directive ATEX 1999/92/CE et au Code du travail (R4227-42 à R4227-54).",
+      "Sensibiliser aux risques liés aux atmosphères explosives et adopter les comportements sécuritaires lors d'interventions en zones ATEX. Conforme à la directive ATEX 1999/92/CE et au Code du travail (R4227-42 à R4227-54).",
     durationHours: 7,
     durationDays: 1,
     minParticipants: 8,
     maxParticipants: 10,
     targetAudience:
       "Salariés travaillant/circulant en zones ATEX sans maintenance; intervenants ponctuels en zones classées.",
+    pricePartnerPerDay: 910, // 910€ HT/forfait 1/2 journées (prix partenaire)
+    priceNonPartnerPerTrainee: 239, // 239€ HT/stagiaire
+    availableForPartners: true,
     objectives: [
-      "Comprendre ce qu’est une atmosphère explosive.",
+      "Comprendre ce qu'est une atmosphère explosive.",
       "Identifier les zones ATEX et leur classification.",
-      "Connaître les sources d’inflammation et leurs conséquences.",
+      "Connaître les sources d'inflammation et leurs conséquences.",
       "Adopter les comportements sécuritaires en zone ATEX.",
-      "Connaître les règles de circulation et d’utilisation des équipements.",
+      "Connaître les règles de circulation et d'utilisation des équipements.",
     ],
     modules: [
       {
@@ -82,7 +88,7 @@ const trainings: TrainingSeed[] = [
         order: 2,
         type: "THEORETICAL",
         content:
-          "- Définition ATEX; gaz/vapeurs/poussières\n- Triangle de l’explosion",
+          "- Définition ATEX; gaz/vapeurs/poussières\n- Triangle de l'explosion",
       },
       {
         title: "Classification des zones",
@@ -91,7 +97,7 @@ const trainings: TrainingSeed[] = [
         content: "- Gaz: 0/1/2; Poussières: 20/21/22\n- Signalisation et accès",
       },
       {
-        title: "Sources d’inflammation",
+        title: "Sources d'inflammation",
         order: 4,
         type: "THEORETICAL",
         content:
@@ -102,23 +108,23 @@ const trainings: TrainingSeed[] = [
         order: 5,
         type: "THEORETICAL",
         content:
-          "- EPI; règles de circulation\n- Consignes & procédures d’urgence",
+          "- EPI; règles de circulation\n- Consignes & procédures d'urgence",
       },
       {
         title: "Ateliers pratiques",
         order: 6,
         type: "PRACTICAL",
         content:
-          "- Études de cas d’accidents\n- Identification de zones sur plans\n- Simulation d’entrée en zone ATEX",
+          "- Études de cas d'accidents\n- Identification de zones sur plans\n- Simulation d'entrée en zone ATEX",
       },
     ],
     teachingMeans:
       "Alternance théorie/exercices; supports multimédia; mise en situation si possible.",
     evaluationMethods: "QCM + exercices pratiques.",
     validationMethod: "Attestation ATEX Niveau 0.",
-    monitoringMethods: "Feuilles d’émargement (½ journée).",
+    monitoringMethods: "Feuilles d'émargement (½ journée).",
     renewalRecommendation:
-      "Remise à niveau conseillée tous les 3 ans ou en cas d’évolution/incident.",
+      "Remise à niveau conseillée tous les 3 ans ou en cas d'évolution/incident.",
   },
 
   // 2) H0 – B0 – H0V
@@ -128,19 +134,22 @@ const trainings: TrainingSeed[] = [
     shortDescription:
       "Sensibilisation des non-électriciens aux risques électriques et au voisinage.",
     longDescription:
-      "Former les non-électriciens aux risques électriques et à l’intervention en sécurité au voisinage d’installations. Conforme NF C18-510 et Code du travail (R4544-9 à R4544-11).",
+      "Former les non-électriciens aux risques électriques et à l'intervention en sécurité au voisinage d'installations. Conforme NF C18-510 et Code du travail (R4544-9 à R4544-11).",
     durationHours: 7,
     durationDays: 1,
     minParticipants: 8,
     maxParticipants: 10,
     targetAudience:
-      "Non-électriciens intervenant dans/à proximité d’installations électriques.",
+      "Non-électriciens intervenant dans/à proximité d'installations électriques.",
+    pricePartnerPerDay: 890, // 890€ HT/j (prix partenaire)
+    priceNonPartnerPerTrainee: 239, // 239€ HT/stagiaire
+    availableForPartners: true,
     objectives: [
-      "Comprendre les risques liés à l’électricité.",
-      "Identifier zones et limites d’intervention.",
+      "Comprendre les risques liés à l'électricité.",
+      "Identifier zones et limites d'intervention.",
       "Connaître les règles de sécurité au voisinage.",
       "Adopter les bons comportements en incident.",
-      "Préparer l’habilitation H0-B0 ou H0V.",
+      "Préparer l'habilitation H0-B0 ou H0V.",
     ],
     modules: [
       {
@@ -190,19 +199,22 @@ const trainings: TrainingSeed[] = [
     shortDescription:
       "Interventions électriques simples en sécurité pour personnels non-électriciens.",
     longDescription:
-      "Former des non-électriciens à réaliser de petites interventions d’ordre électrique en sécurité (NF C18-510).",
+      "Former des non-électriciens à réaliser de petites interventions d'ordre électrique en sécurité (NF C18-510).",
     durationHours: 14,
     durationDays: 2,
     minParticipants: 6,
     maxParticipants: 8,
     targetAudience:
       "Personnel non-électricien désigné pour de petites interventions (maintenance, techniciens...).",
+    pricePartnerPerDay: 890, // 890€ HT/j (prix partenaire)
+    priceNonPartnerPerTrainee: 259, // 259€ HT/stagiaire
+    availableForPartners: true,
     objectives: [
       "Identifier les risques des interventions simples.",
       "Connaître la réglementation applicable.",
       "Réaliser des manœuvres élémentaires en sécurité.",
-      "Réagir en cas d’incident.",
-      "Obtenir l’habilitation BS ou BE Manœuvre.",
+      "Réagir en cas d'incident.",
+      "Obtenir l'habilitation BS ou BE Manœuvre.",
     ],
     modules: [
       {
@@ -258,6 +270,8 @@ const trainings: TrainingSeed[] = [
     minParticipants: 8,
     maxParticipants: 12,
     targetAudience: "Salariés manipulant/déplaçant/portant des charges.",
+    pricePartnerPerDay: 690, // 690€ HT/j
+    availableForPartners: false, // Pas de prix partenaire mentionné
     objectives: [
       "Comprendre les enjeux de prévention des TMS.",
       "Identifier les risques liés aux manutentions et postures.",
@@ -312,9 +326,9 @@ const trainings: TrainingSeed[] = [
   // 5) AIPR
   {
     categoryName: "AIPR",
-    title: "AIPR — Autorisation d’Intervention à Proximité des Réseaux",
+    title: "AIPR — Autorisation d'Intervention à Proximité des Réseaux",
     shortDescription:
-      "Préparer et réussir l’examen AIPR (opérateur/encadrant/concepteur).",
+      "Préparer et réussir l'examen AIPR (opérateur/encadrant/concepteur).",
     longDescription:
       "Travail en sécurité à proximité des réseaux aériens/souterrains (DT-DICT, arrêté du 15/02/2012).",
     durationHours: 7,
@@ -322,7 +336,10 @@ const trainings: TrainingSeed[] = [
     minParticipants: 8,
     maxParticipants: 12,
     targetAudience:
-      "Terrassiers, conducteurs d’engins, encadrants, concepteurs intervenant à proximité des réseaux.",
+      "Terrassiers, conducteurs d'engins, encadrants, concepteurs intervenant à proximité des réseaux.",
+    pricePartnerPerDay: 590, // 590€ HT/j (prix partenaire)
+    priceNonPartnerPerTrainee: 110, // 110€ HT/stagiaire
+    availableForPartners: true,
     objectives: [
       "Comprendre la réglementation DT-DICT.",
       "Identifier les réseaux et leurs risques.",
@@ -385,6 +402,9 @@ const trainings: TrainingSeed[] = [
     maxParticipants: 8,
     targetAudience:
       "Conducteurs et futurs conducteurs de ponts roulants/portiques.",
+    pricePartnerPerDay: 690, // 690€ HT/j (prix partenaire)
+    priceNonPartnerPerTrainee: 220, // 220€ HT/stagiaire
+    availableForPartners: true,
     objectives: [
       "Identifier les risques liés aux ponts roulants.",
       "Comprendre les responsabilités légales.",
@@ -442,6 +462,9 @@ const trainings: TrainingSeed[] = [
     minParticipants: 6,
     maxParticipants: 8,
     targetAudience: "Opérateurs utilisant des gerbeurs en entreprise.",
+    pricePartnerPerDay: 690, // 690€ HT/j (prix partenaire)
+    priceNonPartnerPerTrainee: 220, // 220€ HT/stagiaire (pour chaque catégorie)
+    availableForPartners: true,
     objectives: [
       "Identifier les risques liés aux gerbeurs.",
       "Comprendre les responsabilités légales.",
@@ -484,6 +507,9 @@ const trainings: TrainingSeed[] = [
     minParticipants: 6,
     maxParticipants: 8,
     targetAudience: "Conducteurs de chariots élévateurs (catégories R489).",
+    pricePartnerPerDay: 790, // 790€ HT/j (prix partenaire)
+    priceNonPartnerPerTrainee: 220, // 220€ HT/stagiaire (pour chaque catégorie)
+    availableForPartners: true,
     objectives: [
       "Conduire/manœuvrer en sécurité un chariot adapté.",
       "Identifier les risques (renversement, heurt, chute de charge).",
@@ -533,6 +559,8 @@ const trainings: TrainingSeed[] = [
     minParticipants: 6,
     maxParticipants: 8,
     targetAudience: "Opérateurs de grues de chargement.",
+    pricePartnerPerDay: 690, // 690€ HT/j
+    availableForPartners: false,
     objectives: [
       "Identifier les risques liés à la grue de chargement.",
       "Comprendre règles légales et responsabilités.",
@@ -573,6 +601,9 @@ const trainings: TrainingSeed[] = [
     minParticipants: 6,
     maxParticipants: 8,
     targetAudience: "Utilisateurs de PEMP/nacelles (A/B + option C).",
+    pricePartnerPerDay: 690, // 690€ HT/j (prix partenaire)
+    priceNonPartnerPerTrainee: 220, // 220€ HT/stagiaire (pour chaque catégorie 1a/1b/3a/3b)
+    availableForPartners: true,
     objectives: [
       "Identifier les risques liés aux PEMP.",
       "Comprendre responsabilités légales.",
@@ -625,6 +656,9 @@ const trainings: TrainingSeed[] = [
     minParticipants: 8,
     maxParticipants: 10,
     targetAudience: "Salariés intervenant en hauteur (modules selon besoins).",
+    pricePartnerPerDay: 790, // 790€ HT/j (prix partenaire)
+    priceNonPartnerPerTrainee: 220, // 220€ HT/stagiaire
+    availableForPartners: true,
     objectives: [
       "Identifier les risques liés aux travaux en hauteur.",
       "Connaître la réglementation et responsabilités.",
@@ -693,6 +727,9 @@ const trainings: TrainingSeed[] = [
     minParticipants: 8,
     maxParticipants: 10,
     targetAudience: "Utilisateurs, monteurs/démonteurs, vérificateurs.",
+    pricePartnerPerDay: 790, // 790€ HT/j (prix partenaire)
+    priceNonPartnerPerTrainee: 280, // 280€ HT/stagiaire
+    availableForPartners: true,
     objectives: [
       "Identifier les risques liés aux échafaudages roulants.",
       "Connaître obligations et responsabilités.",
@@ -751,6 +788,9 @@ const trainings: TrainingSeed[] = [
     minParticipants: 8,
     maxParticipants: 10,
     targetAudience: "Utilisateurs, monteurs/démonteurs, vérificateurs.",
+    pricePartnerPerDay: 790, // 790€ HT/j (prix partenaire)
+    priceNonPartnerPerTrainee: 280, // 280€ HT/stagiaire
+    availableForPartners: true,
     objectives: [
       "Identifier les risques des échafaudages fixes.",
       "Connaître obligations et responsabilités.",
@@ -809,12 +849,15 @@ const trainings: TrainingSeed[] = [
     shortDescription:
       "Intervenir efficacement face à un accident du travail (référentiel INRS).",
     longDescription:
-      "Permettre d’intervenir efficacement face à un accident du travail en attendant les secours. Conforme référentiel INRS; Code du travail (R4224-14 à R4224-16).",
+      "Permettre d'intervenir efficacement face à un accident du travail en attendant les secours. Conforme référentiel INRS; Code du travail (R4224-14 à R4224-16).",
     durationHours: 14,
     durationDays: 2,
     minParticipants: 4,
     maxParticipants: 12,
     targetAudience: "Salariés devant intervenir en premiers secours.",
+    pricePartnerPerDay: 690, // 690€ HT/j (prix partenaire)
+    priceNonPartnerPerTrainee: 290, // 290€ HT/stagiaire
+    availableForPartners: true,
     objectives: [
       "Protéger la victime et soi-même.",
       "Examiner l’état de la victime.",
@@ -863,6 +906,9 @@ const trainings: TrainingSeed[] = [
     minParticipants: 8,
     maxParticipants: 10,
     targetAudience: "Équipes impliquées dans des opérations de levage.",
+    pricePartnerPerDay: 990, // 990€ HT/j (prix partenaire)
+    priceNonPartnerPerTrainee: 250, // 250€ HT/stagiaire
+    availableForPartners: true,
     objectives: [
       "Identifier les risques du levage.",
       "Comprendre rôles/responsabilités Chef de Manœuvre & Élingueur.",
@@ -925,7 +971,9 @@ const trainings: TrainingSeed[] = [
     minParticipants: 6,
     maxParticipants: 8,
     targetAudience:
-      "Conducteurs d’engins de chantier (selon catégories visées).",
+      "Conducteurs d'engins de chantier (selon catégories visées).",
+    priceNonPartnerPerTrainee: 1290, // Une catégorie A/B1/C1/E/F: 1290€ HT
+    availableForPartners: false, // Note: Toutes catégories 2690€ HT (pas de prix partenaire mentionné)
     objectives: [
       "Identifier les risques liés aux engins.",
       "Connaître responsabilités du conducteur.",
@@ -1037,23 +1085,24 @@ const trainings: TrainingSeed[] = [
     validationMethod: "Attestation de réussite DSA.",
     monitoringMethods:
       "Suivi via la plateforme e-learning, quiz de progression et sessions de coaching collectif.",
-    priceExclTax: 597,
+    priceNonPartnerPerTrainee: 597,
+    availableForPartners: false,
     availableInCenter: false,
     availableElearning: true,
   },
 
-  // 18) Formation ONE
+  // 18) Formation ONE - Sur candidature
   {
     categoryName: "Digital Business",
     title: "Formation ONE – École digitale finance & entrepreneuriat",
     shortDescription:
       "Parcours digital évolutif en éducation financière, business et entrepreneuriat.",
     longDescription:
-      "École digitale modulable pour acquérir des compétences en finance, trading, business digital, immobilier et leadership. L’objectif est de permettre à chacun de progresser à son rythme et de lancer un projet entrepreneurial durable. Tarification : 299 € le premier mois, puis 169 €/mois avec possibilité de rendre l’abonnement gratuit selon les paliers atteints.",
-    durationDays: 90,
+      "École digitale modulable pour acquérir des compétences en finance, trading, business digital, immobilier et leadership. L'objectif est de permettre à chacun de progresser à son rythme et de lancer un projet entrepreneurial durable.",
     minParticipants: 1,
     targetAudience:
       "Tout public (débutants à experts); salariés, indépendants et entrepreneurs; personnes en reconversion professionnelle.",
+    applicationType: "APPLICATION", // Formulaire de candidature spécial
     objectives: [
       "Développer ses connaissances en éducation financière et comprendre les mécanismes économiques.",
       "Maîtriser les bases et stratégies avancées du trading et de l’investissement.",
@@ -1110,7 +1159,7 @@ const trainings: TrainingSeed[] = [
       "Reconnaissance progressive au sein de la communauté et attestation interne du parcours.",
     monitoringMethods:
       "Suivi personnalisé, coaching individuel et collectif, indicateurs de progression partagés.",
-    priceExclTax: 299,
+    availableForPartners: false,
     availableInCenter: false,
     availableElearning: true,
   },
@@ -1201,7 +1250,10 @@ async function upsertTrainingWithExistingCategory(
       validationMethod: data.validationMethod ?? null,
       monitoringMethods: data.monitoringMethods ?? null,
       renewalRecommendation: data.renewalRecommendation ?? null,
-      priceExclTax: data.priceExclTax ?? null,
+      pricePartnerPerDay: data.pricePartnerPerDay ?? null,
+      priceNonPartnerPerTrainee: data.priceNonPartnerPerTrainee ?? null,
+      availableForPartners: data.availableForPartners ?? false,
+      applicationType: data.applicationType ?? "STANDARD",
       availableInCenter: data.availableInCenter ?? true,
       availableElearning: data.availableElearning ?? false,
       status: "PUBLISHED",
@@ -1226,7 +1278,10 @@ async function upsertTrainingWithExistingCategory(
       validationMethod: data.validationMethod ?? null,
       monitoringMethods: data.monitoringMethods ?? null,
       renewalRecommendation: data.renewalRecommendation ?? null,
-      priceExclTax: data.priceExclTax ?? null,
+      pricePartnerPerDay: data.pricePartnerPerDay ?? null,
+      priceNonPartnerPerTrainee: data.priceNonPartnerPerTrainee ?? null,
+      availableForPartners: data.availableForPartners ?? false,
+      applicationType: data.applicationType ?? "STANDARD",
       availableInCenter: data.availableInCenter ?? true,
       availableElearning: data.availableElearning ?? false,
       status: "PUBLISHED",

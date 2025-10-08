@@ -3,6 +3,7 @@ import Button from "@/components/UI/Button";
 import Heading from "@/components/UI/Heading";
 import { FormationWithDetails } from "@/types/formationDetails";
 import Image from "next/image";
+import ApplicationForm from "./ApplicationForm";
 import DevisForm from "./DevisForm";
 
 interface HeroSectionProps {
@@ -21,6 +22,10 @@ export default function HeroSection({ formation }: HeroSectionProps) {
   };
 
   const getDurationDisplay = () => {
+    // Ne pas afficher la durée pour les formations sur candidature
+    if (formation.applicationType === "APPLICATION") {
+      return null;
+    }
     if (formation.durationHours) {
       return `${formation.durationHours}h`;
     }
@@ -67,17 +72,20 @@ export default function HeroSection({ formation }: HeroSectionProps) {
             </p>
           )}
           <div className="flex flex-wrap gap-6 mt-6">
-            <div className="flex items-center gap-2">
-              <Image
-                src="/formation/picto/Schedule.svg"
-                alt="Durée"
-                width={24}
-                height={24}
-              />
-              <p className=" font-satoshi text-[16px] font-medium text-darkBlue">
-                {getDurationDisplay()}
-              </p>
-            </div>
+            {/* Afficher la durée uniquement pour les formations standard */}
+            {getDurationDisplay() && (
+              <div className="flex items-center gap-2">
+                <Image
+                  src="/formation/picto/Schedule.svg"
+                  alt="Durée"
+                  width={24}
+                  height={24}
+                />
+                <p className=" font-satoshi text-[16px] font-medium text-darkBlue">
+                  {getDurationDisplay()}
+                </p>
+              </div>
+            )}
 
             <div className="flex items-center gap-2">
               <Image
@@ -103,19 +111,61 @@ export default function HeroSection({ formation }: HeroSectionProps) {
               </p>
             </div>
 
-            <div className="flex items-center gap-2 bg-primary/10 p-2 w-fit rounded-full">
-              <Image
-                src="/formation/picto/Euro.svg"
-                alt="Prix"
-                width={24}
-                height={24}
-              />
-              <p className=" font-satoshi text-[16px] font-bold text-darkBlue ">
-                {formation.priceExclTax
-                  ? `${formation.priceExclTax}€ HT`
-                  : "Sur devis"}
-              </p>
-            </div>
+            {/* Prix - affichage conditionnel selon type de formation */}
+            {formation.applicationType === "APPLICATION" ? (
+              <div className="flex items-center gap-2 bg-secondary/10 p-2 w-fit rounded-full">
+                <Image
+                  src="/formation/picto/Euro.svg"
+                  alt="Sur candidature"
+                  width={24}
+                  height={24}
+                />
+                <p className="font-satoshi text-[16px] font-bold text-darkBlue">
+                  Sur candidature
+                </p>
+              </div>
+            ) : formation.priceNonPartnerPerTrainee || formation.pricePartnerPerDay ? (
+              <div className="flex flex-col gap-2 w-full">
+                {formation.priceNonPartnerPerTrainee && (
+                  <div className="flex items-center gap-2 bg-primary/10 p-2 w-fit rounded-full">
+                    <Image
+                      src="/formation/picto/Euro.svg"
+                      alt="Prix non-partenaire"
+                      width={24}
+                      height={24}
+                    />
+                    <p className="font-satoshi text-[16px] font-bold text-darkBlue">
+                      {formation.priceNonPartnerPerTrainee}€ HT/stagiaire
+                    </p>
+                  </div>
+                )}
+                {formation.availableForPartners && formation.pricePartnerPerDay && (
+                  <div className="flex items-center gap-2 bg-secondary/10 p-2 w-fit rounded-full">
+                    <Image
+                      src="/formation/picto/Euro.svg"
+                      alt="Prix partenaire"
+                      width={24}
+                      height={24}
+                    />
+                    <p className="font-satoshi text-[16px] font-bold text-darkBlue">
+                      {formation.pricePartnerPerDay}€ HT/j (partenaire)
+                    </p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 bg-primary/10 p-2 w-fit rounded-full">
+                <Image
+                  src="/formation/picto/Euro.svg"
+                  alt="Prix"
+                  width={24}
+                  height={24}
+                />
+                <p className="font-satoshi text-[16px] font-bold text-darkBlue">
+                  Sur devis
+                </p>
+              </div>
+            )}
 
             {formation.successRate && (
               <div className="flex items-center gap-3">
@@ -131,14 +181,20 @@ export default function HeroSection({ formation }: HeroSectionProps) {
           </div>
         </div>
 
-        {/* Partie droite Desktop - Formulaire de devis */}
+        {/* Partie droite Desktop - Formulaire conditionnel */}
         <div className="flex-1 hidden md:block md:max-w-1/2">
-          <DevisForm formation={formation} />
+          {formation.applicationType === "APPLICATION" ? (
+            <ApplicationForm formation={formation} />
+          ) : (
+            <DevisForm formation={formation} />
+          )}
         </div>
-        {/* Partie droite Desktop - Formulaire de devis */}
+        {/* Partie droite Mobile - Bouton */}
         <div className="block md:hidden w-full max-w-md">
           <Button variant="primary" className="w-full">
-            Demander un devis
+            {formation.applicationType === "APPLICATION"
+              ? "Candidater"
+              : "Demander un devis"}
           </Button>
         </div>
       </div>

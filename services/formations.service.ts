@@ -27,14 +27,20 @@ export class FormationsService {
       title: formation.title,
       slug: formation.slug,
       duration,
+      durationDays: formation.durationDays ?? undefined,
       location,
       capacity: {
         min: formation.minParticipants ?? undefined,
         max: formation.maxParticipants ?? undefined,
       },
-      price: formation.priceExclTax
-        ? Number(formation.priceExclTax)
+      pricePartnerPerDay: formation.pricePartnerPerDay
+        ? Number(formation.pricePartnerPerDay)
         : undefined,
+      priceNonPartnerPerTrainee: formation.priceNonPartnerPerTrainee
+        ? Number(formation.priceNonPartnerPerTrainee)
+        : undefined,
+      availableForPartners: formation.availableForPartners,
+      applicationType: formation.applicationType,
       link: `/formations/${formation.slug}`,
     };
   }
@@ -56,7 +62,10 @@ export class FormationsService {
         maxParticipants: true,
         availableInCenter: true,
         availableElearning: true,
-        priceExclTax: true,
+        pricePartnerPerDay: true,
+        priceNonPartnerPerTrainee: true,
+        availableForPartners: true,
+        applicationType: true,
       },
       orderBy: {
         title: "asc",
@@ -106,7 +115,9 @@ export class FormationsService {
             maxParticipants: true,
             availableInCenter: true,
             availableElearning: true,
-            priceExclTax: true,
+            pricePartnerPerDay: true,
+            priceNonPartnerPerTrainee: true,
+            availableForPartners: true,
           },
           skip,
           take: 1,
@@ -148,7 +159,10 @@ export class FormationsService {
         maxParticipants: true,
         availableInCenter: true,
         availableElearning: true,
-        priceExclTax: true,
+        pricePartnerPerDay: true,
+        priceNonPartnerPerTrainee: true,
+        availableForPartners: true,
+        applicationType: true,
       },
       orderBy: {
         title: "asc",
@@ -180,7 +194,10 @@ export class FormationsService {
         maxParticipants: true,
         availableInCenter: true,
         availableElearning: true,
-        priceExclTax: true,
+        pricePartnerPerDay: true,
+        priceNonPartnerPerTrainee: true,
+        availableForPartners: true,
+        applicationType: true,
       },
     });
 
@@ -207,7 +224,10 @@ export class FormationsService {
         maxParticipants: true,
         availableInCenter: true,
         availableElearning: true,
-        priceExclTax: true,
+        pricePartnerPerDay: true,
+        priceNonPartnerPerTrainee: true,
+        availableForPartners: true,
+        applicationType: true,
         successRate: true,
         targetAudience: true,
         learningObjectives: true,
@@ -257,9 +277,14 @@ export class FormationsService {
       maxParticipants: formation.maxParticipants ?? undefined,
       availableInCenter: formation.availableInCenter,
       availableElearning: formation.availableElearning,
-      priceExclTax: formation.priceExclTax
-        ? Number(formation.priceExclTax)
+      pricePartnerPerDay: formation.pricePartnerPerDay
+        ? Number(formation.pricePartnerPerDay)
         : undefined,
+      priceNonPartnerPerTrainee: formation.priceNonPartnerPerTrainee
+        ? Number(formation.priceNonPartnerPerTrainee)
+        : undefined,
+      availableForPartners: formation.availableForPartners,
+      applicationType: formation.applicationType,
       successRate: formation.successRate
         ? Number(formation.successRate)
         : undefined,

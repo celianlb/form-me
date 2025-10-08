@@ -19,7 +19,10 @@ export interface FormationWithDetails {
   longDescription?: string;
   durationHours?: number;
   durationDays?: number;
-  priceExclTax?: number;
+  pricePartnerPerDay?: number;
+  priceNonPartnerPerTrainee?: number;
+  availableForPartners: boolean;
+  applicationType: "STANDARD" | "APPLICATION";
   availableInCenter: boolean;
   availableElearning: boolean;
   minParticipants?: number;
