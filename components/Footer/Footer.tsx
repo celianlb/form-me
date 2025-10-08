@@ -96,6 +96,12 @@ export default function Footer() {
         <p className="mx-auto md:mx-0 text-white font-satoshi text-[16px]">
           © forme.me 2025
         </p>
+        <Link
+          href={"mailto:contact@form-me.fr"}
+          className="text-white underline hover:text-platinium transition-colors duration-300 font-satoshi text-[16px]"
+        >
+          contact@form-me.fr
+        </Link>
         <div className="flex gap-2 flex-col md:flex-row">
           <Link
             href={"/mentions-legales"}

@@ -68,7 +68,7 @@ export default async function DevisContactPage() {
                     alt="mail svg"
                   />
                   <p className="font-satoshi font-semibold text-darkBlue">
-                    form.me@gmail.com
+                    contact@form-me.fr
                   </p>
                 </div>
                 <div className="flex gap-4 items-center">
