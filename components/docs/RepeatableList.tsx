@@ -1,10 +1,10 @@
 /**
  * Composant générique pour listes répétables (dates, effectif, sessions)
  */
-'use client';
+"use client";
 
-import { Plus, Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import Button from "@/components/UI/Button";
+import { Plus, Trash2 } from "lucide-react";
 
 interface RepeatableListProps<T> {
   items: T[];
@@ -20,7 +20,7 @@ export function RepeatableList<T>({
   onAdd,
   onRemove,
   renderItem,
-  addButtonLabel = 'Ajouter',
+  addButtonLabel = "Ajouter",
   minItems = 1,
 }: RepeatableListProps<T>) {
   return (
@@ -30,8 +30,7 @@ export function RepeatableList<T>({
           {items.length > minItems && (
             <Button
               type="button"
-              variant="ghost"
-              size="icon"
+              variant="tertiary"
               className="absolute top-2 right-2"
               onClick={() => onRemove(index)}
             >
@@ -42,7 +41,12 @@ export function RepeatableList<T>({
         </div>
       ))}
 
-      <Button type="button" variant="outline" onClick={onAdd} className="w-full">
+      <Button
+        type="button"
+        variant="outline"
+        onClick={onAdd}
+        className="w-full"
+      >
         <Plus className="w-4 h-4 mr-2" />
         {addButtonLabel}
       </Button>
