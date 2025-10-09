@@ -123,7 +123,7 @@ export default function MobileMenu({
             Valeurs & Engagements
           </Link>
 
-          {/* À propos */}
+          {/* À propos 
           <Link
             href="/a-propos"
             onClick={onClose}
@@ -131,6 +131,7 @@ export default function MobileMenu({
           >
             À propos
           </Link>
+          */}
         </div>
 
         {/* Buttons */}

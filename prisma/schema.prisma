@@ -55,6 +55,29 @@ enum ApplicationType {
   APPLICATION // Formulaire de candidature
 }
 
+enum PdfGenerationMode {
+  ACROFORM // Remplissage de champs PDF (AcroForms)
+  OVERLAY  // Superposition de texte via coordonnées X/Y
+}
+
+enum PdfFieldType {
+  STRING
+  DATE
+  NUMBER
+  BOOLEAN
+}
+
+enum PdfFieldAlign {
+  LEFT
+  CENTER
+  RIGHT
+}
+
+enum DocumentKind {
+  CONVENTION
+  EMARGEMENT
+}
+
 /**
  * USERS
  */
@@ -85,6 +108,10 @@ model User {
   supportGroupMemberships SupportGroupMember[]
   supportGroupsCreated    SupportGroup[]       @relation("SupportGroupCreatedBy")
   inviteTokens            InviteToken[]
+
+  // PDF Generation
+  generatedDocuments      GeneratedDocument[]
+  documentBatches         DocumentBatch[]
 }
 
 /**
@@ -300,4 +327,87 @@ model TrainingVersion {
   savedBy    Int?
 
   training Training @relation(fields: [trainingId], references: [id])
+}
+
+/**
+ * PDF GENERATION SYSTEM
+ */
+model DocumentTemplate {
+  id               String            @id @default(cuid())
+  name             String
+  description      String?
+  storageProvider  String            @default("cloudinary")
+  pdfUrl           String            // URL Cloudinary du template PDF
+  cloudinaryPublicId String?         // Public ID Cloudinary pour gestion
+  mode             PdfGenerationMode @default(OVERLAY)
+  isActive         Boolean           @default(true)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  fields             TemplateField[]
+  generatedDocuments GeneratedDocument[]
+}
+
+model TemplateField {
+  id         String        @id @default(cuid())
+  templateId String
+  key        String        // ex: "trainer_first_name"
+  label      String        // ex: "Prénom du formateur"
+  type       PdfFieldType  @default(STRING)
+  required   Boolean       @default(false)
+
+  // OVERLAY mode
+  pageIndex  Int?          // Index de page (0-based)
+  x          Float?        // Position X en points PDF
+  y          Float?        // Position Y en points PDF
+  fontSize   Int?          @default(12)
+  fontName   String?       @default("Helvetica")
+  align      PdfFieldAlign? @default(LEFT)
+
+  // ACROFORM mode
+  acroformFieldName String?  // Nom du champ dans le PDF
+  defaultValue      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  template DocumentTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@index([templateId])
+}
+
+model GeneratedDocument {
+  id              String       @id @default(cuid())
+  templateId      String?
+  kind            DocumentKind // CONVENTION | EMARGEMENT
+  createdByUserId Int
+  payloadJson     Json         // Valeurs saisies { key: value }
+  pdfUrl          String       // URL Cloudinary du PDF généré
+  cloudinaryPublicId String?   // Public ID pour gestion
+  batchId         String?      // Pour grouper les émargements multiples
+  createdAt       DateTime     @default(now())
+
+  template  DocumentTemplate? @relation(fields: [templateId], references: [id])
+  createdBy User              @relation(fields: [createdByUserId], references: [id])
+  batch     DocumentBatch?    @relation(fields: [batchId], references: [id])
+
+  @@index([templateId])
+  @@index([createdByUserId])
+  @@index([createdAt])
+  @@index([kind])
+  @@index([batchId])
+}
+
+model DocumentBatch {
+  id              String   @id @default(cuid())
+  kind            DocumentKind
+  createdByUserId Int
+  count           Int
+  createdAt       DateTime @default(now())
+
+  createdBy User                @relation(fields: [createdByUserId], references: [id])
+  documents GeneratedDocument[]
+
+  @@index([createdByUserId])
+  @@index([createdAt])
 }
