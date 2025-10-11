@@ -2,6 +2,22 @@ import DevisContactForm from "@/components/DevisContactForm";
 import Heading from "@/components/UI/Heading";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
+import { createMetadata } from "@/lib/metadata";
+
+export const metadata = createMetadata({
+  title: "Demande de devis et contact",
+  description:
+    "Demandez un devis personnalisé pour vos formations professionnelles. Remplissez notre formulaire et recevez rapidement une proposition adaptée à vos besoins. Contact : contact@form-me.fr ou +33 7 66 76 39 11",
+  keywords: [
+    "devis formation",
+    "contact formation",
+    "demande de devis",
+    "tarif formation professionnelle",
+    "contact organisme de formation",
+    "devis personnalisé",
+  ],
+  path: "/devis-&-contact",
+});
 
 async function getCategories() {
   try {

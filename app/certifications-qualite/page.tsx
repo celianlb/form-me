@@ -3,6 +3,24 @@ import CTA from "@/components/Section/CTA";
 import Badge from "@/components/UI/Badge";
 import Heading from "@/components/UI/Heading";
 import { Award, Building, Calendar, Shield, Star } from "lucide-react";
+import { createMetadata } from "@/lib/metadata";
+
+export const metadata = createMetadata({
+  title: "Certifications et qualité",
+  description:
+    "Découvrez nos certifications Qualiopi, ISO 9001 et label OPQF qui garantissent l'excellence de nos formations professionnelles. Un gage de qualité et de professionnalisme pour vos formations.",
+  keywords: [
+    "certification Qualiopi",
+    "ISO 9001",
+    "label OPQF",
+    "qualité formation",
+    "organisme certifié",
+    "excellence pédagogique",
+    "AFNOR certification",
+    "Bureau Veritas",
+  ],
+  path: "/certifications-qualite",
+});
 
 interface Certification {
   id: string;

@@ -1,7 +1,7 @@
 /**
- * GET /api/documents - Liste les documents générés
- * Accessible aux admins pour voir tous les documents
- * Accessible aux utilisateurs pour voir leurs propres documents
+ * GET /api/docs/list
+ * Liste tous les documents générés (Convention, Émargement, et anciens templates)
+ * Accessible aux admins uniquement
  */
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
@@ -19,22 +19,22 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const { searchParams } = new URL(request.url);
-    const templateId = searchParams.get('templateId');
-
-    // Les admins peuvent voir tous les documents
-    // Les utilisateurs normaux ne voient que les leurs
-    const whereClause: {
-      createdByUserId?: number;
-      templateId?: string;
-    } = {};
-
     if (session.user.role !== 'ADMIN') {
-      whereClause.createdByUserId = Number(session.user.id);
+      return NextResponse.json(
+        { error: 'Accès refusé - Admin requis' },
+        { status: 403 }
+      );
     }
 
-    if (templateId) {
-      whereClause.templateId = templateId;
+    const { searchParams } = new URL(request.url);
+    const kindFilter = searchParams.get('kind'); // CONVENTION | EMARGEMENT | null (all)
+
+    const whereClause: {
+      kind?: 'CONVENTION' | 'EMARGEMENT';
+    } = {};
+
+    if (kindFilter && (kindFilter === 'CONVENTION' || kindFilter === 'EMARGEMENT')) {
+      whereClause.kind = kindFilter as 'CONVENTION' | 'EMARGEMENT';
     }
 
     const documents = await prisma.generatedDocument.findMany({
@@ -55,11 +55,18 @@ export async function GET(request: NextRequest) {
             lastName: true,
           },
         },
+        batch: {
+          select: {
+            id: true,
+            kind: true,
+            count: true,
+          },
+        },
       },
       orderBy: {
         createdAt: 'desc',
       },
-      take: 100, // Limite à 100 documents
+      take: 200,
     });
 
     return NextResponse.json({ documents });

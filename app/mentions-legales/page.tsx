@@ -1,5 +1,20 @@
 import Badge from "@/components/UI/Badge";
 import Heading from "@/components/UI/Heading";
+import { createMetadata } from "@/lib/metadata";
+
+export const metadata = createMetadata({
+  title: "Mentions légales",
+  description:
+    "Mentions légales de Form Me - EURL, informations sur l'éditeur du site, l'hébergement, la propriété intellectuelle et les conditions d'utilisation.",
+  keywords: [
+    "mentions légales",
+    "informations légales",
+    "éditeur du site",
+    "propriété intellectuelle",
+  ],
+  path: "/mentions-legales",
+  noIndex: true,
+});
 
 export default function MentionsLegales() {
   return (

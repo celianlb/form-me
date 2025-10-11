@@ -1,0 +1,22 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Disallow admin pages
+Disallow: /admin/
+Disallow: /dashboard/
+Disallow: /api/
+
+# Disallow auth pages
+Disallow: /auth/
+
+# Allow specific public pages
+Allow: /formations
+Allow: /certifications-qualite
+Allow: /devis-&-contact
+Allow: /nous-rejoindre
+Allow: /mentions-legales
+Allow: /politiques-de-confidentialite
+
+# Sitemap
+Sitemap: https://form-me.fr/sitemap.xml

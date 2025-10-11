@@ -8,12 +8,25 @@ import { FormationsService } from "@/services/formations.service";
 import Link from "next/link";
 import { Suspense } from "react";
 import AllFormationsClient from "./AllFormationsClient";
+import { createMetadata } from "@/lib/metadata";
 
-export const metadata = {
-  title: "Toutes nos formations - Form Me",
+export const metadata = createMetadata({
+  title: "Toutes nos formations professionnelles",
   description:
-    "Découvrez toutes nos formations professionnelles en sécurité et prévention. CACES, AIPR, habilitations électriques, gestes et postures, travaux en hauteur et bien plus.",
-};
+    "Découvrez notre catalogue complet de formations professionnelles en sécurité et prévention : CACES, AIPR, habilitations électriques, gestes et postures, travaux en hauteur et bien plus.",
+  keywords: [
+    "formations professionnelles",
+    "CACES",
+    "AIPR",
+    "habilitations électriques",
+    "gestes et postures",
+    "travaux en hauteur",
+    "sécurité au travail",
+    "prévention des risques",
+    "catalogue formations",
+  ],
+  path: "/formations",
+});
 
 export default async function FormationsPage() {
   // Récupérer les formations et top formations en parallèle

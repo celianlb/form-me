@@ -66,7 +66,7 @@ export default function DocumentsListPage() {
   const fetchDocuments = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/documents");
+      const response = await fetch("/api/docs/list");
       if (!response.ok) {
         throw new Error("Failed to fetch documents");
       }
@@ -179,16 +179,15 @@ export default function DocumentsListPage() {
                       : doc.createdBy.email}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button variant="tertiary" size="sm" asChild>
-                      <a
-                        href={doc.pdfUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Download className="w-4 h-4 mr-2" />
-                        Télécharger
-                      </a>
-                    </Button>
+                    <a
+                      href={doc.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Télécharger
+                    </a>
                   </TableCell>
                 </TableRow>
               ))}

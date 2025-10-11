@@ -1,5 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import { cn } from '@/utils/cn';
+
+interface RadioGroupContextValue {
+  value?: string;
+  onValueChange?: (value: string) => void;
+}
+
+const RadioGroupContext = React.createContext<RadioGroupContextValue>({});
 
 const RadioGroup = React.forwardRef<
   HTMLDivElement,
@@ -9,18 +17,11 @@ const RadioGroup = React.forwardRef<
   }
 >(({ className, value, onValueChange, children, ...props }, ref) => {
   return (
-    <div ref={ref} className={cn('grid gap-2', className)} {...props}>
-      {React.Children.map(children, (child) => {
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child, {
-            ...child.props,
-            checked: child.props.value === value,
-            onChange: () => onValueChange?.(child.props.value),
-          } as any);
-        }
-        return child;
-      })}
-    </div>
+    <RadioGroupContext.Provider value={{ value, onValueChange }}>
+      <div ref={ref} className={cn('grid gap-2', className)} {...props}>
+        {children}
+      </div>
+    </RadioGroupContext.Provider>
   );
 });
 RadioGroup.displayName = 'RadioGroup';
@@ -28,11 +29,16 @@ RadioGroup.displayName = 'RadioGroup';
 const RadioGroupItem = React.forwardRef<
   HTMLInputElement,
   React.InputHTMLAttributes<HTMLInputElement>
->(({ className, ...props }, ref) => {
+>(({ className, value: itemValue, ...props }, ref) => {
+  const { value, onValueChange } = React.useContext(RadioGroupContext);
+
   return (
     <input
       type="radio"
       ref={ref}
+      value={itemValue}
+      checked={itemValue === value}
+      onChange={() => itemValue && onValueChange?.(String(itemValue))}
       className={cn(
         'h-4 w-4 rounded-full border border-primary text-primary focus:ring-2 focus:ring-primary',
         className

@@ -4,22 +4,10 @@
  */
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import { prisma } from '@/lib/prisma';
-import { getTemplateUrl, uploadBuffer } from './cloudinary';
-import { formatDateFR, formatTimeFR, formatMoneyEUR, countUniqueDays, sanitizeText } from './format';
+import { getTemplateBuffer, uploadBuffer } from './cloudinary';
+import { formatDateFR, formatTimeFR, formatMoneyEUR, countUniqueDays, sanitizeText, sanitizeFilename, formatDateForFilename } from './format';
 import { CONVENTION_FIELDS_COORDS, TABLE_CONFIG } from './coordinates';
 import type { ConventionInput, ConventionResult } from './types';
-
-/**
- * Télécharge le template PDF depuis Cloudinary
- */
-async function loadTemplateBuffer(url: string): Promise<Buffer> {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed to load template: ${response.statusText}`);
-  }
-  const arrayBuffer = await response.arrayBuffer();
-  return Buffer.from(arrayBuffer);
-}
 
 /**
  * Génère un PDF Convention depuis les données saisies
@@ -29,9 +17,18 @@ export async function generateConvention(
   userId: number
 ): Promise<ConventionResult> {
   try {
-    // 1. Récupérer l'URL du template
-    const templateUrl = await getTemplateUrl('CONVENTION');
-    const templateBuffer = await loadTemplateBuffer(templateUrl);
+    // 1. Récupérer le template depuis Cloudinary
+    let templateBuffer: Buffer;
+    try {
+      templateBuffer = await getTemplateBuffer('CONVENTION');
+    } catch (error) {
+      console.warn(`Failed to load template, creating blank PDF:`, error);
+      // Créer un PDF vide par défaut
+      const blankPdf = await PDFDocument.create();
+      blankPdf.addPage([595, 842]); // A4 dimensions
+      const pdfBytes = await blankPdf.save();
+      templateBuffer = Buffer.from(pdfBytes);
+    }
 
     // 2. Charger le PDF avec pdf-lib
     const pdfDoc = await PDFDocument.load(templateBuffer);
@@ -39,7 +36,7 @@ export async function generateConvention(
     const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
     const pages = pdfDoc.getPages();
-    let currentPage = pages[0];
+    const currentPage = pages[0];
 
     if (!currentPage) {
       throw new Error('Template PDF has no pages');
@@ -252,15 +249,20 @@ export async function generateConvention(
     const pdfBytes = await pdfDoc.save();
     const pdfBuffer = Buffer.from(pdfBytes);
 
-    // 8. Upload vers Cloudinary
-    const { secure_url, public_id } = await uploadBuffer(pdfBuffer, 'conventions');
+    // 8. Générer le nom de fichier: convention_[nom-entreprise]_[date]
+    const companyName = sanitizeFilename(input.societe.nom);
+    const date = formatDateForFilename(input.datesEtHoraires[0]?.dateISO || new Date().toISOString());
+    const filename = `convention_${companyName}_${date}`;
+
+    // 9. Upload vers Cloudinary
+    const { secure_url, public_id } = await uploadBuffer(pdfBuffer, 'conventions', filename);
 
     // 9. Persister en base
     const doc = await prisma.generatedDocument.create({
       data: {
         kind: 'CONVENTION',
         createdByUserId: userId,
-        payloadJson: input as Record<string, string | number | boolean | null>,
+        payloadJson: input as unknown as Record<string, string | number | boolean | null>,
         pdfUrl: secure_url,
         cloudinaryPublicId: public_id,
       },

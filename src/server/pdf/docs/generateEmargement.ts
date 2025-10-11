@@ -4,22 +4,10 @@
  */
 import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
 import { prisma } from '@/lib/prisma';
-import { getTemplateUrl, uploadBuffer } from './cloudinary';
-import { formatDateFR, formatTimeFR, sanitizeText } from './format';
+import { getTemplateBuffer, uploadBuffer } from './cloudinary';
+import { formatDateFR, formatTimeFR, sanitizeText, sanitizeFilename, formatDateForFilename } from './format';
 import { EMARGEMENT_FIELDS_COORDS } from './coordinates';
 import type { EmargementInput, EmargementResult } from './types';
-
-/**
- * Télécharge le template PDF depuis Cloudinary
- */
-async function loadTemplateBuffer(url: string): Promise<Buffer> {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed to load template: ${response.statusText}`);
-  }
-  const arrayBuffer = await response.arrayBuffer();
-  return Buffer.from(arrayBuffer);
-}
 
 /**
  * Génère un label lisible pour une session
@@ -77,9 +65,8 @@ function generateHorairesText(session: EmargementInput['sessions'][0]): string {
 async function generateSingleEmargement(
   input: EmargementInput,
   session: EmargementInput['sessions'][0],
-  templateUrl: string
+  templateBuffer: Buffer
 ): Promise<Buffer> {
-  const templateBuffer = await loadTemplateBuffer(templateUrl);
   const pdfDoc = await PDFDocument.load(templateBuffer);
   const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
   const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
@@ -168,8 +155,18 @@ export async function generateEmargement(
   userId: number
 ): Promise<EmargementResult> {
   try {
-    // 1. Récupérer l'URL du template
-    const templateUrl = await getTemplateUrl('EMARGEMENT');
+    // 1. Récupérer le template depuis Cloudinary
+    let templateBuffer: Buffer;
+    try {
+      templateBuffer = await getTemplateBuffer('EMARGEMENT');
+    } catch (error) {
+      console.warn(`Failed to load template, creating blank PDF:`, error);
+      // Créer un PDF vide par défaut
+      const blankPdf = await PDFDocument.create();
+      blankPdf.addPage([595, 842]); // A4 dimensions
+      const pdfBytes = await blankPdf.save();
+      templateBuffer = Buffer.from(pdfBytes);
+    }
 
     // 2. Créer un batch
     const batch = await prisma.documentBatch.create({
@@ -187,10 +184,15 @@ export async function generateEmargement(
       const label = generateSessionLabel(session);
 
       // Générer le PDF
-      const pdfBuffer = await generateSingleEmargement(input, session, templateUrl);
+      const pdfBuffer = await generateSingleEmargement(input, session, templateBuffer);
+
+      // Générer le nom de fichier: emargement_[organisme]_[date]
+      const organismeName = sanitizeFilename(input.organismeNom);
+      const date = formatDateForFilename(session.dateISO);
+      const filename = `emargement_${organismeName}_${date}`;
 
       // Upload vers Cloudinary
-      const { secure_url, public_id } = await uploadBuffer(pdfBuffer, 'emargements');
+      const { secure_url, public_id } = await uploadBuffer(pdfBuffer, 'emargements', filename);
 
       // Persister en base
       const doc = await prisma.generatedDocument.create({
@@ -201,7 +203,7 @@ export async function generateEmargement(
           payloadJson: {
             ...input,
             session, // Session spécifique pour ce PDF
-          } as Record<string, string | number | boolean | null>,
+          } as unknown as Record<string, string | number | boolean | null>,
           pdfUrl: secure_url,
           cloudinaryPublicId: public_id,
         },

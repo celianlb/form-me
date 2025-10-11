@@ -11,6 +11,20 @@ import Badge from "@/components/UI/Badge";
 import Heading from "@/components/UI/Heading";
 import { CategoriesService } from "@/services/categories.service";
 import { FormationsService } from "@/services/formations.service";
+import { createMetadata } from "@/lib/metadata";
+
+export const metadata = createMetadata({
+  title: "Accueil - Formations Professionnelles Certifiantes",
+  description:
+    "Form Me, votre partenaire formation professionnelle. Découvrez nos formations certifiantes et qualifiantes adaptées à vos besoins professionnels.",
+  keywords: [
+    "formation professionnelle",
+    "formation certifiante",
+    "développement des compétences",
+    "apprentissage continu",
+  ],
+  path: "/",
+});
 
 export default async function Home() {
   const categoryOptions = await CategoriesService.getCategoriesForDropdown();

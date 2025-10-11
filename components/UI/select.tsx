@@ -27,7 +27,7 @@ Select.displayName = 'Select';
 
 const SelectTrigger = Select;
 
-const SelectContent = ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const SelectContent = ({ children }: React.HTMLAttributes<HTMLDivElement>) => (
   <>{children}</>
 );
 

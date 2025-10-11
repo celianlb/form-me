@@ -10,7 +10,7 @@ import { uploadGeneratedPdf } from './uploadToCloudinary';
 interface GenerateAndStorePdfResult {
   id: string;
   pdfUrl: string;
-  templateId: string;
+  templateId: string | null;
   createdAt: Date;
 }
 
@@ -56,9 +56,10 @@ export async function generateAndStorePdf(
   // 5. Persister en base
   const generatedDoc = await prisma.generatedDocument.create({
     data: {
+      kind: 'CONVENTION', // Default kind for generic template system
       templateId,
       createdByUserId: userId,
-      payloadJson: values as Record<string, string | number | boolean | null>,
+      payloadJson: values as unknown as Record<string, string | number | boolean | null>,
       pdfUrl: url,
       cloudinaryPublicId: publicId,
     },

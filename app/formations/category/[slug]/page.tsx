@@ -9,9 +9,43 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import CategoryPageClient from "./CategoryPageClient";
+import { createMetadata } from "@/lib/metadata";
+import { Metadata } from "next";
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({
+  params,
+}: CategoryPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const category = await CategoriesService.getCategoryBySlug(slug);
+
+  if (!category) {
+    return createMetadata({
+      title: "Catégorie non trouvée",
+      description: "La catégorie demandée n'existe pas.",
+      path: `/formations/category/${slug}`,
+      noIndex: true,
+    });
+  }
+
+  const keywords = [
+    category.name,
+    "formation professionnelle",
+    "certification",
+    `formations ${category.name}`,
+  ];
+
+  return createMetadata({
+    title: `Formations ${category.name} - Formation Professionnelle`,
+    description:
+      category.description ||
+      `Découvrez toutes nos formations en ${category.name}. Formation professionnelle de qualité avec Form Me.`,
+    keywords,
+    path: `/formations/category/${slug}`,
+  });
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
@@ -81,28 +115,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       {formations.length > 0 && <CTADevis />}
     </div>
   );
-}
-
-// Générer les métadonnées pour SEO
-export async function generateMetadata({ params }: CategoryPageProps) {
-  const category = await CategoriesService.getCategoryBySlug(
-    (
-      await params
-    ).slug
-  );
-
-  if (!category) {
-    return {
-      title: "Catégorie non trouvée - Form Me",
-    };
-  }
-
-  return {
-    title: `Formations ${category.name} - Form Me`,
-    description:
-      category.description ||
-      `Découvrez toutes nos formations en ${category.name}. Formation professionnelle de qualité avec Form Me.`,
-  };
 }
 
 // Générer les paramètres statiques pour la construction

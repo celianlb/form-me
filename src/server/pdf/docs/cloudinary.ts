@@ -11,32 +11,40 @@ cloudinary.config({
 });
 
 /**
- * Récupère l'URL sécurisée d'un template depuis son public_id
+ * Récupère le buffer du template depuis le système de fichiers local
+ * Les templates sont stockés dans public/templates/
  */
-export async function getTemplateUrl(kind: 'CONVENTION' | 'EMARGEMENT'): Promise<string> {
-  const publicId = kind === 'CONVENTION'
-    ? process.env.CONVENTION_TEMPLATE_PUBLIC_ID
-    : process.env.EMARGEMENT_TEMPLATE_PUBLIC_ID;
+export async function getTemplateBuffer(kind: 'CONVENTION' | 'EMARGEMENT'): Promise<Buffer> {
+  const fs = await import('fs/promises');
+  const path = await import('path');
 
-  if (!publicId) {
-    throw new Error(`Missing env var: ${kind}_TEMPLATE_PUBLIC_ID`);
+  const templateName = kind === 'CONVENTION'
+    ? 'convention_template.pdf'
+    : 'emargement_template.pdf';
+
+  const templatePath = path.join(process.cwd(), 'public', 'templates', templateName);
+
+  try {
+    console.log(`[${kind}] Reading template from: ${templatePath}`);
+    const buffer = await fs.readFile(templatePath);
+    console.log(`✓ [${kind}] Successfully loaded template (${buffer.length} bytes)`);
+    return buffer;
+  } catch (error) {
+    console.error(`[${kind}] Error reading template:`, error);
+    throw new Error(`Failed to read template ${templateName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
-
-  // Construction de l'URL sécurisée Cloudinary
-  const url = cloudinary.url(publicId, {
-    resource_type: 'raw',
-    secure: true,
-  });
-
-  return url;
 }
 
 /**
  * Upload d'un buffer PDF généré vers Cloudinary
+ * @param buffer - Le buffer PDF à uploader
+ * @param folder - Le dossier de destination
+ * @param filename - Le nom de fichier (optionnel, sans extension)
  */
 export async function uploadBuffer(
   buffer: Buffer,
-  folder = 'generated-docs'
+  folder = 'generated-docs',
+  filename?: string
 ): Promise<{ secure_url: string; public_id: string }> {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
@@ -44,6 +52,9 @@ export async function uploadBuffer(
         resource_type: 'raw',
         folder,
         format: 'pdf',
+        public_id: filename, // Si fourni, utilise ce nom au lieu d'un ID aléatoire
+        unique_filename: !filename, // Si filename fourni, ne pas ajouter de suffixe aléatoire
+        overwrite: false, // Ne pas écraser les fichiers existants
       },
       (error, result) => {
         if (error || !result) {

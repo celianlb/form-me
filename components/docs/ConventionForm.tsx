@@ -65,7 +65,7 @@ export function ConventionForm() {
     remove: removeObjectif,
   } = useFieldArray({
     control,
-    name: "formation.objectifsOperationnels",
+    name: "formation.objectifsOperationnels" as never,
   });
 
   const {

@@ -23,9 +23,9 @@ export const conventionInputSchema = z.object({
   datesEtHoraires: z
     .array(
       z.object({
-        dateISO: z.string().datetime('Date invalide'),
-        debutISO: z.string().datetime('Heure de début invalide'),
-        finISO: z.string().datetime('Heure de fin invalide'),
+        dateISO: z.string().min(1, 'Date requise'),
+        debutISO: z.string().min(1, 'Heure de début requise'),
+        finISO: z.string().min(1, 'Heure de fin requise'),
       })
     )
     .min(1, 'Au moins une date est requise'),
@@ -34,7 +34,7 @@ export const conventionInputSchema = z.object({
       z.object({
         prenom: z.string().min(1, 'Prénom requis'),
         nom: z.string().min(1, 'Nom requis'),
-        dateNaissanceISO: z.string().datetime('Date de naissance invalide'),
+        dateNaissanceISO: z.string().min(1, 'Date de naissance requise'),
       })
     )
     .min(1, 'Au moins un stagiaire est requis'),
@@ -57,18 +57,18 @@ export const emargementInputSchema = z.object({
   sessions: z
     .array(
       z.object({
-        dateISO: z.string().datetime('Date invalide'),
+        dateISO: z.string().min(1, 'Date requise'),
         journeeEntiere: z.boolean(),
         matin: z
           .object({
-            debutISO: z.string().datetime(),
-            finISO: z.string().datetime(),
+            debutISO: z.string().min(1),
+            finISO: z.string().min(1),
           })
           .optional(),
         apresMidi: z
           .object({
-            debutISO: z.string().datetime(),
-            finISO: z.string().datetime(),
+            debutISO: z.string().min(1),
+            finISO: z.string().min(1),
           })
           .optional(),
       })

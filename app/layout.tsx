@@ -1,14 +1,11 @@
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
-import type { Metadata } from "next";
 import "./globals.css";
 import { CategoriesService } from "@/services/categories.service";
 import Providers from "@/components/Providers/SessionProvider";
+import { defaultMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Form Me",
-  description: "Form Me is a platform to study and learn",
-};
+export const metadata = defaultMetadata;
 
 export default async function RootLayout({
   children,
@@ -17,7 +14,7 @@ export default async function RootLayout({
 }>) {
   const categories = await CategoriesService.getCategoriesWithTrainingCount();
   return (
-    <html lang="en">
+    <html lang="fr">
       <body className={` antialiased`}>
         <Providers>
           <Header categories={categories} />

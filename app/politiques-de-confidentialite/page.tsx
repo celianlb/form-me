@@ -1,5 +1,21 @@
 import Badge from "@/components/UI/Badge";
 import Heading from "@/components/UI/Heading";
+import { createMetadata } from "@/lib/metadata";
+
+export const metadata = createMetadata({
+  title: "Politique de confidentialité",
+  description:
+    "Politique de confidentialité de Form Me - Protection de vos données personnelles, collecte, utilisation, droits RGPD et sécurité des informations.",
+  keywords: [
+    "politique de confidentialité",
+    "protection des données",
+    "RGPD",
+    "vie privée",
+    "données personnelles",
+  ],
+  path: "/politiques-de-confidentialite",
+  noIndex: true,
+});
 
 export default function PolitiquesConfidentialite() {
   return (
