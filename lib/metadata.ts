@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 const baseUrl = 'https://form-me.fr';
 const siteName = 'Form Me';
 const defaultDescription =
-  'Form Me - Plateforme de formation professionnelle. Découvrez nos formations certifiantes et qualifiantes adaptées à vos besoins.';
+  'On vous forme avec efficacité et rapidité';
 
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(baseUrl),

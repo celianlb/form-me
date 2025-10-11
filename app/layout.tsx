@@ -15,6 +15,9 @@ export default async function RootLayout({
   const categories = await CategoriesService.getCategoriesWithTrainingCount();
   return (
     <html lang="fr">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body className={` antialiased`}>
         <Providers>
           <Header categories={categories} />
