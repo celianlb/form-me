@@ -15,10 +15,10 @@ export default async function BentoGrid() {
 
       {/* Version Desktop */}
       <div className="hidden lg:block">
-        <div className="flex gap-5 mx-auto">
+        <div className="flex gap-5 mx-auto ">
           {/* Première div - Seule à gauche */}
-          <div className="flex-1 max-w-md flex flex-col gap-5 relative rounded-4xl p-6 bg-gradient-to-br from-primary/5 via-white to-white overflow-hidden border border-primary/10 shadow-lg shadow-primary/5">
-            <div className="absolute -top-20 -right-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+          <div className="flex-1 max-w-md flex flex-col gap-5 bg-darkBlue   relative rounded-4xl p-6  overflow-hidden border border-primary/10 shadow-lg shadow-primary/5">
+            <div className="absolute  top-1/3 left-1/6 w-64 h-64 bg-blue-400 rounded-full blur-3xl"></div>
             <Image
               src={"/bento/dot-pattern-bento.svg"}
               width={650}
@@ -27,12 +27,12 @@ export default async function BentoGrid() {
               className="absolute bottom-0 right-0 opacity-30"
             />
             <div className="relative z-10">
-              <div className="inline-block p-2 items-center leading-none bg-primary/10 rounded-full mb-3">
-                <span className="text-xs font-satoshi font-semibold text-primary">
+              <div className="inline-block p-2 items-center leading-none bg-primary/30 rounded-full mb-3">
+                <span className="text-xs text-white font-satoshi font-semibold ">
                   +150 formations
                 </span>
               </div>
-              <h3 className="font-satoshi text-xl text-darkBlue font-bold tracking-tight">
+              <h3 className="font-satoshi text-xl  font-bold tracking-tight text-white">
                 Choisissez votre formation
               </h3>
             </div>
