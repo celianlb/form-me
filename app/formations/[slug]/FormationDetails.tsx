@@ -63,16 +63,39 @@ const sections = [
 ];
 
 export default function FormationDetails({ formation }: FormationDetailsProps) {
-  const [activeSection, setActiveSection] = useState("targetAudience");
+  // Fonction pour vérifier si une section a du contenu
+  const hasContent = (content: unknown, type: string): boolean => {
+    if (!content) return false;
+
+    switch (type) {
+      case "text":
+        return typeof content === "string" && content.trim().length > 0;
+      case "objectives":
+      case "modules":
+        return Array.isArray(content) && content.length > 0;
+      default:
+        return false;
+    }
+  };
+
+  // Filtrer les sections qui ont du contenu
+  const availableSections = sections.filter((section) => {
+    const content = formation[section.key as keyof FormationWithDetails];
+    return hasContent(content, section.type);
+  });
+
+  const [activeSection, setActiveSection] = useState(
+    availableSections.length > 0 ? availableSections[0].id : ""
+  );
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 200; // Offset pour la détection
 
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sections[i].id);
+      for (let i = availableSections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(availableSections[i].id);
         if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(sections[i].id);
+          setActiveSection(availableSections[i].id);
           break;
         }
       }
@@ -80,7 +103,7 @@ export default function FormationDetails({ formation }: FormationDetailsProps) {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [availableSections]);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -91,7 +114,7 @@ export default function FormationDetails({ formation }: FormationDetailsProps) {
 
   const renderContent = (content: unknown, type: string) => {
     if (!content) {
-      return <p className="text-darkBlue/60 italic">Contenu non disponible</p>;
+      return null;
     }
 
     switch (type) {
@@ -182,6 +205,11 @@ export default function FormationDetails({ formation }: FormationDetailsProps) {
     }
   };
 
+  // Si aucune section n'a de contenu, ne rien afficher
+  if (availableSections.length === 0) {
+    return null;
+  }
+
   return (
     <section className="px-[40px] md:px-[120px] py-[80px]">
       <div className="flex flex-col md:flex-row gap-12">
@@ -189,7 +217,7 @@ export default function FormationDetails({ formation }: FormationDetailsProps) {
         <div className="md:w-1/3 hidden md:block">
           <div className="sticky top-32">
             <nav className="space-y-2">
-              {sections.map((section) => (
+              {availableSections.map((section) => (
                 <button
                   key={section.id}
                   onClick={() => scrollToSection(section.id)}
@@ -209,7 +237,7 @@ export default function FormationDetails({ formation }: FormationDetailsProps) {
         {/* Contenu à droite */}
         <div className="lg:w-2/3">
           <div className="space-y-16">
-            {sections.map((section) => {
+            {availableSections.map((section) => {
               const content =
                 formation[section.key as keyof FormationWithDetails];
 

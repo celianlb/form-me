@@ -49,23 +49,23 @@ export default function FormationCard({ formation }: FormationCardProps) {
   const href = formation.link || `/formations/${formation.slug}`;
 
   return (
-    <Link 
+    <Link
       href={href}
       className="group flex justify-center w-full md:w-fit h-full relative p-6 rounded-3xl border border-grayBlue/20 bg-gradient-to-tr from-white to-gray-100 hover:border-primary transition-all duration-300 ease-in-out cursor-pointer hover:bg-gradient-radial hover:from-white hover:via-[#D8E5FF] hover:to-white"
     >
-      <div className="flex flex-col md:flex-row gap-12 items-center justify-center">
+      <div className="flex flex-col  gap-8 items-center justify-center">
         {/* Partie gauche - Titre */}
-        <div className="flex-1 max-w-[250px]">
+        <div className="flex-1 w-[250px]">
           <h3 className="text-[18px] font-satoshi font-medium tracking-tight text-blackBlue mb-2 ">
             {formation.title}
           </h3>
         </div>
 
         {/* Partie droite - Infos avec pictos */}
-        <div className="flex flex-col gap-3 md:w-1/2">
+        <div className="flex flex-col gap-3">
           <div className="flex gap-3">
             {/* Durée - masquée si formation sur candidature */}
-            {formation.applicationType === "STANDARD" && (
+            {formation.applicationType && (
               <div className="flex items-center gap-1 w-full">
                 <div className="w-8 h-8 flex items-center justify-center">
                   <Image

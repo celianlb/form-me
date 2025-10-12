@@ -35,11 +35,11 @@ export default function CategoryPageClient({
       </section>
 
       {/* Liste des formations filtrées */}
-      <section className="pb-[160px] px-5 lg:px-[120px] pt-[40px]">
+      <section className="pb-[160px] px-10 lg:px-[120px] pt-[40px]">
         <div className="max-w-7xl mx-auto">
           {filteredFormations.length > 0 ? (
             <div className="flex flex-col gap-6 md:gap-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mx-auto">
                 {filteredFormations.map((formation) => (
                   <FormationCard key={formation.id} formation={formation} />
                 ))}

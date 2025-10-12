@@ -68,8 +68,8 @@ export default function FormationFilters({
     filters.search || filters.duration || filters.location;
 
   return (
-    <div className="bg-platinium/20 border border-primary/30 rounded-4xl lg:rounded-full p-6 md:p-8 shadow-md shadow-grayBlue/10 w-fit mx-auto">
-      <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center">
+    <div className="bg-platinium/20 border border-primary/30 rounded-4xl md:rounded-full p-6 md:p-8 shadow-md shadow-grayBlue/10 w-fit mx-auto">
+      <div className="flex flex-col md:flex-row gap-4 items-start lg:items-center">
         {/* Recherche par intitulé */}
         <SearchInput
           value={filters.search}

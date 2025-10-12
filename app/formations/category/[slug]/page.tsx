@@ -3,14 +3,14 @@ import CTADevis from "@/components/Section/CTADevis";
 import Top10Formations from "@/components/Section/Top10Formations";
 import Badge from "@/components/UI/Badge";
 import Heading from "@/components/UI/Heading";
+import { createMetadata } from "@/lib/metadata";
 import { CategoriesService } from "@/services/categories.service";
 import { FormationsService } from "@/services/formations.service";
+import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import CategoryPageClient from "./CategoryPageClient";
-import { createMetadata } from "@/lib/metadata";
-import { Metadata } from "next";
 
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
@@ -65,9 +65,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
 
   return (
-    <div className="min-h-screen">
+    <div>
       {/* Titre principal */}
-      <HeroSection className="min-h-auto pt-[160px] pb-[80px]">
+      <HeroSection>
         <nav className="mb-8 text-sm">
           <ol className="flex items-center space-x-2 text-grayBlue">
             <li>

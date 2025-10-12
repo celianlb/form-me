@@ -56,9 +56,9 @@ export default function NousRejoindre() {
   return (
     <main>
       {/* Hero Section */}
-      <HeroSection className="flex flex-col gap-8 md:gap-12 min-h-0 pt-[180px] pb-[80px] ">
-        <div className="text-center">
-          <Badge className="mb-4">Rejoignez-nous</Badge>
+      <HeroSection className="pb-[80px] ">
+        <div className="md:text-center">
+          <Badge className="mb-4 mx-auto w-fit">Rejoignez-nous</Badge>
           <Heading level={1} className="mb-4 max-w-xl mx-auto">
             Construisons ensemble l&apos;avenir de la formation
           </Heading>
