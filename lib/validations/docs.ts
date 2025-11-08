@@ -49,6 +49,7 @@ export type ConventionInputType = z.infer<typeof conventionInputSchema>;
 export const emargementInputSchema = z.object({
   formationNom: z.string().min(1, 'Le nom de la formation est requis'),
   organismeNom: z.string().min(1, 'Le nom de l\'organisme est requis'),
+  entrepriseNom: z.string().min(1, 'Le nom de l\'entreprise cliente est requis'),
   lieu: z.string().min(1, 'Le lieu est requis'),
   formateur: z.object({
     prenom: z.string().min(1, 'Prénom du formateur requis'),
@@ -83,6 +84,15 @@ export const emargementInputSchema = z.object({
         message: 'Chaque session doit avoir au moins un créneau (matin ou après-midi)',
       }
     ),
+  stagiaires: z
+    .array(
+      z.object({
+        prenom: z.string().min(1, 'Prénom requis'),
+        nom: z.string().min(1, 'Nom requis'),
+        dateNaissanceISO: z.string().min(1, 'Date de naissance requise'),
+      })
+    )
+    .min(1, 'Au moins un stagiaire est requis'),
 });
 
 export type EmargementInputType = z.infer<typeof emargementInputSchema>;

@@ -75,17 +75,22 @@ export default function NewDocumentPage() {
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-5xl">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Générer un document</h1>
-        <p className="text-muted-foreground mt-2">
+    <div className="container mx-auto py-12 px-4 md:px-8 max-w-6xl pt-[200px]">
+      {/* Page Header */}
+      <div className="mb-12 text-center">
+        <h1 className="text-3xl md:text-4xl font-sora font-bold text-darkBlue mb-4 tracking-tight">
+          Générer un document
+        </h1>
+        <p className="text-grayBlue font-satoshi text-lg">
           Créez des Conventions ou des Feuilles d&apos;Émargement
         </p>
       </div>
 
+      {/* Stepper */}
       <Stepper currentStep={currentStep} steps={STEPS} />
 
-      <div className="mt-8">
+      {/* Step Content */}
+      <div className="mt-12">
         {currentStep === 1 && (
           <DocumentTypeStepper
             selectedKind={kind}

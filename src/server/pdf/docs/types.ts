@@ -37,18 +37,20 @@ export interface EmargementInput {
     prenom: string;
     nom: string;
   };
-  sessions: Array<{
+  session: {
     dateISO: string;
-    journeeEntiere: boolean;
-    matin?: {
-      debutISO: string;
-      finISO: string;
-    };
-    apresMidi?: {
-      debutISO: string;
-      finISO: string;
-    };
-  }>;
+    periodeJournee: 'matin' | 'apres-midi'; // Matin ou Après-midi
+    heureDebut: string; // Format HH:mm ou ISO
+    heureFin: string;   // Format HH:mm ou ISO
+  };
+  stagiaire: {
+    prenom: string;
+    nom: string;
+    dateNaissanceISO: string;
+    telephone?: string;
+    entreprise: string;
+    fonction: string;
+  };
 }
 
 export interface ConventionResult {

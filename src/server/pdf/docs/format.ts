@@ -48,12 +48,15 @@ export function formatTimeFR(isoString: string): string {
 
 /**
  * Formate un montant en euros: 1234.56 → "1 234,56 €"
+ * Remplace les espaces insécables fines (U+202F) par des espaces normales pour compatibilité PDF
  */
 export function formatMoneyEUR(amount: number): string {
   return new Intl.NumberFormat('fr-FR', {
     style: 'currency',
     currency: 'EUR',
-  }).format(amount);
+  })
+    .format(amount)
+    .replace(/\u202F/g, ' '); // Remplace l'espace insécable fine par une espace normale
 }
 
 /**

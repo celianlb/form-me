@@ -1,227 +1,373 @@
 /**
- * Service de génération d'Émargement
- * Génère 1 PDF par session (date + créneaux)
+ * Service de génération de Feuilles d'Émargement - VERSION TEMPLATE PROGRAMMATIQUE
+ * Génère un PDF par session (date + matin/après-midi)
  */
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
-import { prisma } from '@/lib/prisma';
-import { getTemplateBuffer, uploadBuffer } from './cloudinary';
-import { formatDateFR, formatTimeFR, sanitizeText, sanitizeFilename, formatDateForFilename } from './format';
-import { EMARGEMENT_FIELDS_COORDS } from './coordinates';
-import type { EmargementInput, EmargementResult } from './types';
+import { prisma } from "@/lib/prisma";
+import type { EmargementInputType } from "@/lib/validations/docs";
+import { StandardFonts, rgb } from "pdf-lib";
+import { generateEmargementTemplate } from "../templates/emargementTemplate";
+import { uploadBuffer } from "./cloudinary";
+import {
+  formatDateFR,
+  formatDateForFilename,
+  formatTimeFR,
+  sanitizeFilename,
+  sanitizeText,
+} from "./format";
 
 /**
- * Génère un label lisible pour une session
+ * Coordonnées pour le remplissage dynamique
+ * ⚠️ SYNCHRONISÉES avec test-emargement-template.ts
  */
-function generateSessionLabel(session: EmargementInput['sessions'][0]): string {
-  const dateStr = formatDateFR(session.dateISO);
+const COORDS = {
+  organismeNom: { x: 430, y: 810 },
+  formationNom: { x: 150, y: 673 },
+  formationDate: { x: 173, y: 648 },
+  formationLieu: { x: 153, y: 598 },
+  formateurNom: { x: 205, y: 517 },
+  formateurHeure: { x: 125, y: 438 },
+  stagiaireNom: { x: 50, y: 280 },
+  stagiairePrenom: { x: 170, y: 280 },
+  stagiaireDateNaissance: { x: 295, y: 280 },
+  stagiaireLineHeight: 50,
+  stagiaireNomContinuation: { x: 50, y: 625 },
+  stagiaireePrenomContinuation: { x: 170, y: 625 },
+  stagiaireDateNaissanceContinuation: { x: 295, y: 625 },
+} as const;
 
-  if (session.journeeEntiere) {
-    return `Émargement - ${dateStr} Journée`;
-  }
-
-  const parts: string[] = [];
-  if (session.matin) parts.push('Matin');
-  if (session.apresMidi) parts.push('Après-midi');
-
-  return `Émargement - ${dateStr} ${parts.join(' + ')}`;
+interface EmargementResult {
+  batchId: string;
+  documents: Array<{
+    documentId: string;
+    pdfUrl: string;
+    label: string;
+  }>;
 }
 
 /**
- * Génère le texte horaires pour affichage
- */
-function generateHorairesText(session: EmargementInput['sessions'][0]): string {
-  const lines: string[] = [];
-
-  if (session.journeeEntiere) {
-    if (session.matin) {
-      const debut = formatTimeFR(session.matin.debutISO);
-      const fin = formatTimeFR(session.matin.finISO);
-      lines.push(`Matin: ${debut} - ${fin}`);
-    }
-    if (session.apresMidi) {
-      const debut = formatTimeFR(session.apresMidi.debutISO);
-      const fin = formatTimeFR(session.apresMidi.finISO);
-      lines.push(`Après-midi: ${debut} - ${fin}`);
-    }
-  } else {
-    if (session.matin) {
-      const debut = formatTimeFR(session.matin.debutISO);
-      const fin = formatTimeFR(session.matin.finISO);
-      lines.push(`Matin: ${debut} - ${fin}`);
-    }
-    if (session.apresMidi) {
-      const debut = formatTimeFR(session.apresMidi.debutISO);
-      const fin = formatTimeFR(session.apresMidi.finISO);
-      lines.push(`Après-midi: ${debut} - ${fin}`);
-    }
-  }
-
-  return lines.join('\n');
-}
-
-/**
- * Génère un PDF Émargement pour une session
- */
-async function generateSingleEmargement(
-  input: EmargementInput,
-  session: EmargementInput['sessions'][0],
-  templateBuffer: Buffer
-): Promise<Buffer> {
-  const pdfDoc = await PDFDocument.load(templateBuffer);
-  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
-  const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-
-  const pages = pdfDoc.getPages();
-  const page = pages[0];
-
-  if (!page) {
-    throw new Error('Template PDF has no pages');
-  }
-
-  const coords = EMARGEMENT_FIELDS_COORDS;
-
-  // === FORMATION ===
-  page.drawText(sanitizeText(input.formationNom), {
-    x: coords['formation.nom'].x,
-    y: coords['formation.nom'].y,
-    size: coords['formation.nom'].fontSize,
-    font: fontBold,
-    color: rgb(0, 0, 0),
-  });
-
-  // === ORGANISME ===
-  page.drawText(`Organisme: ${sanitizeText(input.organismeNom)}`, {
-    x: coords['organisme.nom'].x,
-    y: coords['organisme.nom'].y,
-    size: coords['organisme.nom'].fontSize,
-    font,
-    color: rgb(0, 0, 0),
-  });
-
-  // === LIEU ===
-  page.drawText(`Lieu: ${sanitizeText(input.lieu)}`, {
-    x: coords['lieu'].x,
-    y: coords['lieu'].y,
-    size: coords['lieu'].fontSize,
-    font,
-    color: rgb(0, 0, 0),
-  });
-
-  // === FORMATEUR ===
-  page.drawText(
-    `Formateur: ${sanitizeText(input.formateur.prenom)} ${sanitizeText(input.formateur.nom)}`,
-    {
-      x: coords['formateur.prenom'].x,
-      y: coords['formateur.prenom'].y,
-      size: coords['formateur.prenom'].fontSize,
-      font,
-      color: rgb(0, 0, 0),
-    }
-  );
-
-  // === SESSION (date) ===
-  const dateStr = formatDateFR(session.dateISO);
-  page.drawText(`Date: ${dateStr}`, {
-    x: coords['session.date'].x,
-    y: coords['session.date'].y,
-    size: coords['session.date'].fontSize,
-    font: fontBold,
-    color: rgb(0, 0, 0),
-  });
-
-  // === HORAIRES ===
-  const horairesText = generateHorairesText(session);
-  page.drawText(horairesText, {
-    x: coords['session.horaires'].x,
-    y: coords['session.horaires'].y,
-    size: coords['session.horaires'].fontSize,
-    font,
-    color: rgb(0, 0, 0),
-    lineHeight: 12,
-  });
-
-  // Le reste du tableau de signatures est géré par le template PDF
-  // (lignes pré-imprimées pour signatures stagiaires)
-
-  const pdfBytes = await pdfDoc.save();
-  return Buffer.from(pdfBytes);
-}
-
-/**
- * Génère tous les PDFs Émargement (1 par session) et retourne le batch
+ * Génère des feuilles d'émargement (1 PDF par session)
  */
 export async function generateEmargement(
-  input: EmargementInput,
+  input: EmargementInputType,
   userId: number
 ): Promise<EmargementResult> {
   try {
-    // 1. Récupérer le template depuis Cloudinary
-    let templateBuffer: Buffer;
-    try {
-      templateBuffer = await getTemplateBuffer('EMARGEMENT');
-    } catch (error) {
-      console.warn(`Failed to load template, creating blank PDF:`, error);
-      // Créer un PDF vide par défaut
-      const blankPdf = await PDFDocument.create();
-      blankPdf.addPage([595, 842]); // A4 dimensions
-      const pdfBytes = await blankPdf.save();
-      templateBuffer = Buffer.from(pdfBytes);
-    }
+    const documents: Array<{
+      documentId: string;
+      pdfUrl: string;
+      label: string;
+    }> = [];
 
-    // 2. Créer un batch
-    const batch = await prisma.documentBatch.create({
-      data: {
-        kind: 'EMARGEMENT',
-        createdByUserId: userId,
-        count: input.sessions.length,
-      },
-    });
+    // Générer un batchId unique pour regrouper tous les PDFs
+    const batchId = `batch_${Date.now()}_${Math.random()
+      .toString(36)
+      .substring(7)}`;
 
-    // 3. Générer 1 PDF par session
-    const documents: EmargementResult['documents'] = [];
-
+    // Pour chaque session, générer un ou deux PDFs (matin ET/OU après-midi)
     for (const session of input.sessions) {
-      const label = generateSessionLabel(session);
+      const sessionDate = formatDateFR(session.dateISO);
 
-      // Générer le PDF
-      const pdfBuffer = await generateSingleEmargement(input, session, templateBuffer);
+      // Si matin existe
+      if (session.matin) {
+        const pdfData = await generateSingleEmargementPDF({
+          formationNom: input.formationNom,
+          entrepriseNom: input.entrepriseNom,
+          lieu: input.lieu,
+          formateur: input.formateur,
+          sessionDate: session.dateISO,
+          periode: "matin",
+          heureDebut: session.matin.debutISO,
+          heureFin: session.matin.finISO,
+          stagiaires: input.stagiaires,
+        });
 
-      // Générer le nom de fichier: emargement_[organisme]_[date]
-      const organismeName = sanitizeFilename(input.organismeNom);
-      const date = formatDateForFilename(session.dateISO);
-      const filename = `emargement_${organismeName}_${date}`;
+        // Upload vers Cloudinary
+        const filename = `emargement_${sanitizeFilename(
+          input.formationNom
+        )}_${formatDateForFilename(session.dateISO)}_matin`;
+        const { secure_url, public_id } = await uploadBuffer(
+          pdfData,
+          "emargements",
+          filename
+        );
 
-      // Upload vers Cloudinary
-      const { secure_url, public_id } = await uploadBuffer(pdfBuffer, 'emargements', filename);
+        // Persister en base
+        const doc = await prisma.generatedDocument.create({
+          data: {
+            kind: "EMARGEMENT",
+            createdByUserId: userId,
+            payloadJson: {
+              ...input,
+              batchId,
+              sessionDate: session.dateISO,
+              periode: "matin",
+            } as unknown as Record<string, string | number | boolean | null>,
+            pdfUrl: secure_url,
+            cloudinaryPublicId: public_id,
+          },
+        });
 
-      // Persister en base
-      const doc = await prisma.generatedDocument.create({
-        data: {
-          kind: 'EMARGEMENT',
-          createdByUserId: userId,
-          batchId: batch.id,
-          payloadJson: {
-            ...input,
-            session, // Session spécifique pour ce PDF
-          } as unknown as Record<string, string | number | boolean | null>,
-          pdfUrl: secure_url,
-          cloudinaryPublicId: public_id,
-        },
-      });
+        documents.push({
+          documentId: doc.id,
+          pdfUrl: doc.pdfUrl,
+          label: `${sessionDate} - Matin`,
+        });
+      }
 
-      documents.push({
-        documentId: doc.id,
-        pdfUrl: doc.pdfUrl,
-        label,
-      });
+      // Si après-midi existe
+      if (session.apresMidi) {
+        const pdfData = await generateSingleEmargementPDF({
+          formationNom: input.formationNom,
+          entrepriseNom: input.entrepriseNom,
+          lieu: input.lieu,
+          formateur: input.formateur,
+          sessionDate: session.dateISO,
+          periode: "après-midi",
+          heureDebut: session.apresMidi.debutISO,
+          heureFin: session.apresMidi.finISO,
+          stagiaires: input.stagiaires,
+        });
+
+        // Upload vers Cloudinary
+        const filename = `emargement_${sanitizeFilename(
+          input.formationNom
+        )}_${formatDateForFilename(session.dateISO)}_apresmidi`;
+        const { secure_url, public_id } = await uploadBuffer(
+          pdfData,
+          "emargements",
+          filename
+        );
+
+        // Persister en base
+        const doc = await prisma.generatedDocument.create({
+          data: {
+            kind: "EMARGEMENT",
+            createdByUserId: userId,
+            payloadJson: {
+              ...input,
+              batchId,
+              sessionDate: session.dateISO,
+              periode: "après-midi",
+            } as unknown as Record<string, string | number | boolean | null>,
+            pdfUrl: secure_url,
+            cloudinaryPublicId: public_id,
+          },
+        });
+
+        documents.push({
+          documentId: doc.id,
+          pdfUrl: doc.pdfUrl,
+          label: `${sessionDate} - Après-midi`,
+        });
+      }
     }
 
     return {
-      batchId: batch.id,
+      batchId,
       documents,
     };
   } catch (error) {
-    console.error('Error generating Émargement:', error);
+    console.error("Error generating Emargement:", error);
     throw error;
   }
+}
+
+/**
+ * Génère un seul PDF d'émargement pour une session donnée
+ */
+async function generateSingleEmargementPDF(params: {
+  formationNom: string;
+  entrepriseNom: string;
+  lieu: string;
+  formateur: { prenom: string; nom: string };
+  sessionDate: string;
+  periode: string;
+  heureDebut: string;
+  heureFin: string;
+  stagiaires: Array<{
+    prenom: string;
+    nom: string;
+    dateNaissanceISO: string;
+  }>;
+}): Promise<Buffer> {
+  // Constante : nombre maximum de stagiaires par page
+  const MAX_STAGIAIRES_PREMIERE_PAGE = 4;
+  const MAX_STAGIAIRES_PAGE_CONTINUATION = 10; // Plus d'espace sur les pages de continuation
+
+  // Calculer le nombre de pages nécessaires
+  let nombrePages = 1; // Au moins la première page
+  const stagiaireRestants =
+    params.stagiaires.length - MAX_STAGIAIRES_PREMIERE_PAGE;
+
+  if (stagiaireRestants > 0) {
+    nombrePages += Math.ceil(
+      stagiaireRestants / MAX_STAGIAIRES_PAGE_CONTINUATION
+    );
+  }
+
+  // 1. Générer le template de base avec le bon nombre de pages
+  // Première page avec 4 stagiaires max, pages suivantes avec 10 max
+  const pdfDoc = await generateEmargementTemplate(
+    nombrePages,
+    MAX_STAGIAIRES_PAGE_CONTINUATION
+  );
+
+  // 2. Charger les polices
+  const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+  // 3. Récupérer toutes les pages
+  const pages = pdfDoc.getPages();
+
+  // Préparer les données communes (formateur, formation, etc.)
+  const formateurNomComplet = `${sanitizeText(
+    params.formateur.prenom
+  )} ${sanitizeText(params.formateur.nom)}`;
+  const heureDebut = formatTimeFR(params.heureDebut);
+  const heureFin = formatTimeFR(params.heureFin);
+
+  // === REMPLISSAGE DE CHAQUE PAGE ===
+  // Diviser les stagiaires selon la capacité de chaque page
+  for (let pageIndex = 0; pageIndex < nombrePages; pageIndex++) {
+    const page = pages[pageIndex];
+    if (!page) continue;
+
+    const isFirstPage = pageIndex === 0;
+
+    // Calculer quels stagiaires vont sur cette page
+    let startIndex: number;
+    let endIndex: number;
+
+    if (isFirstPage) {
+      // Première page : 0 à 4 stagiaires
+      startIndex = 0;
+      endIndex = Math.min(
+        MAX_STAGIAIRES_PREMIERE_PAGE,
+        params.stagiaires.length
+      );
+    } else {
+      // Pages suivantes : groupes de 10
+      startIndex =
+        MAX_STAGIAIRES_PREMIERE_PAGE +
+        (pageIndex - 1) * MAX_STAGIAIRES_PAGE_CONTINUATION;
+      endIndex = Math.min(
+        startIndex + MAX_STAGIAIRES_PAGE_CONTINUATION,
+        params.stagiaires.length
+      );
+    }
+
+    const stagiairesPage = params.stagiaires.slice(startIndex, endIndex);
+
+    // === REMPLISSAGE DYNAMIQUE DE LA PAGE ===
+
+    if (isFirstPage) {
+      // PREMIÈRE PAGE : Toutes les informations
+
+      // EN-TÊTE: Nom de l'entreprise cliente en haut à droite
+      page.drawText(sanitizeText(params.entrepriseNom), {
+        x: COORDS.organismeNom.x,
+        y: COORDS.organismeNom.y,
+        size: 10,
+        font,
+        color: rgb(1, 1, 1),
+        maxWidth: 165,
+      });
+
+      // SECTION 1: FORMATION
+      page.drawText(sanitizeText(params.formationNom), {
+        x: COORDS.formationNom.x,
+        y: COORDS.formationNom.y,
+        size: 10,
+        font,
+        color: rgb(0, 0, 0),
+        maxWidth: 340,
+      });
+
+      page.drawText(formatDateFR(params.sessionDate), {
+        x: COORDS.formationDate.x,
+        y: COORDS.formationDate.y,
+        size: 10,
+        font,
+        color: rgb(0, 0, 0),
+      });
+
+      page.drawText(sanitizeText(params.lieu), {
+        x: COORDS.formationLieu.x,
+        y: COORDS.formationLieu.y,
+        size: 10,
+        font,
+        color: rgb(0, 0, 0),
+        maxWidth: 360,
+      });
+
+      // SECTION 2: FORMATEUR
+      page.drawText(formateurNomComplet, {
+        x: COORDS.formateurNom.x,
+        y: COORDS.formateurNom.y,
+        size: 10,
+        font,
+        color: rgb(0, 0, 0),
+      });
+
+      page.drawText(`${heureDebut} - ${heureFin}`, {
+        x: COORDS.formateurHeure.x,
+        y: COORDS.formateurHeure.y,
+        size: 9,
+        font,
+        color: rgb(0, 0, 0),
+      });
+    }
+
+    // SECTION 3: STAGIAIRES (Tableau)
+    // Remplir le tableau avec les stagiaires de cette page
+    // Utiliser les coordonnées appropriées selon la page
+    const baseYCoord = isFirstPage
+      ? COORDS.stagiaireNom.y
+      : COORDS.stagiaireNomContinuation.y;
+    const baseXNom = isFirstPage
+      ? COORDS.stagiaireNom.x
+      : COORDS.stagiaireNomContinuation.x;
+    const baseXPrenom = isFirstPage
+      ? COORDS.stagiairePrenom.x
+      : COORDS.stagiaireePrenomContinuation.x;
+    const baseXDateNaissance = isFirstPage
+      ? COORDS.stagiaireDateNaissance.x
+      : COORDS.stagiaireDateNaissanceContinuation.x;
+
+    stagiairesPage.forEach((stagiaire, indexInPage) => {
+      const yPosition = baseYCoord - indexInPage * COORDS.stagiaireLineHeight;
+
+      // Nom
+      page.drawText(sanitizeText(stagiaire.nom), {
+        x: baseXNom,
+        y: yPosition,
+        size: 10,
+        font,
+        color: rgb(0, 0, 0),
+      });
+
+      // Prénom
+      page.drawText(sanitizeText(stagiaire.prenom), {
+        x: baseXPrenom,
+        y: yPosition,
+        size: 10,
+        font,
+        color: rgb(0, 0, 0),
+      });
+
+      // Date de naissance
+      page.drawText(formatDateFR(stagiaire.dateNaissanceISO), {
+        x: baseXDateNaissance,
+        y: yPosition,
+        size: 9,
+        font,
+        color: rgb(0, 0, 0),
+      });
+
+      // La colonne "Signature" reste vide pour signature manuscrite
+    });
+  }
+
+  // 4. Sérialiser le PDF final
+  const pdfBytes = await pdfDoc.save();
+  return Buffer.from(pdfBytes);
 }

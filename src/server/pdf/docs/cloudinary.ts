@@ -1,5 +1,9 @@
 /**
  * Cloudinary helpers pour les documents Convention et Émargement
+ *
+ * Les templates PDF sont maintenant générés programmatiquement via:
+ * - generateConventionTemplate() pour les conventions
+ * - generateEmargementTemplate() pour les feuilles d'émargement
  */
 import { v2 as cloudinary } from 'cloudinary';
 
@@ -9,31 +13,6 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
-/**
- * Récupère le buffer du template depuis le système de fichiers local
- * Les templates sont stockés dans public/templates/
- */
-export async function getTemplateBuffer(kind: 'CONVENTION' | 'EMARGEMENT'): Promise<Buffer> {
-  const fs = await import('fs/promises');
-  const path = await import('path');
-
-  const templateName = kind === 'CONVENTION'
-    ? 'convention_template.pdf'
-    : 'emargement_template.pdf';
-
-  const templatePath = path.join(process.cwd(), 'public', 'templates', templateName);
-
-  try {
-    console.log(`[${kind}] Reading template from: ${templatePath}`);
-    const buffer = await fs.readFile(templatePath);
-    console.log(`✓ [${kind}] Successfully loaded template (${buffer.length} bytes)`);
-    return buffer;
-  } catch (error) {
-    console.error(`[${kind}] Error reading template:`, error);
-    throw new Error(`Failed to read template ${templateName}: ${error instanceof Error ? error.message : 'Unknown error'}`);
-  }
-}
 
 /**
  * Upload d'un buffer PDF généré vers Cloudinary

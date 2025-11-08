@@ -1,13 +1,50 @@
 /**
- * Service de génération de Convention
- * Génère un PDF unique avec toutes les informations
+ * Service de génération de Convention - VERSION TEMPLATE PROGRAMMATIQUE
+ * Génère un PDF de 2 pages avec un template créé programmatiquement
+ * Plus besoin de masquer des placeholders, le template est généré à la volée
  */
-import { PDFDocument, StandardFonts, rgb } from 'pdf-lib';
-import { prisma } from '@/lib/prisma';
-import { getTemplateBuffer, uploadBuffer } from './cloudinary';
-import { formatDateFR, formatTimeFR, formatMoneyEUR, countUniqueDays, sanitizeText, sanitizeFilename, formatDateForFilename } from './format';
-import { CONVENTION_FIELDS_COORDS, TABLE_CONFIG } from './coordinates';
-import type { ConventionInput, ConventionResult } from './types';
+import { prisma } from "@/lib/prisma";
+import { StandardFonts, rgb } from "pdf-lib";
+import { generateConventionTemplate } from "../templates/conventionTemplate";
+import { uploadBuffer } from "./cloudinary";
+import {
+  countUniqueDays,
+  formatDateFR,
+  formatDateForFilename,
+  formatMoneyEUR,
+  formatTimeFR,
+  sanitizeFilename,
+  sanitizeText,
+} from "./format";
+import type { ConventionInput, ConventionResult } from "./types";
+
+/**
+ * Coordonnées pour le remplissage dynamique
+ * Les valeurs doivent correspondre aux labels dans conventionTemplate.ts
+ */
+const COORDS = {
+  // Page 1 - Préambule
+  entrepriseInfo: { x: 60, y: 685 }, // Ligne "2 - [entreprise]"
+
+  // Page 1 - Article 1 (encadré formation)
+  // Les valeurs sont positionnées À DROITE des labels (sur la même ligne)
+  // labelX = 60, les labels font environ 160-170px de large
+  formationNom: { x: 150, y: 585 }, // Après "Intitulé du stage:" (label à x:60)
+  formationDuree: { x: 80, y: 562 }, // Après "Durée:" (label court, à x:60)
+  formationLieu: { x: 160, y: 542 }, // Après "Lieu (adresse exacte):" (label à x:60)
+  formationDates: { x: 155, y: 527 }, // Après "Dates et horaires:" (label à x:60)
+
+  // Page 1 - Article 2 (tableau stagiaires)
+  tableStartY: 363,
+  colNomX: 135,
+  colPrenomX: 275,
+  colDateNaissanceX: 415,
+  lineHeight: 15,
+
+  // Page 1 - Article 3 (tarifs)
+  tarifUnitaire: { x: 300, y: 240 }, // Après "Frais de formation : coût unitaire/stagiaire Net de TVA:"
+  totalGeneral: { x: 150, y: 222 }, // Après "TOTAL GENERAL :" en gras
+} as const;
 
 /**
  * Génère un PDF Convention depuis les données saisies
@@ -17,252 +54,180 @@ export async function generateConvention(
   userId: number
 ): Promise<ConventionResult> {
   try {
-    // 1. Récupérer le template depuis Cloudinary
-    let templateBuffer: Buffer;
-    try {
-      templateBuffer = await getTemplateBuffer('CONVENTION');
-    } catch (error) {
-      console.warn(`Failed to load template, creating blank PDF:`, error);
-      // Créer un PDF vide par défaut
-      const blankPdf = await PDFDocument.create();
-      blankPdf.addPage([595, 842]); // A4 dimensions
-      const pdfBytes = await blankPdf.save();
-      templateBuffer = Buffer.from(pdfBytes);
-    }
+    // 1. Générer le template de base (2 pages)
+    const pdfDoc = await generateConventionTemplate();
 
-    // 2. Charger le PDF avec pdf-lib
-    const pdfDoc = await PDFDocument.load(templateBuffer);
+    // 2. Charger les polices
     const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
     const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
+    // 3. Récupérer les pages
     const pages = pdfDoc.getPages();
-    const currentPage = pages[0];
+    const page1 = pages[0];
+    if (!page1) throw new Error("Page 1 not found");
 
-    if (!currentPage) {
-      throw new Error('Template PDF has no pages');
+    // === REMPLISSAGE DYNAMIQUE - PAGE 1 ===
+
+    // Informations entreprise (ligne complète)
+    const entrepriseText = `${sanitizeText(input.societe.nom)}, ${sanitizeText(
+      input.societe.siret
+    )}, ${sanitizeText(input.societe.adresse)}, représentée par ${sanitizeText(
+      input.societe.representantPrenom
+    )} ${sanitizeText(input.societe.representantNom)}`;
+
+    page1.drawText(entrepriseText, {
+      x: COORDS.entrepriseInfo.x,
+      y: COORDS.entrepriseInfo.y,
+      size: 10,
+      font,
+      color: rgb(0, 0, 0),
+      maxWidth: 475,
+      lineHeight: 12,
+    });
+
+    // Formation - Intitulé
+    page1.drawText(sanitizeText(input.formation.nom), {
+      x: COORDS.formationNom.x,
+      y: COORDS.formationNom.y,
+      size: 10,
+      font,
+      color: rgb(0, 0, 0),
+      maxWidth: 280,
+    });
+
+    // Formation - Durée
+    page1.drawText(`${input.formation.dureeHeures} heures`, {
+      x: COORDS.formationDuree.x,
+      y: COORDS.formationDuree.y,
+      size: 10,
+      font,
+      color: rgb(0, 0, 0),
+    });
+
+    // Formation - Lieu
+    page1.drawText(sanitizeText(input.formation.lieu), {
+      x: COORDS.formationLieu.x,
+      y: COORDS.formationLieu.y,
+      size: 10,
+      font,
+      color: rgb(0, 0, 0),
+      maxWidth: 250,
+    });
+
+    // Formation - Dates et horaires
+    const datesHorairesText = input.datesEtHoraires
+      .map((session) => {
+        const dateStr = formatDateFR(session.dateISO);
+        const debutStr = formatTimeFR(session.debutISO);
+        const finStr = formatTimeFR(session.finISO);
+        return `${dateStr} de ${debutStr} à ${finStr}`;
+      })
+      .join(", ");
+
+    page1.drawText(datesHorairesText, {
+      x: COORDS.formationDates.x,
+      y: COORDS.formationDates.y,
+      size: 10,
+      font,
+      color: rgb(0, 0, 0),
+      maxWidth: 275,
+      lineHeight: 12,
+    });
+
+    // === TABLEAU DES STAGIAIRES ===
+    let yPos = COORDS.tableStartY;
+
+    for (const candidat of input.effectif) {
+      // Arrêter si on déborde
+      if (yPos < 220) {
+        console.warn("Too many trainees, some may overflow the page");
+        break;
+      }
+
+      // Nom
+      page1.drawText(sanitizeText(candidat.nom), {
+        x: COORDS.colNomX,
+        y: yPos,
+        size: 9,
+        font,
+        color: rgb(0, 0, 0),
+      });
+
+      // Prénom
+      page1.drawText(sanitizeText(candidat.prenom), {
+        x: COORDS.colPrenomX,
+        y: yPos,
+        size: 9,
+        font,
+        color: rgb(0, 0, 0),
+      });
+
+      // Date de naissance
+      page1.drawText(formatDateFR(candidat.dateNaissanceISO), {
+        x: COORDS.colDateNaissanceX,
+        y: yPos,
+        size: 9,
+        font,
+        color: rgb(0, 0, 0),
+      });
+
+      yPos -= COORDS.lineHeight;
     }
 
-    // 3. Dessiner les champs fixes
+    // === TARIFS ===
+    const nbJours = countUniqueDays(
+      input.datesEtHoraires.map((d) => d.dateISO)
+    );
+    const total = input.tarifJournalierEUR * nbJours;
 
-    // === SOCIÉTÉ ===
-    const coords = CONVENTION_FIELDS_COORDS;
-    currentPage.drawText(sanitizeText(input.societe.nom), {
-      x: coords['societe.nom'].x,
-      y: coords['societe.nom'].y,
-      size: coords['societe.nom'].fontSize,
-      font: fontBold,
-      color: rgb(0, 0, 0),
-    });
-
-    currentPage.drawText(`SIRET: ${sanitizeText(input.societe.siret)}`, {
-      x: coords['societe.siret'].x,
-      y: coords['societe.siret'].y,
-      size: coords['societe.siret'].fontSize,
-      font,
-      color: rgb(0, 0, 0),
-    });
-
-    currentPage.drawText(sanitizeText(input.societe.adresse), {
-      x: coords['societe.adresse'].x,
-      y: coords['societe.adresse'].y,
-      size: coords['societe.adresse'].fontSize,
-      font,
-      color: rgb(0, 0, 0),
-    });
-
-    currentPage.drawText(
-      `Représenté(e) par: ${sanitizeText(input.societe.representantPrenom)} ${sanitizeText(input.societe.representantNom)}`,
+    // Tarif unitaire (ajouter "euros" après le montant)
+    page1.drawText(
+      formatMoneyEUR(input.tarifJournalierEUR).replace("€", "euros"),
       {
-        x: coords['societe.representantPrenom'].x,
-        y: coords['societe.representantPrenom'].y,
-        size: coords['societe.representantPrenom'].fontSize,
+        x: COORDS.tarifUnitaire.x,
+        y: COORDS.tarifUnitaire.y,
+        size: 10,
         font,
         color: rgb(0, 0, 0),
       }
     );
 
-    // === FORMATION ===
-    currentPage.drawText(sanitizeText(input.formation.nom), {
-      x: coords['formation.nom'].x,
-      y: coords['formation.nom'].y,
-      size: coords['formation.nom'].fontSize,
+    // Total général (en gras, taille 11)
+    page1.drawText(formatMoneyEUR(total) + " Net", {
+      x: COORDS.totalGeneral.x,
+      y: COORDS.totalGeneral.y,
+      size: 11,
       font: fontBold,
       color: rgb(0, 0, 0),
     });
 
-    // Objectifs (concaténés)
-    const objectifsText = input.formation.objectifsOperationnels
-      .map((obj, i) => `${i + 1}. ${sanitizeText(obj)}`)
-      .join('\n');
-
-    currentPage.drawText(objectifsText, {
-      x: coords['formation.objectifsOperationnels'].x,
-      y: coords['formation.objectifsOperationnels'].y,
-      size: coords['formation.objectifsOperationnels'].fontSize,
-      font,
-      color: rgb(0, 0, 0),
-      lineHeight: 12,
-    });
-
-    currentPage.drawText(`Durée: ${input.formation.dureeHeures}h`, {
-      x: coords['formation.dureeHeures'].x,
-      y: coords['formation.dureeHeures'].y,
-      size: coords['formation.dureeHeures'].fontSize,
-      font,
-      color: rgb(0, 0, 0),
-    });
-
-    currentPage.drawText(`Lieu: ${sanitizeText(input.formation.lieu)}`, {
-      x: coords['formation.lieu'].x,
-      y: coords['formation.lieu'].y,
-      size: coords['formation.lieu'].fontSize,
-      font,
-      color: rgb(0, 0, 0),
-    });
-
-    // 4. Tableau des dates et horaires
-    const tableConfig = TABLE_CONFIG.DATES;
-    let yPos = tableConfig.startY;
-
-    currentPage.drawText('Dates et Horaires:', {
-      x: coords['dates.header'].x,
-      y: coords['dates.header'].y,
-      size: coords['dates.header'].fontSize,
-      font: fontBold,
-      color: rgb(0, 0, 0),
-    });
-
-    for (const session of input.datesEtHoraires) {
-      const dateStr = formatDateFR(session.dateISO);
-      const debutStr = formatTimeFR(session.debutISO);
-      const finStr = formatTimeFR(session.finISO);
-
-      currentPage.drawText(dateStr, {
-        x: tableConfig.columns.date.x,
-        y: yPos,
-        size: 9,
-        font,
-        color: rgb(0, 0, 0),
-      });
-
-      currentPage.drawText(debutStr, {
-        x: tableConfig.columns.debut.x,
-        y: yPos,
-        size: 9,
-        font,
-        color: rgb(0, 0, 0),
-      });
-
-      currentPage.drawText(finStr, {
-        x: tableConfig.columns.fin.x,
-        y: yPos,
-        size: 9,
-        font,
-        color: rgb(0, 0, 0),
-      });
-
-      yPos -= tableConfig.lineHeight;
-
-      // Si débordement, dupliquer la page (MVP: on suppose que ça tient)
-      // TODO: gérer le débordement si nécessaire
-    }
-
-    // 5. Tableau effectif
-    const effectifConfig = TABLE_CONFIG.EFFECTIF;
-    yPos = effectifConfig.startY;
-
-    currentPage.drawText('Effectif:', {
-      x: coords['effectif.header'].x,
-      y: coords['effectif.header'].y,
-      size: coords['effectif.header'].fontSize,
-      font: fontBold,
-      color: rgb(0, 0, 0),
-    });
-
-    for (const candidat of input.effectif) {
-      currentPage.drawText(sanitizeText(candidat.prenom), {
-        x: effectifConfig.columns.prenom.x,
-        y: yPos,
-        size: 9,
-        font,
-        color: rgb(0, 0, 0),
-      });
-
-      currentPage.drawText(sanitizeText(candidat.nom), {
-        x: effectifConfig.columns.nom.x,
-        y: yPos,
-        size: 9,
-        font,
-        color: rgb(0, 0, 0),
-      });
-
-      currentPage.drawText(formatDateFR(candidat.dateNaissanceISO), {
-        x: effectifConfig.columns.dateNaissance.x,
-        y: yPos,
-        size: 9,
-        font,
-        color: rgb(0, 0, 0),
-      });
-
-      yPos -= effectifConfig.lineHeight;
-    }
-
-    // 6. Calcul des frais
-    const nbJours = countUniqueDays(input.datesEtHoraires.map(d => d.dateISO));
-    const total = input.tarifJournalierEUR * nbJours;
-
-    currentPage.drawText(`Tarif journalier: ${formatMoneyEUR(input.tarifJournalierEUR)}`, {
-      x: coords['frais.tarifJournalier'].x,
-      y: coords['frais.tarifJournalier'].y,
-      size: coords['frais.tarifJournalier'].fontSize,
-      font,
-      color: rgb(0, 0, 0),
-    });
-
-    currentPage.drawText(`Nombre de jours: ${nbJours}`, {
-      x: coords['frais.nbJours'].x,
-      y: coords['frais.nbJours'].y,
-      size: coords['frais.nbJours'].fontSize,
-      font,
-      color: rgb(0, 0, 0),
-    });
-
-    currentPage.drawText(`TOTAL: ${formatMoneyEUR(total)}`, {
-      x: coords['frais.total'].x,
-      y: coords['frais.total'].y,
-      size: coords['frais.total'].fontSize,
-      font: fontBold,
-      color: rgb(0, 0, 0),
-    });
-
-    // Signature date (aujourd'hui)
-    const today = new Date().toISOString();
-    currentPage.drawText(`Fait le: ${formatDateFR(today)}`, {
-      x: coords['signature.date'].x,
-      y: coords['signature.date'].y,
-      size: coords['signature.date'].fontSize,
-      font,
-      color: rgb(0, 0, 0),
-    });
-
-    // 7. Sérialiser le PDF
+    // 4. Sérialiser le PDF final
     const pdfBytes = await pdfDoc.save();
     const pdfBuffer = Buffer.from(pdfBytes);
 
-    // 8. Générer le nom de fichier: convention_[nom-entreprise]_[date]
+    // 5. Générer le nom de fichier: convention_[nom-entreprise]_[date]
     const companyName = sanitizeFilename(input.societe.nom);
-    const date = formatDateForFilename(input.datesEtHoraires[0]?.dateISO || new Date().toISOString());
+    const date = formatDateForFilename(
+      input.datesEtHoraires[0]?.dateISO || new Date().toISOString()
+    );
     const filename = `convention_${companyName}_${date}`;
 
-    // 9. Upload vers Cloudinary
-    const { secure_url, public_id } = await uploadBuffer(pdfBuffer, 'conventions', filename);
+    // 6. Upload vers Cloudinary
+    const { secure_url, public_id } = await uploadBuffer(
+      pdfBuffer,
+      "conventions",
+      filename
+    );
 
-    // 9. Persister en base
+    // 7. Persister en base
     const doc = await prisma.generatedDocument.create({
       data: {
-        kind: 'CONVENTION',
+        kind: "CONVENTION",
         createdByUserId: userId,
-        payloadJson: input as unknown as Record<string, string | number | boolean | null>,
+        payloadJson: input as unknown as Record<
+          string,
+          string | number | boolean | null
+        >,
         pdfUrl: secure_url,
         cloudinaryPublicId: public_id,
       },
@@ -273,7 +238,7 @@ export async function generateConvention(
       pdfUrl: doc.pdfUrl,
     };
   } catch (error) {
-    console.error('Error generating Convention:', error);
+    console.error("Error generating Convention:", error);
     throw error;
   }
 }

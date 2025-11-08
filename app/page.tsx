@@ -7,11 +7,10 @@ import CTADevis from "@/components/Section/CTADevis";
 import PartnerCTA from "@/components/Section/PartnerCTA";
 import SocialProof from "@/components/Section/SocialProof";
 import Top10Formations from "@/components/Section/Top10Formations";
-import Badge from "@/components/UI/Badge";
 import Heading from "@/components/UI/Heading";
+import { createMetadata } from "@/lib/metadata";
 import { CategoriesService } from "@/services/categories.service";
 import { FormationsService } from "@/services/formations.service";
-import { createMetadata } from "@/lib/metadata";
 
 export const metadata = createMetadata({
   title: "Form Me - Formations Professionnelles",
@@ -95,14 +94,13 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
       />
       <main>
-        <HeroSection className="flex flex-col gap-16 md:gap-36">
+        <HeroSection className="flex flex-col gap-16">
           <Heading
             level={1}
-            className="max-w-[300px] md:max-w-[500px] text-center flex flex-col items-center gap-2"
+            className="max-w-[300px] md:max-w-[830px] text-start flex flex-col items-center gap-2"
           >
-            Développez vos compétences avec
-            <br />
-            <Badge className="w-fit">form.me</Badge>
+            On aide les entreprises et particuliers à se former rapidement et
+            efficacement
           </Heading>
           <SearchFormation categories={categoryOptions} />
         </HeroSection>

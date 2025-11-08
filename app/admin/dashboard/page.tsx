@@ -258,6 +258,14 @@ export default function AdminDashboard() {
                   <UserPlus className="w-4 h-4 mr-2" />
                   Inviter utilisateur
                 </Button>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  onClick={() => router.push("/admin/docs/new")}
+                >
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  Crée un document PDF
+                </Button>
               </div>
             </div>
 

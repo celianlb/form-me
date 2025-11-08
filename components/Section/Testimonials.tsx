@@ -119,7 +119,7 @@ export default function Testimonials() {
             alt="Star"
             className="text-white"
           />
-          Noté par plus de 1000 étudiants
+          Noté par plus de 1000 stagiaires
         </p>
       </div>
 

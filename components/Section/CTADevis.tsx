@@ -21,7 +21,7 @@ export default function CTADevis() {
               height={40}
               alt="mail svg"
             />
-            <p>form.me@gmail.com</p>
+            <p>contact@form-me.fr</p>
           </div>
           <div className="flex gap-2 items-center">
             <Image
