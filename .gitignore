@@ -45,7 +45,7 @@ next-env.d.ts
 package-lock.json
 
 # pnpm
-pnpm-lock.yaml
+# pnpm-lock.yaml  # Keep lockfile for Vercel deployments
 
 /generated/prisma
 packages/database/generated
