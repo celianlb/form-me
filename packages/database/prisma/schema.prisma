@@ -119,6 +119,10 @@ model User {
 
   // Training Sessions
   sessionsCreated         TrainingSession[] @relation("SessionCreatedBy")
+
+  // Performance indexes
+  @@index([role, isActive])
+  @@index([isActive])
 }
 
 /**
@@ -132,6 +136,9 @@ model Category {
   imageUrl    String? // URL Cloudinary de l'image de couverture
 
   trainings Training[]
+
+  // Performance indexes
+  @@index([name])
 }
 
 model Training {
@@ -182,6 +189,11 @@ model Training {
   versions      TrainingVersion[]
   objectives    TrainingObjective[]
   sessions      TrainingSession[]
+
+  // Performance indexes for public queries
+  @@index([status, isActive])
+  @@index([categoryId, status, isActive])
+  @@index([isActive, status])
 }
 
 model TrainingModule {
@@ -203,6 +215,9 @@ model TrainingObjective {
   text       String
 
   training Training @relation(fields: [trainingId], references: [id])
+
+  // Performance index
+  @@index([trainingId])
 }
 
 /**
@@ -258,6 +273,10 @@ model Support {
 
   training Training        @relation(fields: [trainingId], references: [id])
   access   AccessSupport[]
+
+  // Performance indexes
+  @@index([trainingId, isActive])
+  @@index([trainingId])
 }
 
 /**
@@ -298,6 +317,10 @@ model SupportGroup {
   createdBy User?    @relation("SupportGroupCreatedBy", fields: [createdById], references: [id])
 
   members SupportGroupMember[]
+
+  // Performance indexes
+  @@index([trainingId, isActive])
+  @@index([trainingId])
 }
 
 model SupportGroupMember {
@@ -312,6 +335,10 @@ model SupportGroupMember {
   user  User         @relation(fields: [userId], references: [id])
 
   @@unique([groupId, userId])
+
+  // Performance indexes
+  @@index([userId, status])
+  @@index([groupId, status])
 }
 
 /**
@@ -355,6 +382,12 @@ model Quote {
 
   training Training?        @relation(fields: [trainingId], references: [id])
   session  TrainingSession? @relation(fields: [sessionId], references: [id])
+
+  // Performance indexes
+  @@index([trainingId, status])
+  @@index([sessionId])
+  @@index([status, createdAt])
+  @@index([createdAt])
 }
 
 /**

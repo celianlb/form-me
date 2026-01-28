@@ -51,56 +51,46 @@ export class FormationsService {
   }
 
   // Récupérer des formations aléatoires (pour Top 10)
+  // OPTIMIZED: 2 queries instead of N+1 (was 11 queries for limit=10)
   static async getRandomFormations(
     limit: number = 10
   ): Promise<FormationCardData[]> {
-    // Première requête pour compter le total
-    const totalCount = await prisma.training.count({
+    // Step 1: Fetch only IDs (small payload, fast query)
+    const allIds = await prisma.training.findMany({
       where: {
         isActive: true,
         status: "PUBLISHED",
       },
+      select: { id: true },
     });
 
-    if (totalCount === 0) return [];
+    if (allIds.length === 0) return [];
 
-    // Générer des IDs aléatoires
-    const randomSkips = Array.from(
-      { length: Math.min(limit, totalCount) },
-      () => Math.floor(Math.random() * totalCount)
-    );
+    // Step 2: Shuffle IDs using Fisher-Yates algorithm and take limit
+    const shuffled = [...allIds];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    const selectedIds = shuffled.slice(0, limit).map((f) => f.id);
 
-    // Récupérer les formations à ces positions
-    const formations = await Promise.all(
-      randomSkips.map((skip) =>
-        prisma.training.findMany({
-          where: {
-            isActive: true,
-            status: "PUBLISHED",
-          },
-          select: {
-            id: true,
-            title: true,
-            slug: true,
-            shortDescription: true,
-            durationHours: true,
-            durationDays: true,
-            imageUrl: true,
-          },
-          skip,
-          take: 1,
-        })
-      )
-    );
+    // Step 3: Single query to get full data for selected IDs
+    const formations = await prisma.training.findMany({
+      where: {
+        id: { in: selectedIds },
+      },
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        shortDescription: true,
+        durationHours: true,
+        durationDays: true,
+        imageUrl: true,
+      },
+    });
 
-    // Aplatir le tableau et éliminer les doublons
-    const flatFormations = formations.flat();
-    const uniqueFormations = flatFormations.filter(
-      (formation, index, self) =>
-        self.findIndex((f) => f.id === formation.id) === index
-    );
-
-    return uniqueFormations.map((formation) =>
+    return formations.map((formation) =>
       this.transformToCardData(formation as FormationFromDB)
     );
   }

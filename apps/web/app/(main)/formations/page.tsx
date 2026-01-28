@@ -1,7 +1,10 @@
 import CategorySection from "@/components/Section/CategorySection";
 import Top10Formations from "@/components/Section/Top10Formations";
 import { createMetadata } from "@/lib/metadata";
-import { FormationsService } from "@/services/formations.service";
+import {
+  getAllFormationsCached,
+  getRandomFormationsCached,
+} from "@/lib/cached-queries";
 import Link from "next/link";
 import { Suspense } from "react";
 import AllFormationsClient from "./AllFormationsClient";
@@ -26,9 +29,10 @@ export const metadata = createMetadata({
 
 export default async function FormationsPage() {
   // Récupérer les formations et top formations en parallèle
+  // Uses React cache() for deduplication within request
   const [formations, topFormations] = await Promise.all([
-    FormationsService.getAllFormations(),
-    FormationsService.getRandomFormations(10),
+    getAllFormationsCached(),
+    getRandomFormationsCached(10),
   ]);
 
   return (

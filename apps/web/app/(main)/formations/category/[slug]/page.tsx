@@ -1,7 +1,11 @@
 import Top10Formations from "@/components/Section/Top10Formations";
 import { createMetadata } from "@/lib/metadata";
-import { CategoriesService } from "@/services/categories.service";
-import { FormationsService } from "@/services/formations.service";
+import {
+  getAllCategoriesCached,
+  getCategoryBySlugCached,
+  getFormationsByCategoryCached,
+  getRandomFormationsCached,
+} from "@/lib/cached-queries";
 import { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -16,7 +20,8 @@ export async function generateMetadata({
   params,
 }: CategoryPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const category = await CategoriesService.getCategoryBySlug(slug);
+  // Uses React cache() to deduplicate with page component call
+  const category = await getCategoryBySlugCached(slug);
 
   if (!category) {
     return createMetadata({
@@ -47,12 +52,12 @@ export async function generateMetadata({
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { slug } = await params;
 
-  const topFormations = await FormationsService.getRandomFormations(10);
-
+  // Uses React cache() for deduplication within request
   // Récupérer la catégorie et les formations en parallèle
-  const [category, formations] = await Promise.all([
-    CategoriesService.getCategoryBySlug(slug),
-    FormationsService.getFormationsByCategory(slug),
+  const [category, formations, topFormations] = await Promise.all([
+    getCategoryBySlugCached(slug),
+    getFormationsByCategoryCached(slug),
+    getRandomFormationsCached(10),
   ]);
 
   // Si la catégorie n'existe pas, retourner 404
@@ -104,7 +109,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 // Générer les paramètres statiques pour la construction
 export async function generateStaticParams() {
   try {
-    const categories = await CategoriesService.getAllCategories();
+    const categories = await getAllCategoriesCached();
 
     return categories.map((category) => ({
       slug: category.slug,

@@ -1,5 +1,8 @@
 import Top10Formations from "@/components/Section/Top10Formations";
-import { FormationsService } from "@/services/formations.service";
+import {
+  getFullFormationBySlugCached,
+  getRandomFormationsCached,
+} from "@/lib/cached-queries";
 import { notFound } from "next/navigation";
 import FormationDetails from "./FormationDetails";
 import HeroSection from "./HeroSection";
@@ -14,7 +17,8 @@ export async function generateMetadata({
   params,
 }: FormationPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const formation = await FormationsService.getFullFormationBySlug(slug);
+  // Uses React cache() to deduplicate with page component call
+  const formation = await getFullFormationBySlugCached(slug);
 
   if (!formation) {
     return createMetadata({
@@ -52,13 +56,15 @@ export async function generateMetadata({
 export default async function FormationPage({ params }: FormationPageProps) {
   const { slug } = await params;
 
-  const formation = await FormationsService.getFullFormationBySlug(slug);
+  // Uses React cache() - deduplicated with generateMetadata call (1 DB call instead of 2)
+  const formation = await getFullFormationBySlugCached(slug);
 
   if (!formation) {
     notFound();
   }
 
-  let topFormations = await FormationsService.getRandomFormations(10).catch((error) => {
+  // Uses React cache() for deduplication within request
+  const topFormations = await getRandomFormationsCached(10).catch((error) => {
     console.error("[FormationPage] Error fetching random formations:", error);
     return [];
   });
