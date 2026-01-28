@@ -10,8 +10,8 @@ export default async function CategorySection() {
     return null;
   }
 
-  // On prend les 6 catégories pour le bento (les 6 blocs)
-  const displayCategories = categories.slice(0, 6);
+  // Toutes les catégories (7)
+  const displayCategories = categories;
 
   return (
     <section className="py-[90px] px-10 md:px-[120px]">
@@ -83,7 +83,7 @@ export default async function CategorySection() {
           )}
         </div>
 
-        {/* Quatrième colonne - 1 card flexible + CTA "Voir tout" */}
+        {/* Quatrième colonne - 1 card grande + 2 petites cards + CTA */}
         <div className="flex flex-col gap-4">
           {displayCategories[5] && (
             <CategoryCard
@@ -91,7 +91,16 @@ export default async function CategorySection() {
               nombreFormations={displayCategories[5].trainingCount}
               slug={displayCategories[5].slug}
               imageUrl={displayCategories[5].imageUrl}
-              size="flex"
+              size="small"
+            />
+          )}
+          {displayCategories[6] && (
+            <CategoryCard
+              titre={displayCategories[6].name}
+              nombreFormations={displayCategories[6].trainingCount}
+              slug={displayCategories[6].slug}
+              imageUrl={displayCategories[6].imageUrl}
+              size="small"
             />
           )}
           <Link
