@@ -5,20 +5,20 @@ import Button from "@/components/UI/Button";
 import FileUpload from "@/components/UI/FileUpload";
 import Heading from "@/components/UI/Heading";
 import {
-  Building2,
-  FileText,
-  Mail,
-  Phone,
-  User,
-  Clock,
   Banknote,
   BookOpen,
-  Users,
-  Percent,
-  Receipt,
-  Headphones,
-  Sparkles,
+  Building2,
   Check,
+  Clock,
+  FileText,
+  Headphones,
+  Mail,
+  Percent,
+  Phone,
+  Receipt,
+  Sparkles,
+  User,
+  Users,
 } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -219,28 +219,6 @@ export default function NousRejoindre() {
                 ))}
               </div>
 
-              {/* Tarif exemple card */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 mb-6">
-                <p className="text-xs font-satoshi text-white/60 mb-3 uppercase tracking-wide">
-                  Exemple de tarifs partenaire
-                </p>
-                <div className="space-y-2">
-                  {tarifExemples.map((tarif, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between items-center"
-                    >
-                      <span className="text-white/80 font-satoshi text-sm">
-                        {tarif.formation}
-                      </span>
-                      <span className="font-satoshi font-bold text-white">
-                        {tarif.prix}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
               <div className="mt-auto">
                 <Button
                   variant="light"
@@ -434,7 +412,11 @@ export default function NousRejoindre() {
               )}
 
               <div className="pt-4">
-                <Button type="submit" variant="dark" className="w-full md:w-auto">
+                <Button
+                  type="submit"
+                  variant="dark"
+                  className="w-full md:w-auto"
+                >
                   Envoyer ma candidature
                 </Button>
               </div>

@@ -1,3 +1,5 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: [
@@ -17,5 +19,11 @@ const nextConfig = {
     unoptimized: process.env.NODE_ENV === 'development',
   },
 };
+
+// Configuration spécifique à la production pour Vercel
+// Permet de trouver les fichiers Prisma dans le monorepo
+if (process.env.NODE_ENV === 'production') {
+  nextConfig.outputFileTracingRoot = path.join(__dirname, '../../');
+}
 
 module.exports = nextConfig;
