@@ -1,5 +1,7 @@
 import { CategoriesService } from "@/services/categories.service";
 import CategoryCard from "../UI/CategoryCard";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export default async function CategorySection() {
   const categories = await CategoriesService.getCategoriesWithTrainingCount();
@@ -81,17 +83,28 @@ export default async function CategorySection() {
           )}
         </div>
 
-        {/* Quatrième colonne - 1 grande card */}
-        <div className="flex flex-col">
+        {/* Quatrième colonne - 1 card flexible + CTA "Voir tout" */}
+        <div className="flex flex-col gap-4">
           {displayCategories[5] && (
             <CategoryCard
               titre={displayCategories[5].name}
               nombreFormations={displayCategories[5].trainingCount}
               slug={displayCategories[5].slug}
               imageUrl={displayCategories[5].imageUrl}
-              size="large"
+              size="flex"
             />
           )}
+          <Link
+            href="/formations"
+            className="flex items-center justify-between p-6 rounded-3xl border border-gray-200 bg-transparent group hover:bg-gray-50 transition-all duration-300"
+          >
+            <span className="text-darkBlue font-sora font-bold text-lg">
+              Voir tout
+            </span>
+            <div className="bg-gray-100 rounded-full p-2.5 group-hover:scale-110 transition-transform duration-300">
+              <ArrowRight className="w-4 h-4 text-darkBlue" />
+            </div>
+          </Link>
         </div>
       </div>
     </section>

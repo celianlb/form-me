@@ -1,4 +1,3 @@
-import Badge from "@/components/UI/Badge";
 import { FormationWithDetails } from "@/types/formationDetails";
 import Image from "next/image";
 import SessionsSection from "./SessionsSection";
@@ -43,11 +42,13 @@ export default function HeroSection({ formation }: HeroSectionProps) {
         <div className="absolute inset-0 flex flex-col justify-end pb-32 md:pb-40 px-6 md:px-10 lg:px-[120px]">
           <div className="max-w-3xl">
             {/* Badge catégorie */}
-            <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-4">
-              <span className="text-sm font-satoshi font-semibold text-white">
-                {formation.category.name}
-              </span>
-            </div>
+            {formation.category && (
+              <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-4">
+                <span className="text-sm font-satoshi font-semibold text-white">
+                  {formation.category.name}
+                </span>
+              </div>
+            )}
 
             {/* Titre */}
             <h1 className="text-[32px] md:text-[44px] lg:text-[56px] tracking-[-1px] md:tracking-[-2px] text-white font-sora font-bold leading-[1.1] mb-5">

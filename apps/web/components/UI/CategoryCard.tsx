@@ -7,7 +7,7 @@ interface CategoryCardProps {
   nombreFormations: number;
   slug: string;
   imageUrl?: string | null;
-  size?: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large" | "flex";
   imagePosition?: string;
 }
 
@@ -23,6 +23,7 @@ export default function CategoryCard({
     small: "h-40",
     medium: "h-52",
     large: "h-full min-h-[432px]",
+    flex: "flex-1 min-h-52",
   };
 
   return (

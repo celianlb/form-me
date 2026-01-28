@@ -32,5 +32,5 @@ export interface FormationWithDetails {
   category: {
     name: string;
     slug: string;
-  };
+  } | null;
 }
