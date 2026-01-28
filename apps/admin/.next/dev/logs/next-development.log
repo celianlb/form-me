@@ -1,0 +1,11 @@
+[00:00:00.702] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:00.792] Server  LOG     ✓ Ready in 611ms
+[00:00:04.106] Browser WARN    Image with src "http://localhost:3001/logo/logoBlack.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:06:16.080] Browser WARN    Select is changing from uncontrolled to controlled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
+[00:09:39.889] Browser WARN    Select is changing from uncontrolled to controlled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
+[00:09:54.099] Browser ERROR   Error saving session: {}
+[00:10:02.510] Browser ERROR   Error saving session: {}
+[00:10:08.798] Browser ERROR   Error saving session: {}
+[00:18:59.979] Server  LOG     ✓ Compiled in 161ms
+[00:22:31.278] Browser WARN    Select is changing from uncontrolled to controlled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.
+[00:22:45.714] Browser WARN    Select is changing from uncontrolled to controlled. Components should not switch from controlled to uncontrolled (or vice versa). Decide between using a controlled or uncontrolled value for the lifetime of the component.

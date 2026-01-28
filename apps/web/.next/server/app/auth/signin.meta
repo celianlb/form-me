@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(main)/layout,_N_T_/(main)/auth/layout,_N_T_/(main)/auth/signin/layout,_N_T_/(main)/auth/signin/page,_N_T_/auth/signin"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KG1haW4p/auth/signin/__PAGE__",
+    "/!KG1haW4p/auth/signin",
+    "/!KG1haW4p/auth",
+    "/!KG1haW4p",
+    "/_index",
+    "/_head"
+  ]
+}

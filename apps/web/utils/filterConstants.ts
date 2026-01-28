@@ -1,0 +1,15 @@
+import { SelectOption } from "@/components/UI/Dropdown";
+
+// Options de durée unifiées
+export const durationOptions: SelectOption[] = [
+  { value: "", label: "Toutes les durées" },
+  { value: "1", label: "1 jour" },
+  { value: "2", label: "2 jours" },
+  { value: "3", label: "3 jours" },
+  { value: "3+", label: "3 jours +" },
+];
+
+// Options de durée pour la page d'accueil (sans option "Toutes les durées")
+export const homeDurationOptions: SelectOption[] = durationOptions.filter(
+  (option) => option.value !== ""
+);

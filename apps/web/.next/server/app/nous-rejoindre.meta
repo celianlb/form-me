@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/(main)/layout,_N_T_/(main)/nous-rejoindre/layout,_N_T_/(main)/nous-rejoindre/page,_N_T_/nous-rejoindre"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/!KG1haW4p/nous-rejoindre/__PAGE__",
+    "/!KG1haW4p/nous-rejoindre",
+    "/!KG1haW4p",
+    "/_index",
+    "/_head"
+  ]
+}

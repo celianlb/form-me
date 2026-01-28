@@ -34,9 +34,6 @@ Tu découvriras comment passer de simple utilisateur à véritable référence d
       durationHours: 4,
       durationDays: null,
 
-      minParticipants: 1,
-      maxParticipants: 15,
-
       targetAudience: `• Aux entrepreneurs, freelances et formateurs qui veulent se démarquer.
 • À ceux qui souhaitent attirer plus de clients grâce à leur image en ligne.
 • À toute personne prête à passer au niveau supérieur sur les réseaux sociaux.`,
@@ -44,12 +41,6 @@ Tu découvriras comment passer de simple utilisateur à véritable référence d
       learningObjectives: `À la fin de cette formation, tu sauras exactement comment bâtir ton image, attirer ton audience idéale et transformer ta visibilité en opportunités concrètes.
 Tu ne subiras plus les réseaux : tu les maîtriseras.`,
 
-      pricePartnerPerDay: 520.00,
-      priceNonPartnerPerTrainee: 110.00,
-      availableForPartners: true,
-      applicationType: 'STANDARD',
-      availableInCenter: true,
-      availableElearning: true,
       isActive: true,
       status: 'PUBLISHED',
       publishedAt: new Date(),

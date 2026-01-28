@@ -1,0 +1,3 @@
+module.exports=[45640,a=>{"use strict";var b=a.i(74127);function c({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>c,"metadata",0,{title:"Maintenance en cours - Form Me",description:"Form Me est actuellement en maintenance. Nous serons de retour très bientôt.",robots:{index:!1,follow:!1}}])}];
+
+//# sourceMappingURL=apps_web_app_%28maintenance%29_maintenance_layout_tsx_a0efa94a._.js.map

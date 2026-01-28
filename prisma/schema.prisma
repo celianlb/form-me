@@ -10,8 +10,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 /**
@@ -50,10 +51,6 @@ enum InviteTokenType {
   RESET_PASSWORD
 }
 
-enum ApplicationType {
-  STANDARD  // Formulaire de devis classique
-  APPLICATION // Formulaire de candidature
-}
 
 enum PdfGenerationMode {
   ACROFORM // Remplissage de champs PDF (AcroForms)
@@ -122,6 +119,7 @@ model Category {
   name        String
   slug        String  @unique
   description String?
+  imageUrl    String? // URL Cloudinary de l'image de couverture
 
   trainings Training[]
 }
@@ -134,11 +132,10 @@ model Training {
 
   shortDescription String? // tagline
   longDescription  String? // définition globale
+  imageUrl         String? // URL Cloudinary de la photo de la formation
 
   durationHours   Int?
-  durationDays    Int? // NEW: ex: 1 jour
-  minParticipants Int?     @default(1)
-  maxParticipants Int?
+  durationDays    Int? // ex: 1 jour
   successRate     Decimal? @db.Decimal(5, 2)
 
   targetAudience String? // public concerné
@@ -151,17 +148,11 @@ model Training {
   teachingMeans         String? // méthodes pédagogiques
   evaluationMethods     String?
   validationMethod      String?
-  monitoringMethods     String? // NEW: suivi (émargement, évaluation, etc.)
-  renewalRecommendation String? // NEW: conseils de renouvellement
+  monitoringMethods     String? // suivi (émargement, évaluation, etc.)
+  renewalRecommendation String? // conseils de renouvellement
 
-  pricePartnerPerDay       Decimal? @db.Decimal(10, 2) // Prix journalier partenaire
-  priceNonPartnerPerTrainee Decimal? @db.Decimal(10, 2) // Prix par stagiaire non-partenaire
-  availableForPartners     Boolean  @default(false) // Dispo pour les partenaires
-  applicationType          ApplicationType @default(STANDARD) // Type de formulaire (devis ou candidature)
-  availableInCenter        Boolean  @default(true)
-  availableElearning       Boolean  @default(false)
-  isActive                 Boolean  @default(true)
-  status                   ContentStatus @default(DRAFT)
+  isActive Boolean       @default(true)
+  status   ContentStatus @default(DRAFT)
 
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

@@ -1,0 +1,273 @@
+[00:00:00.895] Server  WARN    ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+[00:00:01.002] Server  LOG     ✓ Ready in 796ms
+[00:00:03.334] Browser WARN    Image with src "http://localhost:3000/whatsapp-blue.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:00:03.334] Browser WARN    Image with src "http://localhost:3000/top10/dot-pattern-left.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:00:03.334] Browser WARN    Image with src "http://localhost:3000/top10/dot-pattern-right.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:00:03.334] Browser WARN    Image with src "http://localhost:3000/logo/logoFullBlack.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:00:03.821] Server  ERROR   [next-auth][error][JWT_SESSION_ERROR] "\nhttps://next-auth.js.org/errors#jwt_session_error" "decryption operation failed" {}
+[00:07:35.910] Server  LOG     ✓ Compiled in 335ms
+[00:08:05.077] Server  LOG     ✓ Compiled in 88ms
+[00:08:29.191] Server  LOG     ✓ Compiled in 70ms
+[00:08:40.352] Server  ERROR   ⨯ ReferenceError: DevisForm is not defined
+[00:08:40.497] Browser ERROR   uncaughtError: ReferenceError: DevisForm is not defined
+[00:08:46.275] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:08:46.597] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[00:08:47.699] Browser WARN    Image with src "http://localhost:3000/whatsapp-blue.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:08:47.699] Browser WARN    Image with src "http://localhost:3000/logo/logoFullBlack.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:10:56.792] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/formation..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/apps/web/...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="fr">
+                          <head>
+                          <body
+                            className="antialiased"
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+
+[00:10:56.792] Browser WARN    Image with src "http://localhost:3000/whatsapp-blue.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:10:56.792] Browser WARN    Image with src "http://localhost:3000/logo/logoFullBlack.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:11:08.648] Browser WARN    Image with src "http://localhost:3000/top10/dot-pattern-left.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:11:08.648] Browser WARN    Image with src "http://localhost:3000/top10/dot-pattern-right.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:14:04.940] Server  LOG     ✓ Compiled in 118ms
+[00:14:26.938] Server  LOG     ✓ Compiled in 199ms
+[00:15:05.413] Server  LOG     ✓ Compiled in 115ms
+[00:26:40.203] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/formation..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/apps/web/...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="fr">
+                          <head>
+                          <body
+                            className="antialiased"
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+
+[00:26:40.203] Browser WARN    Image with src "http://localhost:3000/whatsapp-blue.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:26:40.203] Browser WARN    Image with src "http://localhost:3000/top10/dot-pattern-left.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:26:40.203] Browser WARN    Image with src "http://localhost:3000/top10/dot-pattern-right.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:26:40.203] Browser WARN    Image with src "http://localhost:3000/logo/logoFullBlack.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:28:05.707] Browser WARN    Image with src "http://localhost:3000/bento/dot-pattern-bento.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:28:05.707] Browser WARN    Image with src "http://localhost:3000/bento/desktopmockup.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:30:26.703] Server  LOG     ✓ Compiled in 79ms
+[00:30:38.667] Server  LOG     ✓ Compiled in 71ms
+[00:34:56.971] Server  LOG     ✓ Compiled in 98ms
+[00:35:20.858] Server  LOG     ✓ Compiled in 40ms
+[00:35:25.253] Server  LOG     ✓ Compiled in 44ms
+[00:39:16.680] Server  LOG     ✓ Compiled in 78ms
+[00:43:36.668] Server  ERROR   [next-auth][error][JWT_SESSION_ERROR] "\nhttps://next-auth.js.org/errors#jwt_session_error" "decryption operation failed" {}
+[00:43:36.718] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/formation..." notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/apps/web/...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="fr">
+                          <head>
+                          <body
+                            className="antialiased"
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+
+[00:43:36.718] Browser WARN    Image with src "http://localhost:3000/whatsapp-blue.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:43:36.718] Browser WARN    Image with src "http://localhost:3000/top10/dot-pattern-left.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:43:36.718] Browser WARN    Image with src "http://localhost:3000/top10/dot-pattern-right.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:43:36.718] Browser WARN    Image with src "http://localhost:3000/logo/logoFullBlack.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:44:17.537] Server  LOG     ✓ Compiled in 138ms
+[00:44:21.465] Server  LOG     ✓ Compiled in 42ms
+[00:50:06.739] Server  LOG     ✓ Compiled in 193ms
+[00:50:21.711] Server  LOG     ✓ Compiled in 43ms
+[00:50:41.051] Server  LOG     ✓ Compiled in 65ms
+[00:53:09.725] Browser WARN    Image with src "http://localhost:3000/bento/dot-pattern-bento.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:53:09.725] Browser WARN    Image with src "http://localhost:3000/bento/desktopmockup.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[00:54:49.772] Server  LOG     ✓ Compiled in 67ms
+[00:58:24.651] Server  LOG     ✓ Compiled in 103ms
+[01:01:13.589] Server  LOG     ✓ Compiled in 98ms
+[01:01:23.657] Server  LOG     ✓ Compiled in 43ms
+[01:01:29.917] Server  LOG     ✓ Compiled in 217ms
+[01:01:32.309] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/apps/web/...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="fr">
+                          <head>
+                          <body
+                            className="antialiased"
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+
+[01:01:32.309] Browser WARN    Image with src "http://localhost:3000/whatsapp-blue.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:01:32.309] Browser WARN    Image with src "http://localhost:3000/bento/dot-pattern-bento.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:01:42.692] Server  LOG     ✓ Compiled in 164ms
+[01:03:07.295] Browser WARN    Image with src "http://localhost:3000/bento/desktopmockup.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:05:29.382] Browser WARN    Image with src "http://localhost:3000/top10/dot-pattern-left.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:05:29.382] Browser WARN    Image with src "http://localhost:3000/top10/dot-pattern-right.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:05:44.652] Server  LOG     ✓ Compiled in 95ms
+[01:06:59.567] Server  LOG     ✓ Compiled in 87ms
+[01:07:07.243] Server  LOG     ✓ Compiled in 49ms
+[01:07:32.077] Browser ERROR   A tree hydrated but some attributes of the server rendered HTML didn't match the client properties. This won't be patched up. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+%s%s https://react.dev/link/hydration-mismatch 
+
+  ...
+    <HotReload globalError={[...]} webSocket={WebSocket} staticIndicatorState={{pathname:null, ...}}>
+      <AppDevOverlayErrorBoundary globalError={[...]}>
+        <ReplaySsrOnlyErrors>
+        <DevRootHTTPAccessFallbackBoundary>
+          <HTTPAccessFallbackBoundary notFound={<NotAllowedRootHTTPFallbackError>}>
+            <HTTPAccessFallbackErrorBoundary pathname="/" notFound={<NotAllowedRootHTTPFallbackError>} ...>
+              <RedirectBoundary>
+                <RedirectErrorBoundary router={{...}}>
+                  <Head>
+                  <__next_root_layout_boundary__>
+                    <SegmentViewNode type="layout" pagePath="/apps/web/...">
+                      <SegmentTrieNode>
+                      <link>
+                      <script>
+                      <script>
+                      <RootLayout>
+                        <html lang="fr">
+                          <head>
+                          <body
+                            className="antialiased"
+-                           cz-shortcut-listen="true"
+                          >
+                  ...
+
+[01:07:32.077] Browser WARN    Image with src "http://localhost:3000/whatsapp-blue.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:07:32.077] Browser WARN    Image with src "http://localhost:3000/bento/dot-pattern-bento.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:07:32.711] Browser WARN    Image with src "http://localhost:3000/bento/desktopmockup.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:08:10.533] Server  LOG     ✓ Compiled in 60ms
+[01:08:31.287] Browser WARN    Image with src "http://localhost:3000/whatsapp-blue.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:08:31.287] Browser WARN    Image with src "http://localhost:3000/bento/dot-pattern-bento.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:09:12.419] Browser ERROR   uncaughtError: ReferenceError: HeroLogo is not defined
+[01:09:12.424] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:09:12.587] Server  LOG     ✓ Compiled in 184ms
+[01:09:12.893] Server  ERROR   ⨯ ReferenceError: HeroLogo is not defined
+[01:09:12.914] Server  ERROR   ⨯ ReferenceError: HeroLogo is not defined
+[01:09:13.258] Browser ERROR   uncaughtError: ReferenceError: HeroLogo is not defined
+[01:09:18.483] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[01:09:18.502] Server  LOG     ✓ Compiled in 49ms
+[01:09:20.327] Browser WARN    Image with src "http://localhost:3000/whatsapp-blue.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:09:20.328] Browser WARN    Image with src "http://localhost:3000/bento/dot-pattern-bento.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:09:25.552] Server  ERROR   ⨯ ReferenceError: HeroLogo is not defined
+[01:09:25.682] Browser ERROR   uncaughtError: ReferenceError: HeroLogo is not defined
+[01:09:30.541] Server  LOG     ✓ Compiled in 97ms
+[01:09:32.420] Browser WARN    Image with src "http://localhost:3000/whatsapp-blue.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:09:32.421] Browser WARN    Image with src "http://localhost:3000/bento/dot-pattern-bento.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:09:32.421] Browser WARN    Image with src "http://localhost:3000/bento/desktopmockup.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:09:39.261] Browser WARN    Image with src "http://localhost:3000/top10/dot-pattern-left.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:09:39.261] Browser WARN    Image with src "http://localhost:3000/top10/dot-pattern-right.svg" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
+[01:10:22.000] Server  LOG     ✓ Compiled in 129ms
+[01:14:55.649] Server  LOG     ✓ Compiled in 132ms
+[01:15:04.848] Server  LOG     ✓ Compiled in 123ms

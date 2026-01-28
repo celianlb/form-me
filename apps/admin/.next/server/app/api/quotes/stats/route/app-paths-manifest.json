@@ -1,0 +1,3 @@
+{
+  "/api/quotes/stats/route": "app/api/quotes/stats/route.js"
+}

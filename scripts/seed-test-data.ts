@@ -34,17 +34,10 @@ async function seedTestData() {
           longDescription: 'Formation complète pour maîtriser les fonctions avancées d\'Excel : tableaux croisés dynamiques, macros, etc.',
           durationHours: 14,
           durationDays: 2,
-          minParticipants: 4,
-          maxParticipants: 10,
           successRate: 95.5,
           targetAudience: 'Utilisateurs intermédiaires d\'Excel',
           learningObjectives: 'À l\'issue de la formation, vous serez capable de créer des tableaux croisés dynamiques complexes',
           prerequisites: 'Connaissance de base d\'Excel',
-          pricePartnerPerDay: 690.00,
-          priceNonPartnerPerTrainee: 890.00,
-          availableForPartners: true,
-          availableInCenter: true,
-          availableElearning: true,
           isActive: true,
           status: 'PUBLISHED'
         }

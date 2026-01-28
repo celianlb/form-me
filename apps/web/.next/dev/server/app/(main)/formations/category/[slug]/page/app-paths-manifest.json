@@ -1,0 +1,3 @@
+{
+  "/(main)/formations/category/[slug]/page": "app/(main)/formations/category/[slug]/page.js"
+}

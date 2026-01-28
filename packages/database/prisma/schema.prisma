@@ -1,0 +1,453 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+/**
+ * ENUMS
+ */
+enum UserRole {
+  CLIENT
+  ADMIN
+  LEARNER
+}
+
+enum RequestProfile {
+  INDIVIDUAL
+  PROFESSIONAL
+}
+
+enum TrainingMode {
+  PARTNER_CENTER
+  E_LEARNING
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum GroupMemberStatus {
+  INVITED
+  ACTIVE
+  REMOVED
+}
+
+enum InviteTokenType {
+  SET_PASSWORD
+  RESET_PASSWORD
+}
+
+enum PdfGenerationMode {
+  ACROFORM // Remplissage de champs PDF (AcroForms)
+  OVERLAY  // Superposition de texte via coordonnées X/Y
+}
+
+enum PdfFieldType {
+  STRING
+  DATE
+  NUMBER
+  BOOLEAN
+}
+
+enum PdfFieldAlign {
+  LEFT
+  CENTER
+  RIGHT
+}
+
+enum DocumentKind {
+  CONVENTION
+  EMARGEMENT
+}
+
+enum SessionStatus {
+  SCHEDULED
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+/**
+ * USERS
+ */
+model User {
+  id           Int      @id @default(autoincrement())
+  role         UserRole @default(CLIENT)
+  firstName    String?
+  lastName     String?
+  email        String   @unique
+  phone        String?
+  address      String?
+  postalCode   String?
+  city         String?
+  passwordHash String?
+  mustChangePassword Boolean @default(false) // pour forcer le changement à la première connexion
+  lastLoginAt    DateTime?
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+
+  // Relations
+  trainingsCreated Training[] @relation("TrainingCreatedBy")
+  trainingsUpdated Training[] @relation("TrainingUpdatedBy")
+
+  // deux relations différentes vers AccessSupport
+  accessReceived AccessSupport[] @relation("AccessSupportUser") // quand il est bénéficiaire
+  accessGranted  AccessSupport[] @relation("AccessGrantedBy") // quand il est admin
+
+  supportGroupMemberships SupportGroupMember[]
+  supportGroupsCreated    SupportGroup[]       @relation("SupportGroupCreatedBy")
+  inviteTokens            InviteToken[]
+
+  // PDF Generation
+  generatedDocuments      GeneratedDocument[]
+  documentBatches         DocumentBatch[]
+
+  // Training Sessions
+  sessionsCreated         TrainingSession[] @relation("SessionCreatedBy")
+}
+
+/**
+ * CATEGORIES
+ */
+model Category {
+  id          Int     @id @default(autoincrement())
+  name        String
+  slug        String  @unique
+  description String?
+  imageUrl    String? // URL Cloudinary de l'image de couverture
+
+  trainings Training[]
+}
+
+model Training {
+  id         Int    @id @default(autoincrement())
+  categoryId Int
+  title      String
+  slug       String @unique
+
+  shortDescription String? // tagline
+  longDescription  String? // définition globale
+  imageUrl         String? // URL Cloudinary de la photo de la formation
+
+  durationHours   Int?
+  durationDays    Int? // ex: 1 jour
+  successRate     Decimal? @db.Decimal(5, 2)
+
+  targetAudience String? // public concerné
+
+  learningObjectives String? // version texte brut/markdown
+  // Alternative: relation TrainingObjective[]
+
+  prerequisites         String?
+  technicalMeans        String?
+  teachingMeans         String? // méthodes pédagogiques
+  evaluationMethods     String?
+  validationMethod      String?
+  monitoringMethods     String? // suivi (émargement, évaluation, etc.)
+  renewalRecommendation String? // conseils de renouvellement
+
+  isActive Boolean       @default(true)
+  status   ContentStatus @default(DRAFT)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+
+  createdById Int?
+  updatedById Int?
+
+  category  Category @relation(fields: [categoryId], references: [id])
+  createdBy User?    @relation("TrainingCreatedBy", fields: [createdById], references: [id])
+  updatedBy User?    @relation("TrainingUpdatedBy", fields: [updatedById], references: [id])
+
+  modules       TrainingModule[]
+  supports      Support[]
+  supportGroups SupportGroup[]
+  quotes        Quote[]
+  versions      TrainingVersion[]
+  objectives    TrainingObjective[]
+  sessions      TrainingSession[]
+}
+
+model TrainingModule {
+  id         Int     @id @default(autoincrement())
+  trainingId Int
+  title      String
+  order      Int
+  type       String? // NEW: "THEORETICAL" | "PRACTICAL"
+  content    String? // liste détaillée, markdown
+
+  training Training @relation(fields: [trainingId], references: [id])
+
+  @@unique([trainingId, order])
+}
+
+model TrainingObjective {
+  id         Int    @id @default(autoincrement())
+  trainingId Int
+  text       String
+
+  training Training @relation(fields: [trainingId], references: [id])
+}
+
+/**
+ * TRAINING SESSIONS
+ */
+model TrainingSession {
+  id                    Int           @id @default(autoincrement())
+  trainingId            Int
+  title                 String
+  description           String?
+  startDate             DateTime
+  endDate               DateTime?
+  registrationDeadline  DateTime?
+  maxLearners           Int?
+  registeredCount       Int           @default(0)
+  mode                  TrainingMode
+  location              String?
+  status                SessionStatus @default(SCHEDULED)
+  isActive              Boolean       @default(true)
+  createdById           Int
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  // Récurrence
+  recurrencePattern     String?
+  recurrenceEndDate     DateTime?
+  parentSessionId       Int?
+
+  training              Training      @relation(fields: [trainingId], references: [id])
+  createdBy             User          @relation("SessionCreatedBy", fields: [createdById], references: [id])
+  quotes                Quote[]
+  parentSession         TrainingSession? @relation("SessionRecurrence", fields: [parentSessionId], references: [id])
+  childSessions         TrainingSession[] @relation("SessionRecurrence")
+
+  @@index([trainingId])
+  @@index([status])
+  @@index([startDate])
+}
+
+/**
+ * SUPPORTS
+ */
+model Support {
+  id          Int      @id @default(autoincrement())
+  trainingId  Int
+  type        String // pdf, ppt, video, link…
+  title       String
+  description String?
+  fileUrl     String
+  fileSize    BigInt?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  training Training        @relation(fields: [trainingId], references: [id])
+  access   AccessSupport[]
+}
+
+/**
+ * ACCESS TO SUPPORTS (manual)
+ */
+model AccessSupport {
+  id               Int       @id @default(autoincrement())
+  userId           Int
+  supportId        Int
+  grantedByAdminId Int
+  grantedAt        DateTime  @default(now())
+  expiresAt        DateTime?
+
+  // relations nommées
+  user      User    @relation("AccessSupportUser", fields: [userId], references: [id])
+  support   Support @relation(fields: [supportId], references: [id])
+  grantedBy User    @relation("AccessGrantedBy", fields: [grantedByAdminId], references: [id])
+
+  @@unique([userId, supportId])
+}
+
+/**
+ * SUPPORT GROUPS (per training session, managed manually)
+ */
+model SupportGroup {
+  id           Int       @id @default(autoincrement())
+  trainingId   Int
+  name         String
+  companyName  String    // nom de l'entreprise
+  trainingDate DateTime  // date à laquelle s'est effectuée la formation
+  startDate    DateTime? // optional
+  endDate      DateTime? // optional
+  createdById  Int?
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+
+  training  Training @relation(fields: [trainingId], references: [id])
+  createdBy User?    @relation("SupportGroupCreatedBy", fields: [createdById], references: [id])
+
+  members SupportGroupMember[]
+}
+
+model SupportGroupMember {
+  id         Int               @id @default(autoincrement())
+  groupId    Int
+  userId     Int
+  status     GroupMemberStatus @default(INVITED)
+  invitedAt  DateTime          @default(now())
+  acceptedAt DateTime?
+
+  group SupportGroup @relation(fields: [groupId], references: [id])
+  user  User         @relation(fields: [userId], references: [id])
+
+  @@unique([groupId, userId])
+}
+
+/**
+ * INVITATIONS
+ */
+model InviteToken {
+  id         Int             @id @default(autoincrement())
+  userId     Int
+  token      String          @unique
+  type       InviteTokenType @default(SET_PASSWORD)
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime        @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+/**
+ * QUOTES
+ */
+model Quote {
+  id         Int            @id @default(autoincrement())
+  firstName  String
+  lastName   String?
+  email      String
+  phone      String?
+  profile    RequestProfile
+  address    String?
+  postalCode String?
+  city       String?
+
+  trainingId     Int?
+  sessionId      Int?
+  mode           TrainingMode?
+  numberLearners Int
+  preferredDates String?
+  message        String?
+  source         String?
+  status         String        @default("received") // received / processed / archived
+  createdAt      DateTime      @default(now())
+
+  training Training?        @relation(fields: [trainingId], references: [id])
+  session  TrainingSession? @relation(fields: [sessionId], references: [id])
+}
+
+/**
+ * VERSIONING
+ */
+model TrainingVersion {
+  id         Int      @id @default(autoincrement())
+  trainingId Int
+  snapshot   Json
+  savedAt    DateTime @default(now())
+  savedBy    Int?
+
+  training Training @relation(fields: [trainingId], references: [id])
+}
+
+/**
+ * PDF GENERATION SYSTEM
+ */
+model DocumentTemplate {
+  id               String            @id @default(cuid())
+  name             String
+  description      String?
+  storageProvider  String            @default("cloudinary")
+  pdfUrl           String            // URL Cloudinary du template PDF
+  cloudinaryPublicId String?         // Public ID Cloudinary pour gestion
+  mode             PdfGenerationMode @default(OVERLAY)
+  isActive         Boolean           @default(true)
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  fields             TemplateField[]
+  generatedDocuments GeneratedDocument[]
+}
+
+model TemplateField {
+  id         String        @id @default(cuid())
+  templateId String
+  key        String        // ex: "trainer_first_name"
+  label      String        // ex: "Prénom du formateur"
+  type       PdfFieldType  @default(STRING)
+  required   Boolean       @default(false)
+
+  // OVERLAY mode
+  pageIndex  Int?          // Index de page (0-based)
+  x          Float?        // Position X en points PDF
+  y          Float?        // Position Y en points PDF
+  fontSize   Int?          @default(12)
+  fontName   String?       @default("Helvetica")
+  align      PdfFieldAlign? @default(LEFT)
+
+  // ACROFORM mode
+  acroformFieldName String?  // Nom du champ dans le PDF
+  defaultValue      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  template DocumentTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  @@index([templateId])
+}
+
+model GeneratedDocument {
+  id              String       @id @default(cuid())
+  templateId      String?
+  kind            DocumentKind // CONVENTION | EMARGEMENT
+  createdByUserId Int
+  payloadJson     Json         // Valeurs saisies { key: value }
+  pdfUrl          String       // URL Cloudinary du PDF généré
+  cloudinaryPublicId String?   // Public ID pour gestion
+  batchId         String?      // Pour grouper les émargements multiples
+  createdAt       DateTime     @default(now())
+
+  template  DocumentTemplate? @relation(fields: [templateId], references: [id])
+  createdBy User              @relation(fields: [createdByUserId], references: [id])
+  batch     DocumentBatch?    @relation(fields: [batchId], references: [id])
+
+  @@index([templateId])
+  @@index([createdByUserId])
+  @@index([createdAt])
+  @@index([kind])
+  @@index([batchId])
+}
+
+model DocumentBatch {
+  id              String   @id @default(cuid())
+  kind            DocumentKind
+  createdByUserId Int
+  count           Int
+  createdAt       DateTime @default(now())
+
+  createdBy User                @relation(fields: [createdByUserId], references: [id])
+  documents GeneratedDocument[]
+
+  @@index([createdByUserId])
+  @@index([createdAt])
+}

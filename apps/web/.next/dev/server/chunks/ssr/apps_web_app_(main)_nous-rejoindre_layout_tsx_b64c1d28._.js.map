@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///Users/celianlb/Developpement/form-me-main/apps/web/app/%28main%29/nous-rejoindre/layout.tsx"],"sourcesContent":["import { createMetadata } from \"@/lib/metadata\";\n\nexport const metadata = createMetadata({\n  title: \"Nous rejoindre - Devenez formateur ou partenaire\",\n  description:\n    \"Rejoignez Form Me en tant que formateur ou partenaire. Partagez votre expertise, bénéficiez de tarifs préférentiels et développez votre activité au sein de notre réseau de formation professionnelle.\",\n  keywords: [\n    \"devenir formateur\",\n    \"partenaire formation\",\n    \"recrutement formateur\",\n    \"réseau formation\",\n    \"tarifs partenaire\",\n    \"opportunités formateur\",\n    \"rejoindre organisme de formation\",\n  ],\n  path: \"/nous-rejoindre\",\n});\n\nexport default function NousRejoindreLayout({\n  children,\n}: {\n  children: React.ReactNode;\n}) {\n  return <>{children}</>;\n}\n"],"names":[],"mappings":";;;;;;;AAAA;;;AAEO,MAAM,WAAW,IAAA,gJAAc,EAAC;IACrC,OAAO;IACP,aACE;IACF,UAAU;QACR;QACA;QACA;QACA;QACA;QACA;QACA;KACD;IACD,MAAM;AACR;AAEe,SAAS,oBAAoB,EAC1C,QAAQ,EAGT;IACC,qBAAO;kBAAG;;AACZ"}}]
+}

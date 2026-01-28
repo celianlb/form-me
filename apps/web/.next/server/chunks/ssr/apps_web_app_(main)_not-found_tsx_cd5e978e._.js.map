@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../../../apps/web/app/%28main%29/not-found.tsx"],"sourcesContent":["\"use client\";\n\nexport default function NotFound() {\n  return (\n    <div>\n      <p>test</p>\n    </div>\n  );\n}\n"],"names":[],"mappings":"wDAEe,SAAS,IACtB,MACE,CAAA,EAAA,EAAA,GAAA,EAAC,MAAA,UACC,CAAA,EAAA,EAAA,GAAA,EAAC,IAAA,UAAE,UAGT"}

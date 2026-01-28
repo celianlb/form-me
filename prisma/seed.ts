@@ -23,10 +23,9 @@ type TrainingSeed = {
   title: string;
   shortDescription?: string;
   longDescription?: string;
+  imageUrl?: string;
   durationHours?: number;
   durationDays?: number;
-  minParticipants?: number;
-  maxParticipants?: number;
   successRate?: number;
   targetAudience?: string;
   learningObjectives?: string;
@@ -38,12 +37,6 @@ type TrainingSeed = {
   validationMethod?: string;
   monitoringMethods?: string;
   renewalRecommendation?: string;
-  pricePartnerPerDay?: number;
-  priceNonPartnerPerTrainee?: number;
-  availableForPartners?: boolean;
-  applicationType?: "STANDARD" | "APPLICATION";
-  availableInCenter?: boolean;
-  availableElearning?: boolean;
 
   modules?: ModuleItem[];
 };
@@ -62,13 +55,8 @@ const trainings: TrainingSeed[] = [
       "Sensibiliser aux risques liés aux atmosphères explosives et adopter les comportements sécuritaires lors d'interventions en zones ATEX. Conforme à la directive ATEX 1999/92/CE et au Code du travail (R4227-42 à R4227-54).",
     durationHours: 7,
     durationDays: 1,
-    minParticipants: 8,
-    maxParticipants: 10,
     targetAudience:
       "Salariés travaillant/circulant en zones ATEX sans maintenance; intervenants ponctuels en zones classées.",
-    pricePartnerPerDay: 910, // 910€ HT/forfait 1/2 journées (prix partenaire)
-    priceNonPartnerPerTrainee: 239, // 239€ HT/stagiaire
-    availableForPartners: true,
     objectives: [
       "Comprendre ce qu'est une atmosphère explosive.",
       "Identifier les zones ATEX et leur classification.",
@@ -137,13 +125,8 @@ const trainings: TrainingSeed[] = [
       "Former les non-électriciens aux risques électriques et à l'intervention en sécurité au voisinage d'installations. Conforme NF C18-510 et Code du travail (R4544-9 à R4544-11).",
     durationHours: 7,
     durationDays: 1,
-    minParticipants: 8,
-    maxParticipants: 10,
     targetAudience:
       "Non-électriciens intervenant dans/à proximité d'installations électriques.",
-    pricePartnerPerDay: 890, // 890€ HT/j (prix partenaire)
-    priceNonPartnerPerTrainee: 239, // 239€ HT/stagiaire
-    availableForPartners: true,
     objectives: [
       "Comprendre les risques liés à l'électricité.",
       "Identifier zones et limites d'intervention.",
@@ -202,13 +185,8 @@ const trainings: TrainingSeed[] = [
       "Former des non-électriciens à réaliser de petites interventions d'ordre électrique en sécurité (NF C18-510).",
     durationHours: 14,
     durationDays: 2,
-    minParticipants: 6,
-    maxParticipants: 8,
     targetAudience:
       "Personnel non-électricien désigné pour de petites interventions (maintenance, techniciens...).",
-    pricePartnerPerDay: 890, // 890€ HT/j (prix partenaire)
-    priceNonPartnerPerTrainee: 259, // 259€ HT/stagiaire
-    availableForPartners: true,
     objectives: [
       "Identifier les risques des interventions simples.",
       "Connaître la réglementation applicable.",
@@ -267,11 +245,7 @@ const trainings: TrainingSeed[] = [
       "Sensibilisation aux risques liés aux manutentions manuelles et techniques adaptées. Conforme Code du travail (R4541-1 à R4541-9).",
     durationHours: 7,
     durationDays: 1,
-    minParticipants: 8,
-    maxParticipants: 12,
     targetAudience: "Salariés manipulant/déplaçant/portant des charges.",
-    pricePartnerPerDay: 690, // 690€ HT/j
-    availableForPartners: false, // Pas de prix partenaire mentionné
     objectives: [
       "Comprendre les enjeux de prévention des TMS.",
       "Identifier les risques liés aux manutentions et postures.",
@@ -333,13 +307,8 @@ const trainings: TrainingSeed[] = [
       "Travail en sécurité à proximité des réseaux aériens/souterrains (DT-DICT, arrêté du 15/02/2012).",
     durationHours: 7,
     durationDays: 1,
-    minParticipants: 8,
-    maxParticipants: 12,
     targetAudience:
       "Terrassiers, conducteurs d'engins, encadrants, concepteurs intervenant à proximité des réseaux.",
-    pricePartnerPerDay: 590, // 590€ HT/j (prix partenaire)
-    priceNonPartnerPerTrainee: 110, // 110€ HT/stagiaire
-    availableForPartners: true,
     objectives: [
       "Comprendre la réglementation DT-DICT.",
       "Identifier les réseaux et leurs risques.",
@@ -398,13 +367,8 @@ const trainings: TrainingSeed[] = [
       "Conduite en sécurité des ponts roulants et portiques selon la reco CNAM R484. Cat. 1 (commande au sol) et 2 (commande en cabine). Validité 5 ans.",
     durationHours: 14,
     durationDays: 2,
-    minParticipants: 6,
-    maxParticipants: 8,
     targetAudience:
       "Conducteurs et futurs conducteurs de ponts roulants/portiques.",
-    pricePartnerPerDay: 690, // 690€ HT/j (prix partenaire)
-    priceNonPartnerPerTrainee: 220, // 220€ HT/stagiaire
-    availableForPartners: true,
     objectives: [
       "Identifier les risques liés aux ponts roulants.",
       "Comprendre les responsabilités légales.",
@@ -459,12 +423,7 @@ const trainings: TrainingSeed[] = [
       "Utilisation en sécurité des gerbeurs à conducteur accompagnant, conforme CNAM R485. Cat. 1 (≤2,50m) et 2 (>2,50m). Validité 5 ans.",
     durationHours: 14,
     durationDays: 2,
-    minParticipants: 6,
-    maxParticipants: 8,
     targetAudience: "Opérateurs utilisant des gerbeurs en entreprise.",
-    pricePartnerPerDay: 690, // 690€ HT/j (prix partenaire)
-    priceNonPartnerPerTrainee: 220, // 220€ HT/stagiaire (pour chaque catégorie)
-    availableForPartners: true,
     objectives: [
       "Identifier les risques liés aux gerbeurs.",
       "Comprendre les responsabilités légales.",
@@ -504,12 +463,7 @@ const trainings: TrainingSeed[] = [
       "Certification à la conduite des chariots automoteurs R489 (plusieurs catégories). Validité 5 ans.",
     durationHours: 14,
     durationDays: 2,
-    minParticipants: 6,
-    maxParticipants: 8,
     targetAudience: "Conducteurs de chariots élévateurs (catégories R489).",
-    pricePartnerPerDay: 790, // 790€ HT/j (prix partenaire)
-    priceNonPartnerPerTrainee: 220, // 220€ HT/stagiaire (pour chaque catégorie)
-    availableForPartners: true,
     objectives: [
       "Conduire/manœuvrer en sécurité un chariot adapté.",
       "Identifier les risques (renversement, heurt, chute de charge).",
@@ -556,11 +510,7 @@ const trainings: TrainingSeed[] = [
       "Conduite en sécurité des grues de chargement selon reco CNAM R490 (télécommande, stabilisateurs, accessoires). Validité 5 ans.",
     durationHours: 14,
     durationDays: 2,
-    minParticipants: 6,
-    maxParticipants: 8,
     targetAudience: "Opérateurs de grues de chargement.",
-    pricePartnerPerDay: 690, // 690€ HT/j
-    availableForPartners: false,
     objectives: [
       "Identifier les risques liés à la grue de chargement.",
       "Comprendre règles légales et responsabilités.",
@@ -598,12 +548,7 @@ const trainings: TrainingSeed[] = [
       "Conduite en sécurité des PEMP selon R486 (A: élévation verticale; B: multidirectionnelle; C: déplacement/chargement sur porte-engins). Validité 5 ans.",
     durationHours: 14,
     durationDays: 2,
-    minParticipants: 6,
-    maxParticipants: 8,
     targetAudience: "Utilisateurs de PEMP/nacelles (A/B + option C).",
-    pricePartnerPerDay: 690, // 690€ HT/j (prix partenaire)
-    priceNonPartnerPerTrainee: 220, // 220€ HT/stagiaire (pour chaque catégorie 1a/1b/3a/3b)
-    availableForPartners: true,
     objectives: [
       "Identifier les risques liés aux PEMP.",
       "Comprendre responsabilités légales.",
@@ -653,12 +598,7 @@ const trainings: TrainingSeed[] = [
       "Former aux interventions en hauteur : port du harnais, PIRL, filets de sécurité/surface. Conforme Code du travail (R4323-58 à R4323-90) et normes EN.",
     durationHours: 7,
     durationDays: 1,
-    minParticipants: 8,
-    maxParticipants: 10,
     targetAudience: "Salariés intervenant en hauteur (modules selon besoins).",
-    pricePartnerPerDay: 790, // 790€ HT/j (prix partenaire)
-    priceNonPartnerPerTrainee: 220, // 220€ HT/stagiaire
-    availableForPartners: true,
     objectives: [
       "Identifier les risques liés aux travaux en hauteur.",
       "Connaître la réglementation et responsabilités.",
@@ -724,12 +664,7 @@ const trainings: TrainingSeed[] = [
       "Utilisation, montage/démontage et vérification des échafaudages roulants (décret 2004-924, CNAMTS R457).",
     durationHours: 7,
     durationDays: 1,
-    minParticipants: 8,
-    maxParticipants: 10,
     targetAudience: "Utilisateurs, monteurs/démonteurs, vérificateurs.",
-    pricePartnerPerDay: 790, // 790€ HT/j (prix partenaire)
-    priceNonPartnerPerTrainee: 280, // 280€ HT/stagiaire
-    availableForPartners: true,
     objectives: [
       "Identifier les risques liés aux échafaudages roulants.",
       "Connaître obligations et responsabilités.",
@@ -785,12 +720,7 @@ const trainings: TrainingSeed[] = [
       "Utilisation, montage/démontage et vérification des échafaudages de pied (décret 2004-924, CNAMTS R408).",
     durationHours: 7,
     durationDays: 1,
-    minParticipants: 8,
-    maxParticipants: 10,
     targetAudience: "Utilisateurs, monteurs/démonteurs, vérificateurs.",
-    pricePartnerPerDay: 790, // 790€ HT/j (prix partenaire)
-    priceNonPartnerPerTrainee: 280, // 280€ HT/stagiaire
-    availableForPartners: true,
     objectives: [
       "Identifier les risques des échafaudages fixes.",
       "Connaître obligations et responsabilités.",
@@ -852,12 +782,7 @@ const trainings: TrainingSeed[] = [
       "Permettre d'intervenir efficacement face à un accident du travail en attendant les secours. Conforme référentiel INRS; Code du travail (R4224-14 à R4224-16).",
     durationHours: 14,
     durationDays: 2,
-    minParticipants: 4,
-    maxParticipants: 12,
     targetAudience: "Salariés devant intervenir en premiers secours.",
-    pricePartnerPerDay: 690, // 690€ HT/j (prix partenaire)
-    priceNonPartnerPerTrainee: 290, // 290€ HT/stagiaire
-    availableForPartners: true,
     objectives: [
       "Protéger la victime et soi-même.",
       "Examiner l’état de la victime.",
@@ -903,12 +828,7 @@ const trainings: TrainingSeed[] = [
       "Former aux opérations de levage : Chef de Manœuvre (diriger/sécuriser) & Élingueur (élingage/guidage). Code du travail (R4323-55 et s.) & recommandations CNAM.",
     durationHours: 14,
     durationDays: 2,
-    minParticipants: 8,
-    maxParticipants: 10,
     targetAudience: "Équipes impliquées dans des opérations de levage.",
-    pricePartnerPerDay: 990, // 990€ HT/j (prix partenaire)
-    priceNonPartnerPerTrainee: 250, // 250€ HT/stagiaire
-    availableForPartners: true,
     objectives: [
       "Identifier les risques du levage.",
       "Comprendre rôles/responsabilités Chef de Manœuvre & Élingueur.",
@@ -968,12 +888,8 @@ const trainings: TrainingSeed[] = [
       "Conduite en sécurité des engins de chantier (reco CNAM R482). Validité 10 ans.",
     durationHours: 21,
     durationDays: 3,
-    minParticipants: 6,
-    maxParticipants: 8,
     targetAudience:
       "Conducteurs d'engins de chantier (selon catégories visées).",
-    priceNonPartnerPerTrainee: 1290, // Une catégorie A/B1/C1/E/F: 1290€ HT
-    availableForPartners: false, // Note: Toutes catégories 2690€ HT (pas de prix partenaire mentionné)
     objectives: [
       "Identifier les risques liés aux engins.",
       "Connaître responsabilités du conducteur.",
@@ -1012,156 +928,721 @@ const trainings: TrainingSeed[] = [
     validationMethod: "CACES/Autorisation de conduite R482 (10 ans).",
   },
 
-  // 17) DSA – Digital Success Academy
+  // 17) MAC SST
   {
-    categoryName: "Digital Business",
-    title: "DSA – Digital Success Academy",
-    shortDescription:
-      "Programme en ligne pour lancer et automatiser un business digital rentable.",
-    longDescription:
-      "Programme 100 % en ligne destiné à accompagner entrepreneurs, indépendants et créateurs dans le développement de leur activité digitale : revente de formations, création d’offres numériques et mise en place d’un business automatisé.",
-    durationDays: 56,
-    minParticipants: 1,
-    targetAudience:
-      "Entrepreneurs souhaitant développer des revenus en ligne; formateurs, coachs et consultants; personnes en reconversion vers le digital; indépendants et freelances voulant automatiser leurs ventes.",
+    categoryName: "Sauveteurs secouristes au travail",
+    title: "MAC SST — Maintien et Actualisation des Compétences SST",
+    shortDescription: "Recyclage obligatoire tous les 24 mois pour maintenir le certificat SST.",
+    longDescription: "Le MAC SST permet aux sauveteurs secouristes du travail de maintenir et actualiser leurs compétences, conformément au référentiel INRS.",
+    durationHours: 7,
+    durationDays: 1,
+    targetAudience: "Titulaires du certificat SST souhaitant le renouveler.",
+    prerequisites: "Être titulaire d'un certificat SST en cours de validité ou arrivant à échéance.",
     objectives: [
-      "Comprendre les fondamentaux du business en ligne et du marketing digital.",
-      "Apprendre à revendre et distribuer des formations existantes.",
-      "Créer ses propres produits digitaux (guides, e-books, programmes en ligne).",
-      "Mettre en place un écosystème de vente automatisé (funnels, emailing, réseaux sociaux).",
-      "Développer une stratégie de visibilité sur les plateformes sociales et professionnelles.",
-      "Construire un revenu récurrent et scalable grâce aux outils digitaux.",
+      "Actualiser ses connaissances sur les risques et la prévention.",
+      "Maintenir ses compétences en matière de secourisme.",
+      "Réviser les gestes de premiers secours.",
+      "Intégrer les évolutions réglementaires et techniques.",
     ],
     modules: [
-      {
-        title: "Module 1 – Introduction au business digital",
-        order: 1,
-        type: "THEORETICAL",
-        content:
-          "- Panorama des opportunités en ligne\n- Modèles économiques : affiliation, revente, produits digitaux\n- Mindset et organisation de l’entrepreneur digital",
-      },
-      {
-        title: "Module 2 – Revente de formations et affiliation",
-        order: 2,
-        type: "THEORETICAL",
-        content:
-          "- Identifier des offres à revendre\n- Comprendre les systèmes d’affiliation\n- Construire une stratégie de distribution efficace",
-      },
-      {
-        title: "Module 3 – Création de produits digitaux",
-        order: 3,
-        type: "THEORETICAL",
-        content:
-          "- Définir une niche rentable\n- Concevoir un produit digital (e-book, formation vidéo, toolkit)\n- Structurer et valoriser son offre",
-      },
-      {
-        title: "Module 4 – Mise en place d’un écosystème automatisé",
-        order: 4,
-        type: "THEORETICAL",
-        content:
-          "- Introduction aux tunnels de vente\n- Email marketing et séquences automatisées\n- Pages de capture, de vente et paiement en ligne",
-      },
-      {
-        title: "Module 5 – Communication et visibilité",
-        order: 5,
-        type: "THEORETICAL",
-        content:
-          "- Développer sa présence sur les réseaux sociaux\n- Stratégie de contenu : posts, vidéos, lives\n- Notions de publicité payante (Facebook Ads, Google Ads)",
-      },
-      {
-        title: "Module 6 – Mise en pratique et passage à l’action",
-        order: 6,
-        type: "PRACTICAL",
-        content:
-          "- Lancer son premier produit ou offre digitale\n- Créer son propre tunnel de vente\n- Suivre les performances et optimiser",
-      },
+      { title: "Retour d'expérience", order: 1, type: "THEORETICAL", content: "- Échanges sur les interventions réalisées\n- Difficultés rencontrées" },
+      { title: "Actualisation des connaissances", order: 2, type: "THEORETICAL", content: "- Évolutions réglementaires\n- Mise à jour des techniques de secours" },
+      { title: "Révision des gestes de secours", order: 3, type: "PRACTICAL", content: "- Protection, examen, alerte\n- Gestes de premiers secours\n- Utilisation du DAE" },
+      { title: "Mises en situation", order: 4, type: "PRACTICAL", content: "- Cas concrets adaptés à l'activité de l'entreprise" },
     ],
-    technicalMeans:
-      "Plateforme e-learning, vidéos, tutoriels, supports téléchargeables et communauté privée.",
-    teachingMeans:
-      "Formation 100 % en ligne mêlant vidéos, tutoriels, exercices guidés et coaching de groupe.",
-    evaluationMethods:
-      "Quiz de validation par module et projet final de lancement d’une offre digitale.",
-    validationMethod: "Attestation de réussite DSA.",
-    monitoringMethods:
-      "Suivi via la plateforme e-learning, quiz de progression et sessions de coaching collectif.",
-    priceNonPartnerPerTrainee: 597,
-    availableForPartners: false,
-    availableInCenter: false,
-    availableElearning: true,
+    teachingMeans: "Mannequins, DAE de formation; alternance théorie/pratique.",
+    evaluationMethods: "Évaluation continue (théorique et pratique).",
+    validationMethod: "Renouvellement du certificat SST (24 mois).",
+    monitoringMethods: "Feuille d'émargement.",
+    renewalRecommendation: "MAC SST obligatoire tous les 24 mois.",
   },
 
-  // 18) Formation ONE - Sur candidature
+  // 18) PRAP IBC
   {
-    categoryName: "Digital Business",
-    title: "Formation ONE – École digitale finance & entrepreneuriat",
-    shortDescription:
-      "Parcours digital évolutif en éducation financière, business et entrepreneuriat.",
-    longDescription:
-      "École digitale modulable pour acquérir des compétences en finance, trading, business digital, immobilier et leadership. L'objectif est de permettre à chacun de progresser à son rythme et de lancer un projet entrepreneurial durable.",
-    minParticipants: 1,
-    targetAudience:
-      "Tout public (débutants à experts); salariés, indépendants et entrepreneurs; personnes en reconversion professionnelle.",
-    applicationType: "APPLICATION", // Formulaire de candidature spécial
+    categoryName: "Gestes & postures",
+    title: "PRAP IBC — Prévention des Risques liés à l'Activité Physique (Industrie, BTP, Commerce)",
+    shortDescription: "Formation certifiante INRS pour prévenir les TMS et accidents liés à l'activité physique.",
+    longDescription: "La formation PRAP IBC permet aux salariés de devenir acteurs de leur prévention, d'analyser leur situation de travail et de proposer des améliorations.",
+    durationHours: 14,
+    durationDays: 2,
+    targetAudience: "Salariés des secteurs industrie, BTP et commerce exposés aux risques liés à l'activité physique.",
     objectives: [
-      "Développer ses connaissances en éducation financière et comprendre les mécanismes économiques.",
-      "Maîtriser les bases et stratégies avancées du trading et de l’investissement.",
-      "Apprendre à créer et vendre des produits digitaux et des offres e-commerce.",
-      "Développer son personal branding et monétiser ses réseaux sociaux.",
-      "Comprendre et pratiquer l’investissement immobilier.",
-      "Renforcer son leadership, son organisation et sa performance.",
-      "Construire une vision entrepreneuriale solide pour un projet personnel ou professionnel.",
+      "Identifier les risques liés à l'activité physique.",
+      "Analyser sa situation de travail.",
+      "Proposer des pistes d'amélioration.",
+      "Adopter les bons gestes et postures.",
+      "Participer à la démarche de prévention de l'entreprise.",
     ],
     modules: [
-      {
-        title: "Module 1 – Éducation financière",
-        order: 1,
-        type: "THEORETICAL",
-        content:
-          "- Gestion budgétaire et patrimoine\n- Revenus actifs vs passifs\n- Compréhension du cashflow",
-      },
-      {
-        title: "Module 2 – Finance & trading",
-        order: 2,
-        type: "THEORETICAL",
-        content:
-          "- Introduction aux marchés financiers (bourse, forex, crypto)\n- Lecture de l’actualité économique et indicateurs clés\n- Gestion des risques",
-      },
-      {
-        title: "Module 3 – Business digital & e-commerce",
-        order: 3,
-        type: "THEORETICAL",
-        content:
-          "- Création et lancement d’un produit digital\n- Mise en place d’un shop e-commerce\n- Monétisation des réseaux sociaux et partenariats",
-      },
-      {
-        title: "Module 4 – Immobilier & gestion patrimoniale",
-        order: 4,
-        type: "THEORETICAL",
-        content:
-          "- Typologies d’investissements immobiliers\n- Fiscalité, financement et rénovation\n- Immobilier commercial et résidentiel",
-      },
-      {
-        title: "Module 5 – Leadership & mindset entrepreneurial",
-        order: 5,
-        type: "PRACTICAL",
-        content:
-          "- Communication et influence\n- Prise de décision, organisation stratégique\n- Habitudes de performance et travail en équipe",
-      },
+      { title: "Enjeux de la prévention", order: 1, type: "THEORETICAL", content: "- Statistiques AT/MP\n- Coûts humains et financiers" },
+      { title: "Fonctionnement du corps humain", order: 2, type: "THEORETICAL", content: "- Anatomie (colonne, muscles, articulations)\n- Mécanismes des TMS" },
+      { title: "Analyse de la situation de travail", order: 3, type: "PRACTICAL", content: "- Observation du poste\n- Identification des déterminants" },
+      { title: "Principes de sécurité physique", order: 4, type: "PRACTICAL", content: "- Techniques de manutention\n- Économie d'effort" },
     ],
-    technicalMeans:
-      "Plateforme digitale, sessions live/replay, coaching one-to-one, supports multimédia et communauté d’apprenants.",
-    teachingMeans:
-      "Parcours 100 % digital combinant e-learning, sessions live, ateliers collectifs et coaching personnalisé.",
-    evaluationMethods:
-      "Paliers de progression avec validations à chaque étape et accompagnement continu.",
-    validationMethod:
-      "Reconnaissance progressive au sein de la communauté et attestation interne du parcours.",
-    monitoringMethods:
-      "Suivi personnalisé, coaching individuel et collectif, indicateurs de progression partagés.",
-    availableForPartners: false,
-    availableInCenter: false,
-    availableElearning: true,
+    teachingMeans: "Apports théoriques, exercices pratiques, analyse de situations réelles.",
+    evaluationMethods: "Évaluation continue (théorique et pratique).",
+    validationMethod: "Certificat PRAP IBC (INRS) valable 24 mois.",
+    renewalRecommendation: "MAC PRAP IBC obligatoire tous les 24 mois.",
+  },
+
+  // 19) PRAP 2S
+  {
+    categoryName: "Gestes & postures",
+    title: "PRAP 2S — Prévention des Risques liés à l'Activité Physique (Sanitaire et Social)",
+    shortDescription: "Formation certifiante INRS pour les professionnels du secteur sanitaire et social.",
+    longDescription: "La formation PRAP 2S permet aux professionnels du secteur sanitaire et social de prévenir les risques liés à la mobilisation des personnes.",
+    durationHours: 21,
+    durationDays: 3,
+    targetAudience: "Personnel soignant, aides à domicile, auxiliaires de vie, personnel EHPAD.",
+    objectives: [
+      "Identifier les risques liés à l'activité physique dans le secteur sanitaire et social.",
+      "Analyser sa situation de travail.",
+      "Maîtriser les techniques de mobilisation des personnes.",
+      "Proposer des améliorations de son poste de travail.",
+      "Utiliser les aides techniques adaptées.",
+    ],
+    modules: [
+      { title: "Enjeux de la prévention en 2S", order: 1, type: "THEORETICAL", content: "- Statistiques AT/MP du secteur\n- Spécificités du secteur sanitaire et social" },
+      { title: "Anatomie et biomécanique", order: 2, type: "THEORETICAL", content: "- Fonctionnement du corps\n- Mécanismes des TMS" },
+      { title: "Analyse de la situation de travail", order: 3, type: "PRACTICAL", content: "- Observation du poste\n- Propositions d'amélioration" },
+      { title: "Techniques de mobilisation", order: 4, type: "PRACTICAL", content: "- Principes de manutention des personnes\n- Utilisation des aides techniques" },
+    ],
+    teachingMeans: "Apports théoriques, exercices pratiques, mises en situation.",
+    evaluationMethods: "Évaluation continue (théorique et pratique).",
+    validationMethod: "Certificat PRAP 2S (INRS) valable 24 mois.",
+    renewalRecommendation: "MAC PRAP 2S obligatoire tous les 24 mois.",
+  },
+
+  // 20) Habilitation Mécanique
+  {
+    categoryName: "Habilitations mécaniques",
+    title: "Habilitation Mécanique M0/M1/M2/MR",
+    shortDescription: "Intervention en sécurité sur équipements mécaniques selon le niveau d'habilitation.",
+    longDescription: "Former les salariés à intervenir en sécurité sur des équipements mécaniques, en maîtrisant les procédures de consignation.",
+    durationHours: 14,
+    durationDays: 2,
+    targetAudience: "Personnel de maintenance, techniciens, opérateurs intervenant sur équipements mécaniques.",
+    objectives: [
+      "Identifier les risques mécaniques.",
+      "Connaître les procédures de consignation mécanique.",
+      "Appliquer les règles de sécurité lors des interventions.",
+      "Adopter un comportement sécurisé.",
+    ],
+    modules: [
+      { title: "Réglementation et responsabilités", order: 1, type: "THEORETICAL", content: "- Code du travail\n- Obligations employeur/salarié" },
+      { title: "Risques mécaniques", order: 2, type: "THEORETICAL", content: "- Écrasement, cisaillement, happement\n- Énergies résiduelles" },
+      { title: "Procédures de consignation", order: 3, type: "THEORETICAL", content: "- Séparation, condamnation, vérification" },
+      { title: "Mise en situation pratique", order: 4, type: "PRACTICAL", content: "- Consignation/déconsignation sur équipements" },
+    ],
+    teachingMeans: "Apports théoriques, études de cas, exercices pratiques.",
+    evaluationMethods: "QCM + évaluation pratique.",
+    validationMethod: "Attestation d'habilitation mécanique.",
+    renewalRecommendation: "Recyclage recommandé tous les 3 ans.",
+  },
+
+  // 21) N1 Risques Chimiques
+  {
+    categoryName: "Risques chimiques",
+    title: "N1 Risques Chimiques — Niveau 1",
+    shortDescription: "Sensibilisation aux risques chimiques pour le personnel intervenant sur sites industriels.",
+    longDescription: "La formation N1 Risques Chimiques permet aux salariés d'identifier les risques chimiques et d'adopter les comportements de prévention adaptés.",
+    durationHours: 7,
+    durationDays: 1,
+    targetAudience: "Personnel intervenant sur sites industriels à risques chimiques (entreprises extérieures).",
+    objectives: [
+      "Identifier les risques chimiques.",
+      "Connaître les moyens de prévention.",
+      "Comprendre la signalisation et l'étiquetage.",
+      "Adopter les comportements de sécurité.",
+      "Réagir en cas d'incident.",
+    ],
+    modules: [
+      { title: "Réglementation et responsabilités", order: 1, type: "THEORETICAL", content: "- Code du travail\n- Plan de prévention" },
+      { title: "Risques chimiques", order: 2, type: "THEORETICAL", content: "- Types de produits\n- Voies de pénétration" },
+      { title: "Prévention et protection", order: 3, type: "THEORETICAL", content: "- EPI/EPC\n- Signalisation et étiquetage" },
+      { title: "Conduite à tenir", order: 4, type: "PRACTICAL", content: "- En cas d'exposition\n- En cas d'incident" },
+    ],
+    teachingMeans: "Apports théoriques, vidéos, études de cas.",
+    evaluationMethods: "QCM.",
+    validationMethod: "Attestation N1 Risques Chimiques (valable 3 ans).",
+    renewalRecommendation: "Recyclage obligatoire tous les 3 ans.",
+  },
+
+  // 22) Chef de Manœuvre
+  {
+    categoryName: "Elingage",
+    title: "Chef de Manœuvre — Direction des opérations de levage",
+    shortDescription: "Diriger et sécuriser les opérations de levage en coordonnant les intervenants.",
+    longDescription: "Former les chefs de manœuvre à organiser, diriger et sécuriser les opérations de levage, en coordination avec les conducteurs et élingueurs.",
+    durationHours: 7,
+    durationDays: 1,
+    targetAudience: "Personnel devant diriger des opérations de levage sur chantier ou en industrie.",
+    objectives: [
+      "Identifier les risques liés aux opérations de levage.",
+      "Organiser et sécuriser la zone de manœuvre.",
+      "Communiquer efficacement avec les intervenants.",
+      "Diriger les manœuvres de levage en sécurité.",
+      "Réagir en cas d'incident.",
+    ],
+    modules: [
+      { title: "Réglementation et responsabilités", order: 1, type: "THEORETICAL", content: "- Code du travail\n- Responsabilités du chef de manœuvre" },
+      { title: "Analyse des risques", order: 2, type: "THEORETICAL", content: "- Basculement, rupture, balancement\n- Co-activité" },
+      { title: "Communication et signalisation", order: 3, type: "THEORETICAL", content: "- Gestuelle normalisée\n- Communication radio" },
+      { title: "Mise en situation pratique", order: 4, type: "PRACTICAL", content: "- Organisation de zone\n- Direction de manœuvres" },
+    ],
+    teachingMeans: "Apports théoriques, exercices pratiques, mises en situation.",
+    evaluationMethods: "QCM + évaluation pratique.",
+    validationMethod: "Attestation Chef de Manœuvre.",
+    renewalRecommendation: "Recyclage recommandé tous les 3 ans ou en cas de changement de contexte.",
+  },
+
+  // 23) Élingeur
+  {
+    categoryName: "Elingage",
+    title: "Élingage — Techniques d'élingage et sécurité des opérations de levage",
+    shortDescription: "Maîtriser les techniques d'élingage pour sécuriser les opérations de levage.",
+    longDescription: "Former les salariés à réaliser des opérations d'élingage en toute sécurité, en choisissant et utilisant correctement les accessoires de levage.",
+    durationHours: 7,
+    durationDays: 1,
+    targetAudience: "Personnel amené à réaliser des opérations d'élingage (BTP, industrie, maintenance, logistique).",
+    prerequisites: "Aptitude médicale au poste concerné requise.",
+    objectives: [
+      "Identifier les risques liés aux opérations d'élingage.",
+      "Reconnaître les différents accessoires de levage.",
+      "Choisir les élingues adaptées à la charge à lever.",
+      "Réaliser un élingage conforme et sécurisé.",
+      "Vérifier l'état des accessoires de levage.",
+      "Adopter un comportement sécurisé lors des opérations de levage.",
+    ],
+    modules: [
+      { title: "Réglementation et responsabilités", order: 1, type: "THEORETICAL", content: "- Cadre réglementaire\n- Responsabilités des intervenants" },
+      { title: "Accessoires de levage", order: 2, type: "THEORETICAL", content: "- Élingues chaînes, textiles, câbles\n- Manilles, crochets, anneaux" },
+      { title: "Risques et prévention", order: 3, type: "THEORETICAL", content: "- Lecture des plaques de charge\n- Principes généraux de prévention" },
+      { title: "Pratique d'élingage", order: 4, type: "PRACTICAL", content: "- Contrôle des accessoires\n- Réalisation des différents types d'élingage\n- Équilibrage des charges" },
+    ],
+    teachingMeans: "Apports théoriques, exercices pratiques, mises en situation.",
+    evaluationMethods: "Évaluation pratique lors des opérations d'élingage.",
+    validationMethod: "Attestation de formation Élingage.",
+    renewalRecommendation: "Remise à niveau recommandée en cas de changement de charges ou d'accessoires.",
+  },
+
+  // 24) B1 Habilitation Électrique
+  {
+    categoryName: "Habilitations électriques",
+    title: "Habilitation Électrique B1 — Exécutant électricien basse tension",
+    shortDescription: "Réaliser des travaux d'ordre électrique en basse tension sous la responsabilité d'un chargé de travaux.",
+    longDescription: "La formation B1 permet aux électriciens d'effectuer des travaux d'ordre électrique en basse tension, conformément à la norme NF C 18-510.",
+    durationHours: 14,
+    durationDays: 2,
+    targetAudience: "Personnel électricien réalisant des travaux électriques en basse tension.",
+    prerequisites: "Connaissances de base en électricité obligatoires. Aptitude médicale au poste.",
+    objectives: [
+      "Identifier les risques liés aux travaux électriques en basse tension.",
+      "Comprendre le cadre réglementaire et les responsabilités associées.",
+      "Appliquer les règles de sécurité de la norme NF C 18-510.",
+      "Réaliser des travaux électriques en qualité d'exécutant B1.",
+      "Adopter un comportement sécurisé lors des interventions.",
+    ],
+    modules: [
+      { title: "Tronc commun B1", order: 1, type: "THEORETICAL", content: "- Notions fondamentales en électricité\n- Effets du courant électrique\n- Cadre réglementaire et NF C 18-510" },
+      { title: "Rôles et limites B1", order: 2, type: "THEORETICAL", content: "- Zones d'environnement électrique\n- Responsabilités et limites de l'habilitation B1" },
+      { title: "Sécurité et EPI", order: 3, type: "THEORETICAL", content: "- Procédures de sécurité\n- Équipements de protection" },
+      { title: "Mise en situation pratique", order: 4, type: "PRACTICAL", content: "- Travaux électriques sous responsabilité\n- Conduite à tenir en cas d'incident" },
+    ],
+    teachingMeans: "Apports théoriques, études de cas, exercices pratiques.",
+    evaluationMethods: "QCM + évaluation pratique.",
+    validationMethod: "Attestation de formation B1 + avis d'habilitation remis à l'employeur.",
+    renewalRecommendation: "Recyclage recommandé tous les 3 ans selon NF C 18-510.",
+  },
+
+  // 25) B2 Habilitation Électrique
+  {
+    categoryName: "Habilitations électriques",
+    title: "Habilitation Électrique B2 — Chargé de travaux basse tension",
+    shortDescription: "Diriger et organiser des travaux d'ordre électrique en basse tension.",
+    longDescription: "La formation B2 permet aux électriciens d'assurer la direction et l'organisation de travaux électriques en BT, conformément à la norme NF C 18-510.",
+    durationHours: 14,
+    durationDays: 2,
+    targetAudience: "Personnel électricien amené à encadrer et diriger des travaux électriques en BT.",
+    prerequisites: "Solides connaissances en électricité obligatoires. Expérience professionnelle recommandée.",
+    objectives: [
+      "Identifier les risques liés aux travaux électriques en basse tension.",
+      "Organiser, diriger et surveiller des travaux électriques.",
+      "Appliquer les règles de sécurité de la norme NF C 18-510.",
+      "Assurer la sécurité des personnes et des biens pendant les interventions.",
+    ],
+    modules: [
+      { title: "Tronc commun B2", order: 1, type: "THEORETICAL", content: "- Rappels fondamentaux en électricité\n- Cadre réglementaire et NF C 18-510" },
+      { title: "Organisation des travaux", order: 2, type: "THEORETICAL", content: "- Analyse des risques\n- Mesures de prévention\n- Consignation, balisage" },
+      { title: "Gestion des situations", order: 3, type: "THEORETICAL", content: "- Situations anormales et d'urgence\n- Coordination des intervenants" },
+      { title: "Mise en situation pratique", order: 4, type: "PRACTICAL", content: "- Organisation et direction de travaux\n- Gestion d'équipe" },
+    ],
+    teachingMeans: "Apports théoriques, études de cas, exercices pratiques.",
+    evaluationMethods: "QCM + évaluation pratique.",
+    validationMethod: "Attestation de formation B2 + avis d'habilitation remis à l'employeur.",
+    renewalRecommendation: "Recyclage recommandé tous les 3 ans selon NF C 18-510.",
+  },
+
+  // 26) BC/HC Habilitation Électrique
+  {
+    categoryName: "Habilitations électriques",
+    title: "Habilitation Électrique BC/HC — Chargé de consignation BT & HT",
+    shortDescription: "Réaliser les opérations de consignation et déconsignation électrique.",
+    longDescription: "La formation BC/HC permet aux électriciens d'assurer la consignation et déconsignation d'installations électriques BT et/ou HT, conformément à la norme NF C 18-510.",
+    durationHours: 14,
+    durationDays: 2,
+    targetAudience: "Personnel électricien chargé de réaliser des consignations électriques.",
+    prerequisites: "Solides connaissances en électricité obligatoires. Expérience professionnelle recommandée.",
+    objectives: [
+      "Identifier les risques liés aux opérations de consignation électrique.",
+      "Appliquer les règles de sécurité de la norme NF C 18-510.",
+      "Réaliser une consignation et déconsignation en basse tension (BC).",
+      "Réaliser une consignation et déconsignation en haute tension (HC).",
+      "Garantir la sécurité des personnes et des installations.",
+    ],
+    modules: [
+      { title: "Tronc commun BC/HC", order: 1, type: "THEORETICAL", content: "- Rappels fondamentaux\n- Principe général de la consignation" },
+      { title: "Consignation BT", order: 2, type: "THEORETICAL", content: "- Étapes: séparation, condamnation, identification, VAT, MALT" },
+      { title: "Consignation HT", order: 3, type: "THEORETICAL", content: "- Spécificités HT\n- Procédure de déconsignation" },
+      { title: "Mise en situation pratique", order: 4, type: "PRACTICAL", content: "- Consignation/déconsignation BT et HT" },
+    ],
+    teachingMeans: "Apports théoriques, études de cas, exercices pratiques.",
+    evaluationMethods: "QCM + évaluation pratique.",
+    validationMethod: "Attestation de formation BC/HC + avis d'habilitation remis à l'employeur.",
+    renewalRecommendation: "Recyclage recommandé tous les 3 ans selon NF C 18-510.",
+  },
+
+  // 27) BR Habilitation Électrique
+  {
+    categoryName: "Habilitations électriques",
+    title: "Habilitation Électrique BR — Interventions générales en basse tension",
+    shortDescription: "Réaliser des interventions générales de dépannage et maintenance en BT.",
+    longDescription: "La formation BR permet aux électriciens d'effectuer en sécurité des interventions générales en BT (dépannage, maintenance, remplacement, raccordement).",
+    durationHours: 14,
+    durationDays: 2,
+    targetAudience: "Personnel électricien réalisant des interventions de dépannage et maintenance en BT.",
+    prerequisites: "Solides connaissances en électricité obligatoires. Expérience professionnelle recommandée.",
+    objectives: [
+      "Identifier les risques liés aux interventions électriques en BT.",
+      "Préparer, organiser et réaliser une intervention générale en BT.",
+      "Mettre en œuvre les procédures de consignation adaptées.",
+      "Assurer la sécurité lors des interventions électriques.",
+    ],
+    modules: [
+      { title: "Tronc commun BR", order: 1, type: "THEORETICAL", content: "- Rappels fondamentaux\n- Cadre réglementaire et NF C 18-510" },
+      { title: "Organisation des interventions", order: 2, type: "THEORETICAL", content: "- Analyse des risques\n- Consignation et déconsignation" },
+      { title: "Partie pratique", order: 3, type: "PRACTICAL", content: "- Interventions de dépannage et maintenance\n- Remplacement et raccordement" },
+    ],
+    teachingMeans: "Apports théoriques, études de cas, exercices pratiques.",
+    evaluationMethods: "QCM + évaluation pratique.",
+    validationMethod: "Attestation de formation BR + avis d'habilitation remis à l'employeur.",
+    renewalRecommendation: "Recyclage recommandé tous les 3 ans selon NF C 18-510.",
+  },
+
+  // 28) BP Habilitation Électrique (Photovoltaïque)
+  {
+    categoryName: "Habilitations électriques",
+    title: "Habilitation Électrique BP — Interventions sur installations photovoltaïques",
+    shortDescription: "Intervenir en sécurité sur des installations photovoltaïques.",
+    longDescription: "La formation BP permet aux électriciens d'effectuer en sécurité des interventions sur des installations PV, en tenant compte des risques spécifiques du courant continu.",
+    durationHours: 14,
+    durationDays: 2,
+    targetAudience: "Personnel électricien intervenant sur des installations photovoltaïques.",
+    prerequisites: "Solides connaissances en électricité obligatoires. Connaissances en PV recommandées.",
+    objectives: [
+      "Identifier les risques spécifiques aux installations photovoltaïques.",
+      "Appliquer les règles de sécurité de la norme NF C 18-510.",
+      "Préparer et réaliser une intervention en sécurité sur une installation PV.",
+      "Mettre en œuvre les procédures de consignation adaptées au photovoltaïque.",
+    ],
+    modules: [
+      { title: "Tronc commun BP", order: 1, type: "THEORETICAL", content: "- Spécificités du courant continu\n- Architecture d'une installation PV" },
+      { title: "Risques spécifiques PV", order: 2, type: "THEORETICAL", content: "- Présence de tension même sans alimentation réseau\n- Zones à risque" },
+      { title: "Partie pratique", order: 3, type: "PRACTICAL", content: "- Consignation spécifique PV\n- Interventions de maintenance et dépannage" },
+    ],
+    teachingMeans: "Apports théoriques, études de cas, exercices pratiques.",
+    evaluationMethods: "QCM + évaluation pratique.",
+    validationMethod: "Attestation de formation BP + avis d'habilitation remis à l'employeur.",
+    renewalRecommendation: "Recyclage recommandé tous les 3 ans selon NF C 18-510.",
+  },
+
+  // 29) BF/HF Habilitation Électrique (Travaux en fouilles)
+  {
+    categoryName: "Habilitations électriques",
+    title: "Habilitation Électrique BF/HF — Travaux en fouilles à proximité d'ouvrages électriques",
+    shortDescription: "Intervenir en sécurité lors de travaux en fouilles à proximité de réseaux électriques.",
+    longDescription: "La formation BF/HF permet aux salariés d'intervenir en sécurité lors de travaux en fouilles à proximité d'ouvrages électriques enterrés BT et/ou HT.",
+    durationHours: 7,
+    durationDays: 1,
+    targetAudience: "Personnel réalisant des travaux de fouilles, terrassement à proximité de réseaux électriques.",
+    prerequisites: "Aucun prérequis technique en électricité n'est exigé. Sensibilisation AIPR recommandée.",
+    objectives: [
+      "Identifier les risques électriques liés aux ouvrages enterrés.",
+      "Reconnaître les réseaux électriques BT et HT en fouilles.",
+      "Appliquer les règles de sécurité de la norme NF C 18-510.",
+      "Travailler en sécurité à proximité d'ouvrages électriques enterrés.",
+      "Réagir efficacement en cas d'incident.",
+    ],
+    modules: [
+      { title: "Tronc commun BF/HF", order: 1, type: "THEORETICAL", content: "- Notions sur les risques électriques\n- Cadre réglementaire" },
+      { title: "Travaux en fouilles BT", order: 2, type: "THEORETICAL", content: "- Spécificités des réseaux BT\n- Distances de sécurité" },
+      { title: "Travaux en fouilles HT", order: 3, type: "THEORETICAL", content: "- Dangers des réseaux HT\n- Zones de danger renforcées" },
+      { title: "Mise en situation", order: 4, type: "PRACTICAL", content: "- Analyse de situations à risque\n- Conduite à tenir" },
+    ],
+    teachingMeans: "Apports théoriques, études de cas, mises en situation.",
+    evaluationMethods: "QCM + évaluation pratique.",
+    validationMethod: "Attestation de formation BF/HF + avis d'habilitation remis à l'employeur.",
+    renewalRecommendation: "Recyclage recommandé tous les 3 ans selon NF C 18-510.",
+  },
+
+  // 30) Formation Incendie EPI
+  {
+    categoryName: "Sécurité incendie & sûreté",
+    title: "Formation Incendie EPI — Équipier de Première Intervention",
+    shortDescription: "Intervenir efficacement en cas de départ de feu et utiliser les moyens de première intervention.",
+    longDescription: "La formation EPI permet aux salariés d'intervenir efficacement en cas de départ de feu, d'utiliser les moyens de première intervention et d'adopter les bons comportements.",
+    durationHours: 4,
+    targetAudience: "Tout salarié désigné Équipier de Première Intervention.",
+    objectives: [
+      "Identifier les risques d'incendie dans l'entreprise.",
+      "Reconnaître un départ de feu.",
+      "Donner l'alerte efficacement.",
+      "Utiliser un extincteur adapté.",
+      "Adopter un comportement sécurisé face à un incendie.",
+    ],
+    modules: [
+      { title: "Théorie incendie", order: 1, type: "THEORETICAL", content: "- Triangle du feu\n- Classes de feu\n- Causes d'incendie" },
+      { title: "Organisation sécurité incendie", order: 2, type: "THEORETICAL", content: "- Consignes internes\n- Rôle de l'EPI" },
+      { title: "Manipulation extincteurs", order: 3, type: "PRACTICAL", content: "- Eau, CO₂, poudre\n- Mise en situation sur feu réel ou simulateur" },
+    ],
+    teachingMeans: "Apports théoriques, exercices pratiques, mise en situation.",
+    evaluationMethods: "Exercices pratiques.",
+    validationMethod: "Attestation de formation EPI.",
+    renewalRecommendation: "Recyclage recommandé tous les 1 à 2 ans.",
+  },
+
+  // 31) Manipulation des extincteurs
+  {
+    categoryName: "Sécurité incendie & sûreté",
+    title: "Manipulation des extincteurs",
+    shortDescription: "Manipuler efficacement un extincteur face à un départ de feu.",
+    longDescription: "Cette formation permet aux salariés de manipuler efficacement un extincteur face à un départ de feu, en toute sécurité.",
+    durationHours: 2,
+    targetAudience: "Tout salarié.",
+    objectives: [
+      "Identifier les classes de feu.",
+      "Choisir l'extincteur adapté.",
+      "Manipuler un extincteur en sécurité.",
+    ],
+    modules: [
+      { title: "Types d'extincteurs", order: 1, type: "THEORETICAL", content: "- Eau, poudre, CO₂\n- Classes de feu" },
+      { title: "Exercices pratiques", order: 2, type: "PRACTICAL", content: "- Distances et techniques d'attaque\n- Feu réel ou simulateur" },
+    ],
+    teachingMeans: "Apports théoriques, exercices pratiques.",
+    evaluationMethods: "Exercices pratiques.",
+    validationMethod: "Attestation de formation.",
+    renewalRecommendation: "Recyclage recommandé tous les 1 à 2 ans.",
+  },
+
+  // 32) Évacuation incendie
+  {
+    categoryName: "Sécurité incendie & sûreté",
+    title: "Évacuation incendie — Guide-file / Serre-file",
+    shortDescription: "Assurer une évacuation rapide, ordonnée et sécurisée en cas d'incendie.",
+    longDescription: "Former les salariés désignés guide-file et serre-file à assurer une évacuation rapide, ordonnée et sécurisée des occupants en cas d'incendie.",
+    durationHours: 3,
+    targetAudience: "Salariés désignés guide-file / serre-file.",
+    objectives: [
+      "Connaître les consignes d'évacuation.",
+      "Identifier les cheminements et points de rassemblement.",
+      "Gérer le flux des personnes.",
+      "Assurer la sécurité lors de l'évacuation.",
+    ],
+    modules: [
+      { title: "Rôles et responsabilités", order: 1, type: "THEORETICAL", content: "- Guide-file / serre-file\n- Signal d'alarme" },
+      { title: "Organisation de l'évacuation", order: 2, type: "THEORETICAL", content: "- Cheminements\n- Points de rassemblement" },
+      { title: "Exercice d'évacuation", order: 3, type: "PRACTICAL", content: "- Mise en situation réelle" },
+    ],
+    teachingMeans: "Apports théoriques, mise en situation.",
+    evaluationMethods: "Mise en situation.",
+    validationMethod: "Attestation de formation.",
+    renewalRecommendation: "Recyclage recommandé tous les 1 à 2 ans.",
+  },
+
+  // 33) SSIAP 1
+  {
+    categoryName: "Sécurité incendie & sûreté",
+    title: "SSIAP 1 — Agent de Service de Sécurité Incendie et d'Assistance à Personnes",
+    shortDescription: "Exercer la fonction d'agent de sécurité incendie conformément à l'arrêté du 2 mai 2005.",
+    longDescription: "La formation SSIAP 1 prépare les stagiaires à exercer la fonction d'agent de sécurité incendie, conformément à l'arrêté du 2 mai 2005 modifié.",
+    durationHours: 67,
+    targetAudience: "Agents de sécurité, personnel souhaitant accéder à la fonction SSIAP 1.",
+    prerequisites: "Aptitude médicale. PSC1 ou équivalent valide. Compréhension du français.",
+    objectives: [
+      "Prévenir les incendies.",
+      "Intervenir sur un début d'incendie.",
+      "Alerter et accueillir les secours.",
+      "Assurer l'assistance aux personnes.",
+    ],
+    modules: [
+      { title: "Le feu et ses conséquences", order: 1, type: "THEORETICAL", content: "- Comportement du feu\n- Propagation" },
+      { title: "Sécurité incendie", order: 2, type: "THEORETICAL", content: "- Réglementation ERP/IGH\n- Installations techniques" },
+      { title: "Rôle et missions de l'agent SSIAP", order: 3, type: "THEORETICAL", content: "- Prévention\n- Intervention" },
+      { title: "Mises en situation pratiques", order: 4, type: "PRACTICAL", content: "- Rondes\n- Intervention sur sinistre" },
+    ],
+    teachingMeans: "Apports théoriques, exercices pratiques, mises en situation.",
+    evaluationMethods: "Examen théorique + examen pratique.",
+    validationMethod: "Diplôme SSIAP 1.",
+    renewalRecommendation: "MAC obligatoire tous les 3 ans.",
+  },
+
+  // 34) SSIAP 2
+  {
+    categoryName: "Sécurité incendie & sûreté",
+    title: "SSIAP 2 — Chef d'Équipe de Service de Sécurité Incendie",
+    shortDescription: "Exercer la fonction de chef d'équipe sécurité incendie.",
+    longDescription: "La formation SSIAP 2 prépare à la fonction de chef d'équipe, responsable de la coordination des agents SSIAP 1.",
+    durationHours: 70,
+    targetAudience: "Agents SSIAP 1 souhaitant évoluer. Chefs d'équipe sécurité incendie.",
+    prerequisites: "Être titulaire du SSIAP 1. Expérience professionnelle requise. Aptitude médicale.",
+    objectives: [
+      "Encadrer une équipe SSIAP.",
+      "Gérer les interventions incendie.",
+      "Former et organiser les équipes.",
+      "Appliquer la réglementation ERP/IGH.",
+    ],
+    modules: [
+      { title: "Rôles et responsabilités du chef d'équipe", order: 1, type: "THEORETICAL", content: "- Management\n- Gestion du PCS" },
+      { title: "Management opérationnel", order: 2, type: "THEORETICAL", content: "- Organisation des équipes\n- Gestion des interventions" },
+      { title: "Exercices pratiques", order: 3, type: "PRACTICAL", content: "- Mises en situation de gestion d'équipe" },
+    ],
+    teachingMeans: "Apports théoriques, exercices pratiques, mises en situation.",
+    evaluationMethods: "Examen théorique + examen pratique.",
+    validationMethod: "Diplôme SSIAP 2.",
+    renewalRecommendation: "MAC obligatoire tous les 3 ans.",
+  },
+
+  // 35) H1 Habilitation Électrique Haute Tension
+  {
+    categoryName: "Habilitations électriques",
+    title: "Habilitation Électrique H1 — Exécutant électricien haute tension",
+    shortDescription: "Réaliser des travaux d'ordre électrique en haute tension sous la responsabilité d'un chargé de travaux.",
+    longDescription: "La formation H1 permet aux électriciens d'effectuer des travaux d'ordre électrique en haute tension, conformément à la norme NF C 18-510.",
+    durationHours: 14,
+    durationDays: 2,
+    targetAudience: "Personnel électricien amené à intervenir sur des installations haute tension.",
+    prerequisites: "Solides connaissances en électricité obligatoires. Expérience professionnelle en électricité requise.",
+    objectives: [
+      "Identifier les risques spécifiques liés aux installations haute tension.",
+      "Comprendre le cadre réglementaire et les responsabilités associées.",
+      "Appliquer les règles de sécurité de la norme NF C 18-510 en HT.",
+      "Réaliser des travaux électriques en qualité d'exécutant H1.",
+      "Adopter un comportement sécurisé lors des interventions en haute tension.",
+    ],
+    modules: [
+      { title: "Tronc commun H1", order: 1, type: "THEORETICAL", content: "- Rappels fondamentaux en électricité HT\n- Effets du courant électrique" },
+      { title: "Spécificités HT", order: 2, type: "THEORETICAL", content: "- Zones d'environnement électrique HT\n- Consignation, balisage en HT" },
+      { title: "Sécurité et EPI", order: 3, type: "THEORETICAL", content: "- Équipements de protection\n- Conduite à tenir en cas d'incident" },
+      { title: "Mise en situation pratique", order: 4, type: "PRACTICAL", content: "- Travaux électriques HT sous responsabilité" },
+    ],
+    teachingMeans: "Apports théoriques, études de cas HT, exercices pratiques.",
+    evaluationMethods: "QCM + évaluation pratique.",
+    validationMethod: "Attestation de formation H1 + avis d'habilitation remis à l'employeur.",
+    renewalRecommendation: "Recyclage recommandé tous les 3 ans selon NF C 18-510.",
+  },
+
+  // 36) H2 Habilitation Électrique Haute Tension
+  {
+    categoryName: "Habilitations électriques",
+    title: "Habilitation Électrique H2 — Chargé de travaux haute tension",
+    shortDescription: "Diriger et organiser des travaux d'ordre électrique en haute tension.",
+    longDescription: "La formation H2 permet aux électriciens d'assurer la direction, l'organisation et la surveillance de travaux électriques en HT, conformément à la norme NF C 18-510.",
+    durationHours: 14,
+    durationDays: 2,
+    targetAudience: "Personnel électricien amené à encadrer et diriger des travaux électriques en haute tension.",
+    prerequisites: "Solides connaissances en électricité obligatoires. Expérience professionnelle confirmée en électricité HT recommandée.",
+    objectives: [
+      "Identifier les risques spécifiques liés aux installations haute tension.",
+      "Organiser, diriger et surveiller des travaux électriques en qualité de chargé de travaux H2.",
+      "Mettre en œuvre les mesures de prévention adaptées.",
+      "Assurer la sécurité des personnes et des biens lors des interventions en haute tension.",
+    ],
+    modules: [
+      { title: "Tronc commun H2", order: 1, type: "THEORETICAL", content: "- Rappels fondamentaux en électricité HT\n- Cadre réglementaire et NF C 18-510" },
+      { title: "Organisation des travaux HT", order: 2, type: "THEORETICAL", content: "- Analyse des risques\n- Coordination des intervenants" },
+      { title: "Consignation et sécurité HT", order: 3, type: "THEORETICAL", content: "- Consignation, balisage\n- Gestion des situations d'urgence" },
+      { title: "Mise en situation pratique", order: 4, type: "PRACTICAL", content: "- Organisation et direction de travaux HT" },
+    ],
+    teachingMeans: "Apports théoriques, études de cas HT, exercices pratiques.",
+    evaluationMethods: "QCM + évaluation pratique.",
+    validationMethod: "Attestation de formation H2 + avis d'habilitation remis à l'employeur.",
+    renewalRecommendation: "Recyclage recommandé tous les 3 ans selon NF C 18-510.",
+  },
+
+  // 37) F0 Formation Formateur Tronc Commun
+  {
+    categoryName: "Formation de formateurs",
+    title: "F0 — Devenir formateur professionnel en prévention, sécurité et réglementation",
+    shortDescription: "Acquérir les compétences pour devenir formateur professionnel conforme aux exigences Qualiopi.",
+    longDescription: "La formation F0 permet à des professionnels indépendants de devenir formateurs compétents, structurés et conformes aux exigences réglementaires et Qualiopi.",
+    durationHours: 28,
+    durationDays: 4,
+    targetAudience: "Professionnels indépendants, experts métiers souhaitant transmettre leurs compétences.",
+    prerequisites: "Expertise métier dans au moins un domaine de la prévention ou de la sécurité. Maîtrise orale du français.",
+    objectives: [
+      "Comprendre le cadre réglementaire de la formation professionnelle.",
+      "Adopter la posture et les responsabilités du formateur professionnel.",
+      "Concevoir une action de formation structurée et conforme à Qualiopi.",
+      "Animer une formation en présentiel de manière efficace.",
+      "Évaluer les acquis des stagiaires.",
+      "Assurer la traçabilité et la conformité documentaire d'une formation.",
+    ],
+    modules: [
+      { title: "Le cadre de la formation professionnelle", order: 1, type: "THEORETICAL", content: "- Système de formation en France\n- Obligations légales" },
+      { title: "Posture et rôle du formateur", order: 2, type: "THEORETICAL", content: "- Communication pédagogique\n- Gestion d'un groupe d'adultes" },
+      { title: "Ingénierie pédagogique", order: 3, type: "THEORETICAL", content: "- Objectifs pédagogiques\n- Construction d'un programme" },
+      { title: "Animation d'une formation", order: 4, type: "PRACTICAL", content: "- Techniques d'animation\n- Pédagogie active" },
+      { title: "Évaluation et suivi des acquis", order: 5, type: "PRACTICAL", content: "- QCM, mises en situation\n- Attestation et traçabilité" },
+      { title: "Qualiopi et conformité documentaire", order: 6, type: "THEORETICAL", content: "- Référentiel Qualiopi\n- Documents obligatoires" },
+    ],
+    teachingMeans: "Apports théoriques, travaux pratiques, exercices d'animation.",
+    evaluationMethods: "Évaluations continues, mise en situation pédagogique.",
+    validationMethod: "Attestation de formation F0.",
+    renewalRecommendation: "Actualisation des compétences recommandée tous les 3 ans.",
+  },
+
+  // 38) F-A Formation Formateur Travail en Hauteur
+  {
+    categoryName: "Formation de formateurs",
+    title: "F-A — Devenir formateur en Travail en Hauteur & Équipements",
+    shortDescription: "Concevoir, animer et évaluer des formations en travail en hauteur.",
+    longDescription: "La formation F-A permet à des professionnels indépendants de concevoir, animer et évaluer des formations en travail en hauteur, conformément aux exigences réglementaires et Qualiopi.",
+    durationHours: 28,
+    durationDays: 4,
+    targetAudience: "Formateurs indépendants, professionnels du BTP, de l'industrie ou de la maintenance souhaitant devenir formateurs.",
+    prerequisites: "Être titulaire du F0. Expérience professionnelle significative en travail en hauteur.",
+    objectives: [
+      "Maîtriser le cadre réglementaire du travail en hauteur.",
+      "Concevoir une formation travail en hauteur conforme à Qualiopi.",
+      "Animer des formations pratiques en toute sécurité.",
+      "Évaluer les acquis théoriques et pratiques des stagiaires.",
+    ],
+    modules: [
+      { title: "Réglementation travail en hauteur", order: 1, type: "THEORETICAL", content: "- Code du travail\n- Hiérarchie des moyens de protection" },
+      { title: "Ingénierie pédagogique Bloc A", order: 2, type: "THEORETICAL", content: "- Programmes travail en hauteur, échafaudages, chef de manœuvre" },
+      { title: "Animation des formations pratiques", order: 3, type: "PRACTICAL", content: "- Organisation d'un plateau pédagogique\n- Sécurisation des zones" },
+      { title: "Modules complémentaires", order: 4, type: "PRACTICAL", content: "- Port du harnais, PIRL, filets de sécurité" },
+      { title: "Évaluation et validation", order: 5, type: "PRACTICAL", content: "- Évaluation théorique et pratique\n- Critères d'évaluation" },
+    ],
+    teachingMeans: "Apports théoriques, travaux pratiques de conception, mises en situation d'animation.",
+    evaluationMethods: "Évaluations continues, mise en situation d'animation réelle.",
+    validationMethod: "Attestation de formation F-A.",
+    renewalRecommendation: "Actualisation des compétences recommandée tous les 3 ans.",
+  },
+
+  // 39) F-B Formation Formateur Prévention Santé Sécurité
+  {
+    categoryName: "Formation de formateurs",
+    title: "F-B — Devenir formateur en Prévention, Santé & Sécurité",
+    shortDescription: "Concevoir, animer et évaluer des formations en prévention des risques professionnels.",
+    longDescription: "La formation F-B permet à des professionnels indépendants de concevoir, animer et évaluer des formations en prévention des risques professionnels, conformément aux exigences Qualiopi.",
+    durationHours: 28,
+    durationDays: 4,
+    targetAudience: "Formateurs indépendants, professionnels de la prévention, QHSE, sécurité.",
+    prerequisites: "Être titulaire du F0. Expérience professionnelle ou expertise en prévention des risques.",
+    objectives: [
+      "Maîtriser le cadre réglementaire de la prévention et de la santé au travail.",
+      "Concevoir des formations conformes à Qualiopi.",
+      "Animer des formations prévention de manière dynamique et efficace.",
+      "Évaluer les acquis théoriques et pratiques des stagiaires.",
+    ],
+    modules: [
+      { title: "Cadre réglementaire prévention", order: 1, type: "THEORETICAL", content: "- Code du travail\n- Obligations employeur/salarié" },
+      { title: "Ingénierie pédagogique Bloc B", order: 2, type: "THEORETICAL", content: "- Programmes SST, Gestes et postures, PRAP, ATEX" },
+      { title: "Animation des formations prévention", order: 3, type: "PRACTICAL", content: "- Techniques d'animation\n- Gestion des groupes" },
+      { title: "Évaluation et validation", order: 4, type: "PRACTICAL", content: "- Évaluation théorique et pratique\n- Traçabilité Qualiopi" },
+    ],
+    teachingMeans: "Apports théoriques, travaux pratiques de conception, mises en situation d'animation.",
+    evaluationMethods: "Évaluations continues, mise en situation d'animation réelle.",
+    validationMethod: "Attestation de formation F-B.",
+    renewalRecommendation: "Actualisation des compétences recommandée tous les 3 ans.",
+  },
+
+  // 40) Module Port du Harnais
+  {
+    categoryName: "Travaux en hauteur & échafaudages",
+    title: "Module Port du Harnais — Utilisation des EPI antichute",
+    shortDescription: "Utiliser en sécurité les équipements de protection individuelle contre les chutes de hauteur.",
+    longDescription: "Le module Port du harnais forme les salariés à l'utilisation en sécurité des EPI antichute (harnais, longes, systèmes antichute), conformément à la réglementation et aux notices fabricants.",
+    durationHours: 3.5,
+    targetAudience: "Tout salarié amené à utiliser un harnais antichute.",
+    prerequisites: "Aptitude médicale au travail en hauteur requise. Avoir suivi ou suivre la formation Travail en hauteur.",
+    objectives: [
+      "Identifier les risques de chute nécessitant le port d'un harnais.",
+      "Reconnaître les différents équipements antichute.",
+      "Vérifier l'état et la conformité des EPI.",
+      "Mettre en place et ajuster correctement un harnais.",
+      "Utiliser un système antichute en respectant les consignes de sécurité.",
+    ],
+    modules: [
+      { title: "Rappel réglementaire", order: 1, type: "THEORETICAL", content: "- EPI antichute\n- Normes EN" },
+      { title: "Présentation des équipements", order: 2, type: "THEORETICAL", content: "- Harnais, longes, absorbeurs, lignes de vie" },
+      { title: "Mise en pratique", order: 3, type: "PRACTICAL", content: "- Vérification, mise en place, réglage\n- Utilisation en situation" },
+    ],
+    teachingMeans: "Apports théoriques ciblés, exercices pratiques individuels.",
+    evaluationMethods: "Évaluation pratique lors des mises en situation.",
+    validationMethod: "Attestation de formation – Module Port du harnais.",
+  },
+
+  // 41) Module PIRL
+  {
+    categoryName: "Travaux en hauteur & échafaudages",
+    title: "Module PIRL — Plateforme Individuelle Roulante Légère",
+    shortDescription: "Utiliser en sécurité les plateformes individuelles roulantes légères.",
+    longDescription: "Le module PIRL forme les salariés à l'utilisation en sécurité des PIRL, afin de prévenir les risques de chute et de renversement.",
+    durationHours: 3.5,
+    targetAudience: "Salariés utilisant des PIRL pour des travaux en hauteur.",
+    prerequisites: "Aptitude médicale au travail en hauteur requise. Avoir suivi ou suivre la formation Travail en hauteur.",
+    objectives: [
+      "Identifier les risques liés à l'utilisation d'une PIRL.",
+      "Vérifier la conformité de la PIRL avant utilisation.",
+      "Utiliser une PIRL dans le respect des règles de sécurité.",
+      "Se déplacer et travailler en hauteur en toute sécurité.",
+    ],
+    modules: [
+      { title: "Réglementation PIRL", order: 1, type: "THEORETICAL", content: "- Types de PIRL\n- Règles d'utilisation" },
+      { title: "Vérifications", order: 2, type: "THEORETICAL", content: "- Contrôles avant utilisation" },
+      { title: "Mise en pratique", order: 3, type: "PRACTICAL", content: "- Utilisation et déplacement en sécurité" },
+    ],
+    teachingMeans: "Apports théoriques ciblés, exercices pratiques sur PIRL.",
+    evaluationMethods: "Évaluation pratique lors des exercices.",
+    validationMethod: "Attestation de formation – Module PIRL.",
+  },
+
+  // 42) Module Filet de sécurité
+  {
+    categoryName: "Travaux en hauteur & échafaudages",
+    title: "Module Filet de sécurité — Protection collective contre les chutes",
+    shortDescription: "Comprendre l'utilisation des filets de sécurité comme protection collective.",
+    longDescription: "Le module Filet de sécurité sensibilise les salariés à l'utilisation des filets comme moyen de protection collective contre les chutes de hauteur.",
+    durationHours: 3.5,
+    targetAudience: "Salariés intervenant sur des chantiers équipés de filets de sécurité.",
+    prerequisites: "Aptitude médicale au travail en hauteur requise. Avoir suivi ou suivre la formation Travail en hauteur.",
+    objectives: [
+      "Identifier les risques de chute nécessitant une protection collective.",
+      "Comprendre le rôle et les limites des filets de sécurité.",
+      "Reconnaître les différents types de filets.",
+      "Respecter les consignes de travail en présence de filets.",
+      "Adopter un comportement sécurisé sur les zones protégées.",
+    ],
+    modules: [
+      { title: "Protection collective", order: 1, type: "THEORETICAL", content: "- Principes de protection\n- Réglementation" },
+      { title: "Types de filets", order: 2, type: "THEORETICAL", content: "- Domaines d'utilisation\n- Limites" },
+      { title: "Études de cas", order: 3, type: "PRACTICAL", content: "- Situations à risque\n- Consignes de sécurité" },
+    ],
+    teachingMeans: "Apports théoriques ciblés, études de cas issues du terrain.",
+    evaluationMethods: "Évaluation continue.",
+    validationMethod: "Attestation de formation – Module Filet de sécurité.",
   },
 ];
 
@@ -1209,11 +1690,15 @@ async function ensureTrainingCategories(
       idx.byName.set(lowerName, existingBySlug);
       continue;
     }
-    const category = await prisma.category.upsert({
+    // Check if category exists by slug first
+    let category = await prisma.category.findFirst({
       where: { slug },
-      update: { name },
-      create: { name, slug },
     });
+    if (!category) {
+      category = await prisma.category.create({
+        data: { name, slug },
+      });
+    }
     idx.byName.set(lowerName, category.id);
     idx.bySlug.set(category.slug.toLowerCase(), category.id);
   }
@@ -1236,10 +1721,9 @@ async function upsertTrainingWithExistingCategory(
       title: data.title,
       shortDescription: data.shortDescription ?? null,
       longDescription: data.longDescription ?? null,
+      imageUrl: data.imageUrl ?? null,
       durationHours: data.durationHours ?? null,
       durationDays: data.durationDays ?? null,
-      minParticipants: data.minParticipants ?? 1,
-      maxParticipants: data.maxParticipants ?? null,
       successRate: data.successRate ?? null,
       targetAudience: data.targetAudience ?? null,
       learningObjectives: data.learningObjectives ?? null,
@@ -1250,12 +1734,6 @@ async function upsertTrainingWithExistingCategory(
       validationMethod: data.validationMethod ?? null,
       monitoringMethods: data.monitoringMethods ?? null,
       renewalRecommendation: data.renewalRecommendation ?? null,
-      pricePartnerPerDay: data.pricePartnerPerDay ?? null,
-      priceNonPartnerPerTrainee: data.priceNonPartnerPerTrainee ?? null,
-      availableForPartners: data.availableForPartners ?? false,
-      applicationType: data.applicationType ?? "STANDARD",
-      availableInCenter: data.availableInCenter ?? true,
-      availableElearning: data.availableElearning ?? false,
       status: "PUBLISHED",
     },
     create: {
@@ -1264,10 +1742,9 @@ async function upsertTrainingWithExistingCategory(
       slug,
       shortDescription: data.shortDescription ?? null,
       longDescription: data.longDescription ?? null,
+      imageUrl: data.imageUrl ?? null,
       durationHours: data.durationHours ?? null,
       durationDays: data.durationDays ?? null,
-      minParticipants: data.minParticipants ?? 1,
-      maxParticipants: data.maxParticipants ?? null,
       successRate: data.successRate ?? null,
       targetAudience: data.targetAudience ?? null,
       learningObjectives: data.learningObjectives ?? null,
@@ -1278,12 +1755,6 @@ async function upsertTrainingWithExistingCategory(
       validationMethod: data.validationMethod ?? null,
       monitoringMethods: data.monitoringMethods ?? null,
       renewalRecommendation: data.renewalRecommendation ?? null,
-      pricePartnerPerDay: data.pricePartnerPerDay ?? null,
-      priceNonPartnerPerTrainee: data.priceNonPartnerPerTrainee ?? null,
-      availableForPartners: data.availableForPartners ?? false,
-      applicationType: data.applicationType ?? "STANDARD",
-      availableInCenter: data.availableInCenter ?? true,
-      availableElearning: data.availableElearning ?? false,
       status: "PUBLISHED",
     },
   });

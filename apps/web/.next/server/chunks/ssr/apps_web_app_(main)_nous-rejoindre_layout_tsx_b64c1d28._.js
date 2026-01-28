@@ -1,0 +1,3 @@
+module.exports=[7746,a=>{"use strict";var b=a.i(74127);let c=(0,a.i(79145).createMetadata)({title:"Nous rejoindre - Devenez formateur ou partenaire",description:"Rejoignez Form Me en tant que formateur ou partenaire. Partagez votre expertise, bénéficiez de tarifs préférentiels et développez votre activité au sein de notre réseau de formation professionnelle.",keywords:["devenir formateur","partenaire formation","recrutement formateur","réseau formation","tarifs partenaire","opportunités formateur","rejoindre organisme de formation"],path:"/nous-rejoindre"});function d({children:a}){return(0,b.jsx)(b.Fragment,{children:a})}a.s(["default",()=>d,"metadata",0,c])}];
+
+//# sourceMappingURL=apps_web_app_%28main%29_nous-rejoindre_layout_tsx_b64c1d28._.js.map
