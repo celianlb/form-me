@@ -12,6 +12,9 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import CategoryPageClient from "./CategoryPageClient";
 
+// ISR: Revalidate every hour (3600 seconds)
+export const revalidate = 3600;
+
 interface CategoryPageProps {
   params: Promise<{ slug: string }>;
 }

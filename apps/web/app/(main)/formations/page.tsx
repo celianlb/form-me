@@ -9,6 +9,10 @@ import Link from "next/link";
 import { Suspense } from "react";
 import AllFormationsClient from "./AllFormationsClient";
 
+// ISR: Revalidate every 30 minutes (1800 seconds)
+// List page changes more frequently than detail pages
+export const revalidate = 1800;
+
 export const metadata = createMetadata({
   title: "Toutes nos formations professionnelles",
   description:

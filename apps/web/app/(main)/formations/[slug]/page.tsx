@@ -3,12 +3,31 @@ import {
   getFullFormationBySlugCached,
   getRandomFormationsCached,
   getPublicSessionsForTraining,
+  getAllFormationsCached,
 } from "@/lib/cached-queries";
 import { notFound } from "next/navigation";
 import FormationDetailsServer from "./FormationDetailsServer";
 import HeroSection from "./HeroSection";
 import { createMetadata } from "@/lib/metadata";
 import { Metadata } from "next";
+
+// ISR: Revalidate every hour (3600 seconds)
+// Pages are statically generated at build time and revalidated in the background
+export const revalidate = 3600;
+
+// Allow dynamic params for formations not pre-generated
+export const dynamicParams = true;
+
+// Pre-generate all published formations at build time
+export async function generateStaticParams() {
+  try {
+    const formations = await getAllFormationsCached();
+    return formations.map((f) => ({ slug: f.slug }));
+  } catch (error) {
+    console.error("[generateStaticParams] Error:", error);
+    return [];
+  }
+}
 
 interface FormationPageProps {
   params: Promise<{ slug: string }>;

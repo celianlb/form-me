@@ -1,6 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+// Cache headers for CDN and browser
+const CACHE_HEADERS = {
+  // Cache for 5 minutes on CDN (sessions need fresher data for availability)
+  // Serve stale for 1 hour while revalidating
+  "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600",
+};
+
+const NO_CACHE_HEADERS = {
+  "Cache-Control": "no-store, must-revalidate",
+};
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -9,7 +20,7 @@ export async function GET(request: NextRequest) {
     if (!trainingId) {
       return NextResponse.json(
         { error: "trainingId is required" },
-        { status: 400 }
+        { status: 400, headers: NO_CACHE_HEADERS }
       );
     }
 
@@ -52,9 +63,14 @@ export async function GET(request: NextRequest) {
         : false,
     }));
 
-    return NextResponse.json(sessionsWithAvailability);
+    return NextResponse.json(sessionsWithAvailability, {
+      headers: CACHE_HEADERS,
+    });
   } catch (error) {
     console.error("Error fetching public sessions:", error);
-    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Erreur serveur" },
+      { status: 500, headers: NO_CACHE_HEADERS }
+    );
   }
 }

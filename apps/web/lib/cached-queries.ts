@@ -1,49 +1,134 @@
 import { cache } from "react";
+import { unstable_cache } from "next/cache";
 import { FormationsService } from "@/services/formations.service";
 import { CategoriesService } from "@/services/categories.service";
 import { prisma } from "@/lib/prisma";
 
 /**
- * Cached Queries - React cache() for request-level deduplication
+ * Cached Queries - Two-layer caching strategy
  *
- * React's cache() deduplicates calls within a single server request.
- * This is useful when generateMetadata() and the page component
- * both need the same data.
+ * Layer 1: unstable_cache() - Cross-request persistent caching
+ * - Caches data in the Data Cache (persists across requests)
+ * - Configurable TTL and tag-based invalidation
+ * - Use for: expensive queries, rarely changing data
  *
- * For cross-request caching, use unstable_cache() (see Phase 3).
+ * Layer 2: React cache() - Request-level deduplication
+ * - Deduplicates calls within a single server request
+ * - Auto-clears when request ends
+ * - Use for: generateMetadata + page component sharing
+ *
+ * Combined: unstable_cache wraps the DB call, cache() wraps unstable_cache
+ * This gives us both persistent caching AND request deduplication.
  */
 
-// Formation detail - deduplicated within single request
-export const getFullFormationBySlugCached = cache(async (slug: string) => {
-  return FormationsService.getFullFormationBySlug(slug);
-});
+// =============================================================================
+// CATEGORIES - 24 hour cache (rarely change)
+// =============================================================================
 
-// All formations - deduplicated within single request
-export const getAllFormationsCached = cache(async () => {
-  return FormationsService.getAllFormations();
-});
-
-// Formations by category - deduplicated within single request
-export const getFormationsByCategoryCached = cache(
-  async (categorySlug: string) => {
-    return FormationsService.getFormationsByCategory(categorySlug);
+const getAllCategoriesBase = unstable_cache(
+  async () => {
+    return CategoriesService.getAllCategories();
+  },
+  ["all-categories"],
+  {
+    revalidate: 86400, // 24 hours
+    tags: ["categories"],
   }
 );
 
-// Random formations - deduplicated within single request
-export const getRandomFormationsCached = cache(async (limit: number = 10) => {
-  return FormationsService.getRandomFormations(limit);
-});
-
-// Category by slug - deduplicated within single request
-export const getCategoryBySlugCached = cache(async (slug: string) => {
-  return CategoriesService.getCategoryBySlug(slug);
-});
-
-// All categories - deduplicated within single request
+// Request-level deduplication wrapper
 export const getAllCategoriesCached = cache(async () => {
-  return CategoriesService.getAllCategories();
+  return getAllCategoriesBase();
 });
+
+const getCategoryBySlugBase = unstable_cache(
+  async (slug: string) => {
+    return CategoriesService.getCategoryBySlug(slug);
+  },
+  ["category-by-slug"],
+  {
+    revalidate: 86400, // 24 hours
+    tags: ["categories"],
+  }
+);
+
+export const getCategoryBySlugCached = cache(async (slug: string) => {
+  return getCategoryBySlugBase(slug);
+});
+
+// =============================================================================
+// FORMATIONS - 1 hour cache (moderate change frequency)
+// =============================================================================
+
+const getAllFormationsBase = unstable_cache(
+  async () => {
+    return FormationsService.getAllFormations();
+  },
+  ["all-formations"],
+  {
+    revalidate: 3600, // 1 hour
+    tags: ["formations"],
+  }
+);
+
+export const getAllFormationsCached = cache(async () => {
+  return getAllFormationsBase();
+});
+
+const getFullFormationBySlugBase = unstable_cache(
+  async (slug: string) => {
+    return FormationsService.getFullFormationBySlug(slug);
+  },
+  ["formation-by-slug"],
+  {
+    revalidate: 3600, // 1 hour
+    tags: ["formations"],
+  }
+);
+
+export const getFullFormationBySlugCached = cache(async (slug: string) => {
+  return getFullFormationBySlugBase(slug);
+});
+
+const getFormationsByCategoryBase = unstable_cache(
+  async (categorySlug: string) => {
+    return FormationsService.getFormationsByCategory(categorySlug);
+  },
+  ["formations-by-category"],
+  {
+    revalidate: 3600, // 1 hour
+    tags: ["formations"],
+  }
+);
+
+export const getFormationsByCategoryCached = cache(
+  async (categorySlug: string) => {
+    return getFormationsByCategoryBase(categorySlug);
+  }
+);
+
+// =============================================================================
+// RANDOM FORMATIONS - 30 minute cache (frequently changing)
+// =============================================================================
+
+const getRandomFormationsBase = unstable_cache(
+  async (limit: number = 10) => {
+    return FormationsService.getRandomFormations(limit);
+  },
+  ["random-formations"],
+  {
+    revalidate: 1800, // 30 minutes
+    tags: ["formations", "random"],
+  }
+);
+
+export const getRandomFormationsCached = cache(async (limit: number = 10) => {
+  return getRandomFormationsBase(limit);
+});
+
+// =============================================================================
+// SESSIONS - 5 minute cache (real-time availability)
+// =============================================================================
 
 // Session type matching the client component interface
 export interface ServerSession {
@@ -57,9 +142,7 @@ export interface ServerSession {
   isFull: boolean;
 }
 
-// Public sessions for a training - fetched server-side to avoid waterfall
-// Returns serialized data compatible with client components
-export const getPublicSessionsForTraining = cache(
+const getPublicSessionsForTrainingBase = unstable_cache(
   async (trainingId: number): Promise<ServerSession[]> => {
     const now = new Date();
 
@@ -103,5 +186,16 @@ export const getPublicSessionsForTraining = cache(
         ? session.registeredCount >= session.maxLearners
         : false,
     }));
+  },
+  ["public-sessions"],
+  {
+    revalidate: 300, // 5 minutes - sessions need fresher data
+    tags: ["sessions"],
+  }
+);
+
+export const getPublicSessionsForTraining = cache(
+  async (trainingId: number): Promise<ServerSession[]> => {
+    return getPublicSessionsForTrainingBase(trainingId);
   }
 );
