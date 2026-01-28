@@ -52,8 +52,22 @@ export async function generateMetadata({
 export default async function FormationPage({ params }: FormationPageProps) {
   const { slug } = await params;
 
-  const formation = await FormationsService.getFullFormationBySlug(slug);
-  const topFormations = await FormationsService.getRandomFormations(10);
+  let formation;
+  let topFormations;
+
+  try {
+    formation = await FormationsService.getFullFormationBySlug(slug);
+  } catch (error) {
+    console.error("[FormationPage] Error fetching formation:", error);
+    throw error;
+  }
+
+  try {
+    topFormations = await FormationsService.getRandomFormations(10);
+  } catch (error) {
+    console.error("[FormationPage] Error fetching random formations:", error);
+    topFormations = [];
+  }
 
   if (!formation) {
     notFound();

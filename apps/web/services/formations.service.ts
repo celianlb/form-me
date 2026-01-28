@@ -164,7 +164,8 @@ export class FormationsService {
 
   // Récupérer une formation complète avec catégorie pour la page détaillée
   static async getFullFormationBySlug(slug: string) {
-    const formation = await prisma.training.findUnique({
+    try {
+      const formation = await prisma.training.findUnique({
       where: {
         slug,
         isActive: true,
@@ -238,5 +239,9 @@ export class FormationsService {
       renewalRecommendation: formation.renewalRecommendation ?? undefined,
       category: formation.category,
     };
+    } catch (error) {
+      console.error("[FormationsService.getFullFormationBySlug] Prisma error:", error);
+      throw error;
+    }
   }
 }

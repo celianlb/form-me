@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@form-me/database";
+import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 import { z } from "zod";
 
