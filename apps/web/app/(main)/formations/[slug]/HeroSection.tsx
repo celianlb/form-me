@@ -1,13 +1,14 @@
 import { FormationWithDetails } from "@/types/formationDetails";
 import Image from "next/image";
-import SessionsSection from "./SessionsSection";
+import SessionsSection, { Session } from "./SessionsSection";
 import { Clock, Award } from "lucide-react";
 
 interface HeroSectionProps {
   formation: FormationWithDetails;
+  initialSessions?: Session[]; // Server-side prefetched sessions to avoid waterfall
 }
 
-export default function HeroSection({ formation }: HeroSectionProps) {
+export default function HeroSection({ formation, initialSessions }: HeroSectionProps) {
   const getDurationDisplay = () => {
     if (formation.durationHours) {
       return `${formation.durationHours}h`;
@@ -102,6 +103,7 @@ export default function HeroSection({ formation }: HeroSectionProps) {
                 formationId={formation.id}
                 formationTitle={formation.title}
                 categoryName={formation.category?.name}
+                initialSessions={initialSessions}
               />
             </div>
           </div>

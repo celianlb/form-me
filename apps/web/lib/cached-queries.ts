@@ -45,9 +45,22 @@ export const getAllCategoriesCached = cache(async () => {
   return CategoriesService.getAllCategories();
 });
 
+// Session type matching the client component interface
+export interface ServerSession {
+  id: number;
+  title: string;
+  startDate: string; // ISO string for serialization
+  endDate: string | null;
+  mode: "PARTNER_CENTER" | "E_LEARNING";
+  location: string | null;
+  availableSpots: number | null;
+  isFull: boolean;
+}
+
 // Public sessions for a training - fetched server-side to avoid waterfall
+// Returns serialized data compatible with client components
 export const getPublicSessionsForTraining = cache(
-  async (trainingId: number) => {
+  async (trainingId: number): Promise<ServerSession[]> => {
     const now = new Date();
 
     const sessions = await prisma.trainingSession.findMany({
@@ -75,8 +88,14 @@ export const getPublicSessionsForTraining = cache(
       take: 10,
     });
 
+    // Serialize dates to ISO strings for client component compatibility
     return sessions.map((session) => ({
-      ...session,
+      id: session.id,
+      title: session.title,
+      startDate: session.startDate.toISOString(),
+      endDate: session.endDate?.toISOString() ?? null,
+      mode: session.mode,
+      location: session.location,
       availableSpots: session.maxLearners
         ? Math.max(0, session.maxLearners - session.registeredCount)
         : null,

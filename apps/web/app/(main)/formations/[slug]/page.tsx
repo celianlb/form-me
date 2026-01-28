@@ -2,9 +2,10 @@ import Top10Formations from "@/components/Section/Top10Formations";
 import {
   getFullFormationBySlugCached,
   getRandomFormationsCached,
+  getPublicSessionsForTraining,
 } from "@/lib/cached-queries";
 import { notFound } from "next/navigation";
-import FormationDetails from "./FormationDetails";
+import FormationDetailsServer from "./FormationDetailsServer";
 import HeroSection from "./HeroSection";
 import { createMetadata } from "@/lib/metadata";
 import { Metadata } from "next";
@@ -63,16 +64,23 @@ export default async function FormationPage({ params }: FormationPageProps) {
     notFound();
   }
 
-  // Uses React cache() for deduplication within request
-  const topFormations = await getRandomFormationsCached(10).catch((error) => {
-    console.error("[FormationPage] Error fetching random formations:", error);
-    return [];
-  });
+  // Fetch sessions and random formations in parallel (server-side)
+  // Sessions are now SSR - eliminates 3-4s client-side waterfall
+  const [initialSessions, topFormations] = await Promise.all([
+    getPublicSessionsForTraining(formation.id).catch((error) => {
+      console.error("[FormationPage] Error fetching sessions:", error);
+      return [];
+    }),
+    getRandomFormationsCached(10).catch((error) => {
+      console.error("[FormationPage] Error fetching random formations:", error);
+      return [];
+    }),
+  ]);
 
   return (
     <div>
-      <HeroSection formation={formation} />
-      <FormationDetails formation={formation} />
+      <HeroSection formation={formation} initialSessions={initialSessions} />
+      <FormationDetailsServer formation={formation} />
       <Top10Formations formations={topFormations} />
     </div>
   );

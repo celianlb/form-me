@@ -8,7 +8,8 @@ import SessionCard from "./SessionCard";
 import SessionReservationModal from "./SessionReservationModal";
 import Button from "@/components/UI/Button";
 
-interface Session {
+// Exported for use in other components
+export interface Session {
   id: number;
   title: string;
   startDate: string;
@@ -23,20 +24,26 @@ interface SessionsSectionProps {
   formationId: number;
   formationTitle: string;
   categoryName?: string;
+  initialSessions?: Session[]; // Server-side prefetched sessions to avoid waterfall
 }
 
 export default function SessionsSection({
   formationId,
   formationTitle,
   categoryName,
+  initialSessions,
 }: SessionsSectionProps) {
-  const [sessions, setSessions] = useState<Session[]>([]);
-  const [loading, setLoading] = useState(true);
+  // If initialSessions provided, use them directly (SSR optimization)
+  const [sessions, setSessions] = useState<Session[]>(initialSessions || []);
+  const [loading, setLoading] = useState(!initialSessions);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(startOfMonth(new Date()));
 
+  // Only fetch client-side if no initial sessions were provided
   useEffect(() => {
+    if (initialSessions) return; // Skip fetch if we have server data
+
     const fetchSessions = async () => {
       try {
         const response = await fetch(
@@ -53,7 +60,7 @@ export default function SessionsSection({
       }
     };
     fetchSessions();
-  }, [formationId]);
+  }, [formationId, initialSessions]);
 
   // Filter sessions by current month
   const filteredSessions = useMemo(() => {
