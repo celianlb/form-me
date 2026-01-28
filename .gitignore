@@ -15,7 +15,7 @@
 /coverage
 
 # next.js
-/.next/
+.next/
 /out/
 
 # production
@@ -52,3 +52,6 @@ packages/database/generated
 
 # Turbo
 .turbo
+
+# Local env files in apps
+apps/*/.env.local

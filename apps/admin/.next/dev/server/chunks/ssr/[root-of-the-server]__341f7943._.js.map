@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":["file:///Users/celianlb/Developpement/form-me-main/apps/admin/components/providers/session-provider.tsx"],"sourcesContent":["\"use client\";\n\nimport { SessionProvider as NextAuthSessionProvider } from \"next-auth/react\";\n\nexport function SessionProvider({ children }: { children: React.ReactNode }) {\n  return <NextAuthSessionProvider>{children}</NextAuthSessionProvider>;\n}\n"],"names":[],"mappings":";;;;;AAEA;AAFA;;;AAIO,SAAS,gBAAgB,EAAE,QAAQ,EAAiC;IACzE,qBAAO,6WAAC,+YAAuB;kBAAE;;;;;;AACnC"}}]
-}

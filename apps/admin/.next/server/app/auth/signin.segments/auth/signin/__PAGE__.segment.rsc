@@ -1,6 +1,0 @@
-1:"$Sreact.fragment"
-2:"$Sreact.suspense"
-3:I[84199,["/_next/static/chunks/590062abf4ea111f.js","/_next/static/chunks/c185a8b655f53505.js","/_next/static/chunks/41f9eda25346c093.js"],"SignInForm"]
-4:I[83903,["/_next/static/chunks/54fed072c98fe5de.js","/_next/static/chunks/287747b3d2679c41.js"],"OutletBoundary"]
-0:{"buildId":"mIYWCh7rLfAMq4Mfhu3GJ","rsc":["$","$1","c",{"children":[["$","$2",null,{"fallback":["$","div",null,{"className":"min-h-screen flex items-center justify-center","children":["$","svg",null,{"xmlns":"http://www.w3.org/2000/svg","width":24,"height":24,"viewBox":"0 0 24 24","fill":"none","stroke":"currentColor","strokeWidth":2,"strokeLinecap":"round","strokeLinejoin":"round","className":"lucide lucide-loader-circle h-8 w-8 animate-spin text-primary","aria-hidden":"true","children":[["$","path","13zald",{"d":"M21 12a9 9 0 1 1-6.219-8.56"}],"$undefined"]}]}],"children":["$","$L3",null,{}]}],[["$","script","script-0",{"src":"/_next/static/chunks/c185a8b655f53505.js","async":true}],["$","script","script-1",{"src":"/_next/static/chunks/41f9eda25346c093.js","async":true}]],["$","$L4",null,{"children":["$","$2",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"loading":null,"isPartial":false}
-5:null
