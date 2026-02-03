@@ -95,9 +95,6 @@ export function Sidebar() {
                 alt="Form-Me"
                 width={36}
                 height={32}
-                className="relative dark:invert"
-                unoptimized
-                priority
               />
             </div>
             <div className="flex flex-col">

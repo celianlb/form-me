@@ -21,8 +21,8 @@ export default function HeroSection({ formation, initialSessions }: HeroSectionP
 
   return (
     <section className="relative">
-      {/* Hero Image Section - Full Width */}
-      <div className="relative h-[420px] md:h-[500px] lg:h-[550px] w-full">
+      {/* Hero Image Section - Full Width avec hauteur minimale qui s'adapte au contenu */}
+      <div className="relative min-h-[420px] md:min-h-[500px] lg:min-h-[550px] w-full">
         {/* Image de fond */}
         {formation.imageUrl ? (
           <Image
@@ -39,8 +39,8 @@ export default function HeroSection({ formation, initialSessions }: HeroSectionP
         {/* Overlay gradient pour lisibilité */}
         <div className="absolute inset-0 bg-gradient-to-t from-darkBlue via-darkBlue/70 to-darkBlue/30" />
 
-        {/* Contenu sur l'image */}
-        <div className="absolute inset-0 flex flex-col justify-end pb-32 md:pb-40 px-6 md:px-10 lg:px-[120px]">
+        {/* Contenu sur l'image - utilise padding au lieu de absolute pour permettre au hero de grandir */}
+        <div className="relative z-10 flex flex-col justify-end pt-28 md:pt-32 pb-32 md:pb-40 px-6 md:px-10 lg:px-[120px] min-h-[420px] md:min-h-[500px] lg:min-h-[550px]">
           <div className="max-w-3xl">
             {/* Badge catégorie */}
             {formation.category && (

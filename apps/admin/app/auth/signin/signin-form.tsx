@@ -1,15 +1,21 @@
 "use client";
 
-import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
-import { Loader2, Lock, Mail, ShieldCheck } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Loader2, Lock, Mail, ShieldCheck } from "lucide-react";
+import { signIn } from "next-auth/react";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 export function SignInForm() {
   const router = useRouter();
@@ -37,9 +43,11 @@ export function SignInForm() {
     setIsLoading(false);
 
     if (result?.error) {
-      setErrorMsg(result.error === "CredentialsSignin"
-        ? "Email ou mot de passe incorrect"
-        : result.error);
+      setErrorMsg(
+        result.error === "CredentialsSignin"
+          ? "Email ou mot de passe incorrect"
+          : result.error
+      );
     } else if (result?.ok) {
       router.push(callbackUrl);
       router.refresh();
@@ -66,9 +74,6 @@ export function SignInForm() {
                   alt="Form-Me"
                   width={48}
                   height={43}
-                  className="dark:invert"
-                  unoptimized
-                  priority
                 />
               </div>
             </div>
