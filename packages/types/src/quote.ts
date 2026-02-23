@@ -18,7 +18,7 @@ export interface Quote {
   city?: string | null;
   trainingId?: number | null;
   sessionId?: number | null;
-  mode?: 'PARTNER_CENTER' | 'E_LEARNING' | null;
+  mode?: 'PARTNER_CENTER' | 'E_LEARNING' | 'INTRA_COMPANY' | null;
   numberLearners: number;
   preferredDates?: string | null;
   message?: string | null;
@@ -52,7 +52,7 @@ export interface CreateQuoteInput {
   city?: string;
   trainingId?: number;
   sessionId?: number;
-  mode?: 'PARTNER_CENTER' | 'E_LEARNING';
+  mode?: 'PARTNER_CENTER' | 'E_LEARNING' | 'INTRA_COMPANY';
   numberLearners: number;
   preferredDates?: string;
   message?: string;

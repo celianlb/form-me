@@ -58,8 +58,14 @@ async function getTrainings(searchParams: SearchParams) {
     ]),
   ]);
 
+  // Convert Decimal fields to plain numbers for Client Components
+  const serializedTrainings = trainings.map((t) => ({
+    ...t,
+    successRate: t.successRate ? parseFloat(t.successRate.toString()) : null,
+  }));
+
   return {
-    trainings,
+    trainings: serializedTrainings,
     pagination: {
       page,
       limit,

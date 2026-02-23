@@ -11,7 +11,7 @@ interface Session {
   title: string;
   startDate: string;
   endDate: string | null;
-  mode: "PARTNER_CENTER" | "E_LEARNING";
+  mode: "PARTNER_CENTER" | "E_LEARNING" | "INTRA_COMPANY";
   location: string | null;
   availableSpots: number | null;
   isFull: boolean;
@@ -92,7 +92,12 @@ export default function SessionReservationModal({
   const sessionDate = format(new Date(session.startDate), "d MMMM yyyy", {
     locale: fr,
   });
-  const modeLabel = session.mode === "E_LEARNING" ? "E-learning" : "Présentiel";
+  const modeLabels: Record<string, string> = {
+    PARTNER_CENTER: "Présentiel",
+    E_LEARNING: "E-learning",
+    INTRA_COMPANY: "Intra entreprise",
+  };
+  const modeLabel = modeLabels[session.mode] ?? session.mode;
 
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center p-4 pt-20">

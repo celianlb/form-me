@@ -11,6 +11,7 @@ import {
   MessageSquare,
   Monitor,
   Building,
+  Briefcase,
   RefreshCw,
 } from "lucide-react";
 import {
@@ -80,6 +81,7 @@ const statusConfig = {
 const modeConfig = {
   PARTNER_CENTER: { label: "En centre", icon: Building },
   E_LEARNING: { label: "E-learning", icon: Monitor },
+  INTRA_COMPANY: { label: "Intra entreprise", icon: Briefcase },
 };
 
 export function SessionsTable({ sessions, pagination }: SessionsTableProps) {

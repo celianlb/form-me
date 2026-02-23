@@ -13,7 +13,7 @@ const createSessionSchema = z.object({
   endDate: z.string().datetime().optional().nullable(),
   registrationDeadline: z.string().datetime().optional().nullable(),
   maxLearners: z.number().positive().optional().nullable(),
-  mode: z.enum(["PARTNER_CENTER", "E_LEARNING"]),
+  mode: z.enum(["PARTNER_CENTER", "E_LEARNING", "INTRA_COMPANY"]),
   location: z.string().optional().nullable(),
   recurrencePattern: z.enum(["WEEKLY", "BIWEEKLY", "MONTHLY", "NONE"]).optional().nullable(),
   recurrenceEndDate: z.string().datetime().optional().nullable(),

@@ -9,7 +9,7 @@ interface Session {
   title: string;
   startDate: string;
   endDate: string | null;
-  mode: "PARTNER_CENTER" | "E_LEARNING";
+  mode: "PARTNER_CENTER" | "E_LEARNING" | "INTRA_COMPANY";
   location: string | null;
   availableSpots: number | null;
   isFull: boolean;
@@ -37,7 +37,12 @@ export default function SessionCard({ session, onReserve }: SessionCardProps) {
   };
 
   const { day, month } = formatShortDate();
-  const modeLabel = session.mode === "E_LEARNING" ? "E-learning" : "Présentiel";
+  const modeLabels: Record<string, string> = {
+    PARTNER_CENTER: "Présentiel",
+    E_LEARNING: "E-learning",
+    INTRA_COMPANY: "Intra entreprise",
+  };
+  const modeLabel = modeLabels[session.mode] ?? session.mode;
 
   return (
     <button
@@ -77,7 +82,7 @@ export default function SessionCard({ session, onReserve }: SessionCardProps) {
           <div>
             <p className="font-satoshi font-semibold text-darkBlue text-sm">
               {modeLabel}
-              {session.location && session.mode === "PARTNER_CENTER" && (
+              {session.location && session.mode !== "E_LEARNING" && (
                 <span className="text-grayBlue font-normal"> · {session.location}</span>
               )}
             </p>

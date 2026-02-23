@@ -93,6 +93,8 @@ export default async function QuoteDetailPage({
         return "Centre partenaire";
       case "E_LEARNING":
         return "E-learning";
+      case "INTRA_COMPANY":
+        return "Intra entreprise";
       default:
         return mode;
     }

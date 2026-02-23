@@ -11,7 +11,7 @@ const updateSessionSchema = z.object({
   endDate: z.string().datetime().optional().nullable(),
   registrationDeadline: z.string().datetime().optional().nullable(),
   maxLearners: z.number().positive().optional().nullable(),
-  mode: z.enum(["PARTNER_CENTER", "E_LEARNING"]).optional(),
+  mode: z.enum(["PARTNER_CENTER", "E_LEARNING", "INTRA_COMPANY"]).optional(),
   location: z.string().optional().nullable(),
   status: z.enum(["SCHEDULED", "ONGOING", "COMPLETED", "CANCELLED"]).optional(),
   isActive: z.boolean().optional(),

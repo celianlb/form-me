@@ -11,7 +11,7 @@ const quoteSchema = z.object({
   email: z.string().email(),
   telephone: z.string().optional(),
   profil: z.enum(["entreprise", "particulier"]),
-  modalite: z.enum(["elearning", "presentiel"]).optional(),
+  modalite: z.enum(["elearning", "presentiel", "intra"]).optional(),
   apprenants: z.coerce.number().min(1).default(1),
   ville: z.string().min(1).default("Non renseigné"),
   codePostal: z.string().min(1).default("00000"),
@@ -41,7 +41,11 @@ export async function POST(request: NextRequest) {
         message: validatedData.message,
         trainingId: validatedData.formationId,
         sessionId: validatedData.sessionId,
-        mode: validatedData.modalite === "elearning" ? "E_LEARNING" : "PARTNER_CENTER",
+        mode: validatedData.modalite === "elearning"
+          ? "E_LEARNING"
+          : validatedData.modalite === "intra"
+            ? "INTRA_COMPANY"
+            : "PARTNER_CENTER",
         numberLearners: validatedData.apprenants,
         source: "website",
         status: "received",

@@ -32,6 +32,7 @@ enum RequestProfile {
 enum TrainingMode {
   PARTNER_CENTER
   E_LEARNING
+  INTRA_COMPANY
 }
 
 enum ContentStatus {

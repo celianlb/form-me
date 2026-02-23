@@ -30,7 +30,13 @@ async function getTraining(id: string) {
     },
   });
 
-  return training;
+  if (!training) return null;
+
+  // Convert Decimal fields to plain numbers for Client Components
+  return {
+    ...training,
+    successRate: training.successRate ? parseFloat(training.successRate.toString()) : null,
+  };
 }
 
 const statusConfig = {

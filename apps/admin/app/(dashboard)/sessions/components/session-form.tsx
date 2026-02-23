@@ -40,7 +40,7 @@ const sessionFormSchema = z.object({
   endDate: z.date().optional().nullable(),
   registrationDeadline: z.date().optional().nullable(),
   maxLearners: z.number().positive().optional().nullable(),
-  mode: z.enum(["PARTNER_CENTER", "E_LEARNING"], {
+  mode: z.enum(["PARTNER_CENTER", "E_LEARNING", "INTRA_COMPANY"], {
     error: "Le mode est requis",
   }),
   location: z.string().optional(),
@@ -366,6 +366,7 @@ export function SessionForm({ trainings, initialData, mode }: SessionFormProps) 
                       <SelectContent>
                         <SelectItem value="PARTNER_CENTER">En centre</SelectItem>
                         <SelectItem value="E_LEARNING">E-learning</SelectItem>
+                        <SelectItem value="INTRA_COMPANY">Intra entreprise</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -397,7 +398,7 @@ export function SessionForm({ trainings, initialData, mode }: SessionFormProps) 
               />
             </div>
 
-            {watchMode === "PARTNER_CENTER" && (
+            {(watchMode === "PARTNER_CENTER" || watchMode === "INTRA_COMPANY") && (
               <FormField
                 control={form.control}
                 name="location"

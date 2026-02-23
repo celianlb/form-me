@@ -11,7 +11,7 @@ interface Session {
   title: string;
   startDate: string;
   endDate: string | null;
-  mode: "PARTNER_CENTER" | "E_LEARNING";
+  mode: "PARTNER_CENTER" | "E_LEARNING" | "INTRA_COMPANY";
   location: string | null;
   availableSpots: number | null;
   isFull: boolean;

@@ -4,7 +4,7 @@
  */
 
 export type SessionStatus = 'SCHEDULED' | 'ONGOING' | 'COMPLETED' | 'CANCELLED';
-export type TrainingMode = 'PARTNER_CENTER' | 'E_LEARNING';
+export type TrainingMode = 'PARTNER_CENTER' | 'E_LEARNING' | 'INTRA_COMPANY';
 export type RecurrencePattern = 'WEEKLY' | 'BIWEEKLY' | 'MONTHLY' | 'NONE';
 
 export interface TrainingSession {

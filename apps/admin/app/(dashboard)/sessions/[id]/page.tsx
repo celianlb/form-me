@@ -11,6 +11,7 @@ import {
   MapPin,
   Monitor,
   Building,
+  Briefcase,
   MessageSquare,
   RefreshCw,
   Clock,
@@ -85,6 +86,7 @@ const statusConfig = {
 const modeConfig = {
   PARTNER_CENTER: { label: "En centre", icon: Building },
   E_LEARNING: { label: "E-learning", icon: Monitor },
+  INTRA_COMPANY: { label: "Intra entreprise", icon: Briefcase },
 };
 
 const quoteStatusConfig: Record<string, { label: string; variant: "default" | "secondary" | "outline" }> = {

@@ -69,7 +69,7 @@ export function getQuoteNotificationHtml(data: QuoteNotificationData): string {
           ${data.mode ? `
           <div class="field">
             <div class="label">Modalité souhaitée</div>
-            <div class="value">${data.mode === 'E_LEARNING' ? 'E-learning' : 'En centre partenaire'}</div>
+            <div class="value">${data.mode === 'E_LEARNING' ? 'E-learning' : data.mode === 'INTRA_COMPANY' ? 'Intra entreprise' : 'En centre partenaire'}</div>
           </div>
           ` : ''}
           ${data.message ? `
