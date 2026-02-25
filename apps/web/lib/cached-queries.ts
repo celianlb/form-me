@@ -136,7 +136,7 @@ export interface ServerSession {
   title: string;
   startDate: string; // ISO string for serialization
   endDate: string | null;
-  mode: "PARTNER_CENTER" | "E_LEARNING";
+  mode: "PARTNER_CENTER" | "E_LEARNING" | "INTRA_COMPANY";
   location: string | null;
   availableSpots: number | null;
   isFull: boolean;

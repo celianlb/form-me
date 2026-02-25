@@ -34,7 +34,7 @@ interface Session {
   endDate: Date | string | null;
   maxLearners: number | null;
   registeredCount: number;
-  mode: "PARTNER_CENTER" | "E_LEARNING";
+  mode: "PARTNER_CENTER" | "E_LEARNING" | "INTRA_COMPANY";
   location: string | null;
   status: "SCHEDULED" | "ONGOING" | "COMPLETED" | "CANCELLED";
   recurrencePattern: string | null;
