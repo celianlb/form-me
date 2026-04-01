@@ -5,9 +5,10 @@ import FormationCarousel from "./FormationCarousel";
 
 interface BentoGridMobileProps {
   formations: FormationCardData[];
+  totalCount: number;
 }
 
-export default function BentoGridMobile({ formations }: BentoGridMobileProps) {
+export default function BentoGridMobile({ formations, totalCount }: BentoGridMobileProps) {
   return (
     <div className="flex flex-col gap-4">
       {/* Card 1 - Choisissez votre formation */}
@@ -23,7 +24,7 @@ export default function BentoGridMobile({ formations }: BentoGridMobileProps) {
         <div className="relative z-10 flex flex-col gap-2">
           <div className="inline-block w-fit px-3 py-1.5 items-center leading-none bg-primary/30 rounded-full">
             <span className="text-xs text-white font-satoshi font-semibold">
-              +15 formations
+              +{totalCount} formations
             </span>
           </div>
           <h3 className="font-satoshi text-base font-bold tracking-tight text-white">

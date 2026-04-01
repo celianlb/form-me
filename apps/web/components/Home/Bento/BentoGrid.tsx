@@ -5,12 +5,17 @@ import BentoGridMobile from "./BentoGridMobile";
 import FormationCarousel from "./FormationCarousel";
 
 export default async function BentoGrid() {
-  const formations = await FormationsService.getRandomFormations(10);
+  const [formations, allFormations] = await Promise.all([
+    FormationsService.getRandomFormations(10),
+    FormationsService.getAllFormations(),
+  ]);
+  const totalCount = allFormations.length;
+
   return (
     <>
       {/* Version Mobile */}
       <div className="block lg:hidden">
-        <BentoGridMobile formations={formations.slice(0, 2)} />
+        <BentoGridMobile formations={formations.slice(0, 2)} totalCount={totalCount} />
       </div>
 
       {/* Version Desktop */}
@@ -31,7 +36,7 @@ export default async function BentoGrid() {
               <div className="relative z-10 flex items-center gap-4">
                 <div className="inline-block px-3 py-1.5 items-center leading-none bg-primary/30 rounded-full">
                   <span className="text-xs text-white font-satoshi font-semibold">
-                    +15 formations
+                    +{totalCount} formations
                   </span>
                 </div>
                 <h3 className="font-satoshi text-lg font-bold tracking-tight text-white">

@@ -55,11 +55,12 @@ export class FormationsService {
   static async getRandomFormations(
     limit: number = 10
   ): Promise<FormationCardData[]> {
-    // Step 1: Fetch only IDs (small payload, fast query)
+    // Step 1: Fetch only IDs of formations with an image
     const allIds = await prisma.training.findMany({
       where: {
         isActive: true,
         status: "PUBLISHED",
+        imageUrl: { not: null },
       },
       select: { id: true },
     });

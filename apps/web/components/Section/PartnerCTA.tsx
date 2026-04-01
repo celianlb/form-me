@@ -1,4 +1,4 @@
-import { Users, Zap, HeadphonesIcon } from "lucide-react";
+import { HeadphonesIcon, Users, Zap } from "lucide-react";
 import Image from "next/image";
 import Button from "../UI/Button";
 
@@ -52,7 +52,7 @@ export default function PartnerCTA() {
             </h2>
 
             {/* Description */}
-            <p className="text-white/70 font-satoshi max-w-md mb-6">
+            <p className="text-white/70 font-satoshi mb-6">
               Développez votre activité avec un engagement de seulement{" "}
               <span className="font-bold text-white">10 formations / an</span>.
             </p>
@@ -66,14 +66,12 @@ export default function PartnerCTA() {
           </div>
         </div>
 
-        {/* Cards avantages - style badges */}
-        <div className="lg:col-span-2 flex flex-col gap-5 justify-center">
+        {/* Cards avantages */}
+        <div className="lg:col-span-2 flex flex-col gap-4">
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className={`border-2 border-dashed border-gray-300 bg-white rounded-xl px-5 py-4 flex items-center gap-4 ${
-                index === 1 ? "rotate-2" : index === 2 ? "-rotate-1" : ""
-              }`}
+              className="flex-1 border-2 border-dashed border-gray-300 bg-white rounded-xl px-5 py-4 flex items-center gap-4"
             >
               <benefit.icon className="w-5 h-5 text-primary shrink-0" />
               <div>

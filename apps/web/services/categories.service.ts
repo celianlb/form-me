@@ -1,6 +1,27 @@
 import { prisma } from '@/lib/prisma'
 import { Category, CategoryOption, CategoryWithCount } from '@/types/category'
 
+// Ordre d'affichage personnalisé (noms exacts de la DB)
+const CATEGORY_DISPLAY_ORDER = [
+  "CACES & autorisations de conduite",
+  "Prévention, santé & sécurité au travail",
+  "Électricité & habilitations électriques",
+  "Travail en hauteur & levage",
+  "Formation de formateur",
+  "Sécurité incendie & sûreté",
+  "Digital, Web & développement",
+];
+
+function sortByDisplayOrder<T extends { name: string }>(categories: T[]): T[] {
+  return [...categories].sort((a, b) => {
+    const indexA = CATEGORY_DISPLAY_ORDER.indexOf(a.name);
+    const indexB = CATEGORY_DISPLAY_ORDER.indexOf(b.name);
+    const posA = indexA === -1 ? CATEGORY_DISPLAY_ORDER.length : indexA;
+    const posB = indexB === -1 ? CATEGORY_DISPLAY_ORDER.length : indexB;
+    return posA - posB;
+  });
+}
+
 export class CategoriesService {
   static async getAllCategories(): Promise<Category[]> {
     const categories = await prisma.category.findMany({
@@ -28,13 +49,20 @@ export class CategoriesService {
       select: {
         name: true,
         slug: true,
+        _count: {
+          select: {
+            trainings: {
+              where: { isActive: true, status: 'PUBLISHED' }
+            }
+          }
+        }
       },
-      orderBy: {
-        name: 'asc'
-      }
     })
 
-    return categories.map(category => ({
+    const filtered = categories.filter(c => c._count.trainings > 0);
+    const sorted = sortByDisplayOrder(filtered);
+
+    return sorted.map(category => ({
       value: category.slug,
       label: category.name,
     }))
@@ -80,9 +108,6 @@ export class CategoriesService {
           }
         }
       },
-      orderBy: {
-        name: 'asc'
-      }
     })
 
     // Mapping des pictos par catégorie (à adapter selon tes catégories)
@@ -92,14 +117,18 @@ export class CategoriesService {
       // Ajoute d'autres mappings selon tes catégories
     }
 
-    return categories.map(category => ({
-      id: category.id,
-      name: category.name,
-      slug: category.slug,
-      description: category.description ?? undefined,
-      imageUrl: category.imageUrl ?? undefined,
-      trainingCount: category._count.trainings,
-      picto: categoryPictos[category.slug] || '/formation/picto/person.svg' // picto par défaut
-    }))
+    const mapped = categories
+      .filter(category => category._count.trainings > 0)
+      .map(category => ({
+        id: category.id,
+        name: category.name,
+        slug: category.slug,
+        description: category.description ?? undefined,
+        imageUrl: category.imageUrl ?? undefined,
+        trainingCount: category._count.trainings,
+        picto: categoryPictos[category.slug] || '/formation/picto/person.svg'
+      }));
+
+    return sortByDisplayOrder(mapped);
   }
 }

@@ -12,7 +12,7 @@ import { ArrowDown } from "lucide-react";
 export const metadata = createMetadata({
   title: "Form Me - Formations Professionnelles",
   description:
-    "On vous forme avec efficacité et rapidité. Formations certifiantes en AIPR, ATEX, CACES, Habilitations électriques, Digital Business et bien plus.",
+    "On vous forme avec efficacité et rapidité. Découvrez nos formations en AIPR, ATEX, CACES, habilitation électrique et bien plus encore.",
   keywords: [
     "formation professionnelle",
     "formation certifiante",
@@ -92,9 +92,9 @@ export default async function Home() {
       />
       <main>
         <HeroSection className="flex flex-col gap-8">
-          <h1 className="text-[32px] md:text-[48px] tracking-[-2px] md:tracking-[-4px] text-darkBlue font-sora font-bold max-w-[300px] md:max-w-[830px] text-center">
+          <h1 className="text-[32px] md:text-[48px] tracking-[-2px] md:tracking-[-4px] text-darkBlue font-sora font-bold max-w-[300px] md:max-w-[700px] text-center">
             Nous aidons les entreprises et particuliers à se former{" "}
-            <span className="text-darkBlue/60 italic">
+            <span className="text-[#6E7C9D] italic">
               rapidement et efficacement
             </span>
           </h1>

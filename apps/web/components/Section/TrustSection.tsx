@@ -3,6 +3,10 @@
 import { Testimonial } from "@/types/testimonial";
 import Image from "next/image";
 
+const partners = [
+  { name: "GreenEnergy", logo: "/partners/GreenEnergy.png", height: "h-8" },
+];
+
 const stats = [
   { number: "4,3/5", label: "satisfaction" },
   { number: "3K+", label: "apprenants formés" },
@@ -53,13 +57,6 @@ const testimonials: Testimonial[] = [
     quote:
       "Plateforme moderne et efficace. J'ai obtenu ma certification rapidement grâce à leur méthode.",
   },
-];
-
-const partners = [
-  { name: "FDM", logo: "/partners/fdm-logo.png", height: "h-5" },
-  { name: "FO-SEC", logo: "/partners/fosec-logo.png", height: "h-5" },
-  { name: "Lysafe Pro", logo: "/partners/lysafe-logo.png", height: "h-4" },
-  { name: "Liva", logo: "/partners/liva-logo.png", height: "h-5" },
 ];
 
 const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => (
@@ -172,17 +169,16 @@ export default function TrustSection() {
               Ils nous font confiance
             </h3>
 
-            <div className="grid grid-cols-2 gap-4 items-center">
+            <div className="flex items-center justify-center">
               {partners.map((partner) => (
-                <div key={partner.name} className="flex items-center justify-center">
-                  <Image
-                    src={partner.logo}
-                    alt={partner.name}
-                    width={100}
-                    height={40}
-                    className={`${partner.height} w-auto object-contain opacity-70`}
-                  />
-                </div>
+                <Image
+                  key={partner.name}
+                  src={partner.logo}
+                  alt={partner.name}
+                  width={160}
+                  height={50}
+                  className={`${partner.height} w-auto object-contain opacity-70`}
+                />
               ))}
             </div>
           </div>

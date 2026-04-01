@@ -23,7 +23,7 @@ export default function CategoryCard({
     small: "h-40",
     medium: "h-52",
     large: "h-full min-h-[432px]",
-    flex: "flex-1 min-h-52",
+    flex: "h-full",
   };
 
   return (
