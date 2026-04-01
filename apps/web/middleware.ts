@@ -45,10 +45,13 @@ export default withAuth(
           "/",
           "/formations",
           "/auth",
-          "/devis",
+          "/devis-&-contact",
           "/maintenance",
           "/api",
           "/nous-rejoindre",
+          "/certifications-qualite",
+          "/mentions-legales",
+          "/politiques-de-confidentialite",
         ];
         const isPublic = publicPaths.some(
           (path) =>

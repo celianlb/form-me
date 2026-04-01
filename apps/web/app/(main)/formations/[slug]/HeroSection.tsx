@@ -80,7 +80,7 @@ export default function HeroSection({ formation, initialSessions }: HeroSectionP
       </div>
 
       {/* Section avec card qui chevauche */}
-      <div className="relative px-6 md:px-10 lg:px-[120px] -mt-24 md:-mt-28 pb-12">
+      <div className="relative z-20 px-6 md:px-10 lg:px-[120px] -mt-24 md:-mt-28 pb-12">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
           {/* Description - Partie gauche */}
           <div className="flex-1 pt-28 md:pt-32 lg:pt-0">

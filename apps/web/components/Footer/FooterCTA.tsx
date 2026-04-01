@@ -116,9 +116,7 @@ export default function FooterCTA() {
                   href={contact.href}
                   target={contact.href.startsWith("http") ? "_blank" : undefined}
                   rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className={`border-2 border-dashed border-gray-300 bg-white rounded-xl px-4 py-3 flex items-center gap-3 hover:border-primary/50 hover:shadow-sm transition-all ${
-                    index === 1 ? "rotate-1" : index === 2 ? "-rotate-1" : ""
-                  }`}
+                  className="border-2 border-dashed border-gray-300 bg-white rounded-xl px-4 py-3 flex items-center gap-3 hover:border-primary/50 hover:shadow-sm transition-all"
                 >
                   <contact.icon className="w-4 h-4 text-primary shrink-0" />
                   <div>

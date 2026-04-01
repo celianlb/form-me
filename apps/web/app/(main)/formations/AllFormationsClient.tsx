@@ -5,6 +5,7 @@ import Dropdown from "@/components/UI/Dropdown";
 import FormationCard from "@/components/UI/FormationCard";
 import SearchInput from "@/components/UI/SearchInput";
 import { useFilterSync } from "@/hooks/useFilterSync";
+import { X } from "lucide-react";
 import { FormationCardData } from "@/types/formation";
 import { durationOptions } from "@/utils/filterConstants";
 import { filterFormations } from "@/utils/formationFilters";
@@ -114,13 +115,13 @@ export default function AllFormationsClient({
             className="w-full sm:w-auto"
           />
           {hasActiveFilters && (
-            <Button
+            <button
               onClick={resetFilters}
-              variant="secondary"
-              className="text-red-600 border-red-600 hover:bg-red-50"
+              className="py-2 px-4 rounded-full border border-red-300 text-red-600 hover:bg-red-50 font-satoshi font-semibold text-sm transition-colors cursor-pointer inline-flex items-center gap-2"
             >
-              X
-            </Button>
+              <X className="w-4 h-4" />
+              Effacer
+            </button>
           )}
         </div>
       </section>
