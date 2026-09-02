@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, Phone, MessageCircle, Linkedin } from "lucide-react";
+import { Linkedin, Mail, MessageCircle, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../UI/Button";
@@ -27,12 +27,27 @@ const contactOptions = [
 ];
 
 const formationCategories = [
-  { label: "CACES® et autorisation de conduite", href: "/formations/category/caces-autorisation-conduite" },
+  {
+    label: "CACES® et autorisation de conduite",
+    href: "/formations/category/caces-autorisation-conduite",
+  },
   { label: "AIPR", href: "/formations/category/aipr" },
-  { label: "Habilitations électriques", href: "/formations/category/habilitations-electriques" },
-  { label: "Travaux en hauteurs", href: "/formations/category/travaux-hauteurs-echafaudage" },
-  { label: "Incendie & évacuation", href: "/formations/category/incendie-&-evacuation" },
-  { label: "SST", href: "/formations/category/sauveteurs-secouristes-au-travail" },
+  {
+    label: "Habilitations électriques",
+    href: "/formations/category/habilitations-electriques",
+  },
+  {
+    label: "Travaux en hauteurs",
+    href: "/formations/category/travaux-hauteurs-echafaudage",
+  },
+  {
+    label: "Incendie & évacuation",
+    href: "/formations/category/incendie-&-evacuation",
+  },
+  {
+    label: "SST",
+    href: "/formations/category/sauveteurs-secouristes-au-travail",
+  },
 ];
 
 const menuLinks = [
@@ -44,7 +59,10 @@ const menuLinks = [
 
 const legalLinks = [
   { label: "Mentions légales", href: "/mentions-legales" },
-  { label: "Politique de confidentialité", href: "/politiques-de-confidentialite" },
+  {
+    label: "Politique de confidentialité",
+    href: "/politiques-de-confidentialite",
+  },
 ];
 
 export default function FooterCTA() {
@@ -65,8 +83,7 @@ export default function FooterCTA() {
 
             {/* Titre */}
             <h2 className="font-sora font-bold text-2xl md:text-3xl text-darkBlue mb-3 tracking-tight">
-              Prêt à vous{" "}
-              <span className="text-grayBlue italic">former</span> ?
+              Prêt à vous <span className="text-grayBlue italic">former</span> ?
             </h2>
 
             {/* Description */}
@@ -92,7 +109,8 @@ export default function FooterCTA() {
 
             {/* Description */}
             <p className="text-grayBlue font-satoshi mb-5 max-w-md">
-              Suivez-nous sur LinkedIn pour rester informé de nos actualités et nouveautés.
+              Suivez-nous sur LinkedIn pour rester informé de nos actualités et
+              nouveautés.
             </p>
 
             {/* LinkedIn Button */}
@@ -114,8 +132,14 @@ export default function FooterCTA() {
                 <Link
                   key={index}
                   href={contact.href}
-                  target={contact.href.startsWith("http") ? "_blank" : undefined}
-                  rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  target={
+                    contact.href.startsWith("http") ? "_blank" : undefined
+                  }
+                  rel={
+                    contact.href.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
                   className="border-2 border-dashed border-gray-300 bg-white rounded-xl px-4 py-3 flex items-center gap-3 hover:border-primary/50 hover:shadow-sm transition-all"
                 >
                   <contact.icon className="w-4 h-4 text-primary shrink-0" />
@@ -136,9 +160,9 @@ export default function FooterCTA() {
         {/* Right Column - Menu */}
         <div className="lg:col-span-5 bg-gray-200/80 rounded-4xl p-6 md:p-8 flex flex-col relative overflow-hidden">
           {/* Background Logo - Decorative */}
-          <div className="absolute bottom-20 right-0 w-64 h-64 opacity-[0.07] pointer-events-none z-0">
+          <div className="absolute bottom-20 right-0 w-64 h-64 opacity-[0.1] pointer-events-none z-0">
             <Image
-              src="/logo/logoBlack.png"
+              src="/logo/noBgColor.png"
               fill
               alt=""
               className="object-contain"
@@ -178,7 +202,9 @@ export default function FooterCTA() {
                   className="text-xs font-satoshi text-grayBlue hover:text-primary transition-colors duration-200"
                 >
                   {cat.label}
-                  {index < formationCategories.length - 1 && <span className="ml-2 text-gray-300">•</span>}
+                  {index < formationCategories.length - 1 && (
+                    <span className="ml-2 text-gray-300">•</span>
+                  )}
                 </Link>
               ))}
             </div>

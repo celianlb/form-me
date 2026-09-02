@@ -122,17 +122,20 @@ export default function Header({ categories = [] }: HeaderProps) {
         </div>
 
         {/* Center: Logo - positionné par rapport à cette div, pas le header entier */}
-        <Link href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+        <Link
+          href="/"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
           <Image
-            src="/logo/logoBlack.png"
+            src="/logo/noBgColor.png"
             alt="Form Me Logo"
             width={120}
-            height={48}
-            className="h-8 w-auto hidden lg:block rounded-lg"
+            height={120}
+            className="h-16 w-auto hidden lg:block rounded-lg"
             priority
           />
           <Image
-            src="/logo/logoBlack.png"
+            src="/logo/noBgColor.png"
             alt="Form Me Logo"
             width={100}
             height={36}
